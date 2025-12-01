@@ -9,13 +9,13 @@ build:
 
 # Sphinx配置
 sphinx:
-  configuration: doc/source/conf.py  # 注意路径：doc/source/conf.py
+  configuration: source/conf.py  # 注意路径：doc/source/conf.py
 
 # Python依赖安装
 python:
   install:
     # 安装文档依赖
-    - requirements: doc/requirements.txt
+    - requirements: source/requirements.txt
     
     # 可选：如果你有项目自身的依赖
     # - requirements: requirements.txt
