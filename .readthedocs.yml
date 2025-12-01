@@ -1,6 +1,11 @@
 # .readthedocs.yml
 version: 2
 
+# 指定使用 main 分支
+defaults:
+  version: latest  # 使用最新版本
+  branch: main     # 指定 main 分支
+
 # 构建环境
 build:
   os: ubuntu-22.04    # 使用Ubuntu 22.04
