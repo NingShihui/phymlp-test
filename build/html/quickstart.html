@@ -1,0 +1,660 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>快速开始 &mdash; PhyMLP 1.0.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=34088549"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/translations.js?v=beaddf03"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="搜索" href="search.html" />
+    <link rel="next" title="phymlp" href="modules.html" />
+    <link rel="prev" title="PhyMLP documentation" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            PhyMLP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">目录：</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">快速开始</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">基础使用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">核心功能模块</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">训练与验证</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">数据格式转换</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">工具函数</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">自动训练集生成工作流</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#materials-project">1. 从 Materials Project 获取结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">2. 生成形变结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">3. 生成微扰结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vasp">4. 设置 VASP 计算</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#potcar">5. 测试 POTCAR 生成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">6. 提交 VASP 计算</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id12">7. 处理形变结果</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#birch-murnaghan">8. Birch-Murnaghan 拟合</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id13">9. 生成最终数据集</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id14">配置文件详解</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#inputfile-txt">训练配置文件 Inputfile.txt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#input-yaml">自动化训练集配置文件 input.yaml</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id15">典型工作流程</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ni-cr">快速开始示例：Ni-Cr 合金训练集生成</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id16">进阶用法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id17">自定义训练参数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id18">自定义VASP计算</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id19">批量处理多个体系</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id20">故障排除</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id21">常见问题</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id22">获取帮助</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id23">下一步</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">phymlp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="phymlp.html">phymlp package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html">phymlp.auto_generate_set package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.cli.html">phymlp.cli package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.converters.html">phymlp.converters package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.tools.html">phymlp.tools package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.utils.html">phymlp.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.html#module-phymlp">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="phymlp.auto_generate_set.html">phymlp.auto_generate_set package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.auto_generate_set.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.auto_generate_set.html#module-phymlp.auto_generate_set.birch_murnaghan_fitting">phymlp.auto_generate_set.birch_murnaghan_fitting module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.birch_murnaghan_eqn"><code class="docutils literal notranslate"><span class="pre">birch_murnaghan_eqn()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.birch_murnaghan_residuals"><code class="docutils literal notranslate"><span class="pre">birch_murnaghan_residuals()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.create_mirror_structure"><code class="docutils literal notranslate"><span class="pre">create_mirror_structure()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.create_outcar_scale_directory"><code class="docutils literal notranslate"><span class="pre">create_outcar_scale_directory()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.ensure_numeric_parameters"><code class="docutils literal notranslate"><span class="pre">ensure_numeric_parameters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.filter_data"><code class="docutils literal notranslate"><span class="pre">filter_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.find_a_v_e_p_files"><code class="docutils literal notranslate"><span class="pre">find_a_v_e_p_files()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.find_scale_directories"><code class="docutils literal notranslate"><span class="pre">find_scale_directories()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.get_initial_guess"><code class="docutils literal notranslate"><span class="pre">get_initial_guess()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.get_reference_volume"><code class="docutils literal notranslate"><span class="pre">get_reference_volume()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.perform_fitting"><code class="docutils literal notranslate"><span class="pre">perform_fitting()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.process_all_birch_murnaghan_fitting"><code class="docutils literal notranslate"><span class="pre">process_all_birch_murnaghan_fitting()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.read_a_v_e_p_file"><code class="docutils literal notranslate"><span class="pre">read_a_v_e_p_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.save_fitting_results"><code class="docutils literal notranslate"><span class="pre">save_fitting_results()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.auto_generate_set.html#module-phymlp.auto_generate_set.config">phymlp.auto_generate_set.config module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.config.load_config"><code class="docutils literal notranslate"><span class="pre">load_config()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp-auto-generate-set-deform-structures-module">phymlp.auto_generate_set.deform_structures module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp-auto-generate-set-from-mp-structures-module">phymlp.auto_generate_set.from_mp_structures module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.auto_generate_set.html#module-phymlp.auto_generate_set.generate_extxyz_dataset">phymlp.auto_generate_set.generate_extxyz_dataset module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.calculate_pressure_from_birch_murnaghan"><code class="docutils literal notranslate"><span class="pre">calculate_pressure_from_birch_murnaghan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.extract_structures_from_outcar"><code class="docutils literal notranslate"><span class="pre">extract_structures_from_outcar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.extract_structures_from_outcar_scale"><code class="docutils literal notranslate"><span class="pre">extract_structures_from_outcar_scale()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.filter_data_by_pressure"><code class="docutils literal notranslate"><span class="pre">filter_data_by_pressure()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.find_outcar_files"><code class="docutils literal notranslate"><span class="pre">find_outcar_files()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.find_reference_structure"><code class="docutils literal notranslate"><span class="pre">find_reference_structure()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.generate_birch_murnaghan_extxyz"><code class="docutils literal notranslate"><span class="pre">generate_birch_murnaghan_extxyz()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.generate_extxyz_dataset"><code class="docutils literal notranslate"><span class="pre">generate_extxyz_dataset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.generate_extxyz_from_config"><code class="docutils literal notranslate"><span class="pre">generate_extxyz_from_config()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.generate_structures_from_fit_a_P"><code class="docutils literal notranslate"><span class="pre">generate_structures_from_fit_a_P()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.generate_structures_from_fitting_curve"><code class="docutils literal notranslate"><span class="pre">generate_structures_from_fitting_curve()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.generate_vasp_extxyz"><code class="docutils literal notranslate"><span class="pre">generate_vasp_extxyz()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.gpa_to_ev_per_ang3"><code class="docutils literal notranslate"><span class="pre">gpa_to_ev_per_ang3()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.load_birch_murnaghan_fitting_results"><code class="docutils literal notranslate"><span class="pre">load_birch_murnaghan_fitting_results()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.load_fit_a_P_data"><code class="docutils literal notranslate"><span class="pre">load_fit_a_P_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.merge_extxyz_files"><code class="docutils literal notranslate"><span class="pre">merge_extxyz_files()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp-auto-generate-set-perturb-structures-module">phymlp.auto_generate_set.perturb_structures module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.auto_generate_set.html#module-phymlp.auto_generate_set.potcar_generator">phymlp.auto_generate_set.potcar_generator module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.potcar_generator.concatenate_potcar_files"><code class="docutils literal notranslate"><span class="pre">concatenate_potcar_files()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.potcar_generator.find_potcar_files"><code class="docutils literal notranslate"><span class="pre">find_potcar_files()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.potcar_generator.generate_potcar"><code class="docutils literal notranslate"><span class="pre">generate_potcar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.potcar_generator.generate_potcar_auto"><code class="docutils literal notranslate"><span class="pre">generate_potcar_auto()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.potcar_generator.generate_potcar_pymatgen"><code class="docutils literal notranslate"><span class="pre">generate_potcar_pymatgen()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.potcar_generator.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.potcar_generator.read_poscar_elements"><code class="docutils literal notranslate"><span class="pre">read_poscar_elements()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.auto_generate_set.html#module-phymlp.auto_generate_set.process_deform_results">phymlp.auto_generate_set.process_deform_results module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.process_deform_results.classify_deform_directories"><code class="docutils literal notranslate"><span class="pre">classify_deform_directories()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.process_deform_results.create_classified_structure"><code class="docutils literal notranslate"><span class="pre">create_classified_structure()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.process_deform_results.extract_vasp_data"><code class="docutils literal notranslate"><span class="pre">extract_vasp_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.process_deform_results.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.process_deform_results.process_all_deform_results"><code class="docutils literal notranslate"><span class="pre">process_all_deform_results()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.auto_generate_set.html#module-phymlp.auto_generate_set.utils">phymlp.auto_generate_set.utils module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.check_file_exists"><code class="docutils literal notranslate"><span class="pre">check_file_exists()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.check_potcar_availability"><code class="docutils literal notranslate"><span class="pre">check_potcar_availability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.chemsys_comb"><code class="docutils literal notranslate"><span class="pre">chemsys_comb()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.get_formula_from_filename"><code class="docutils literal notranslate"><span class="pre">get_formula_from_filename()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.mkdir_output_load"><code class="docutils literal notranslate"><span class="pre">mkdir_output_load()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.safe_copy"><code class="docutils literal notranslate"><span class="pre">safe_copy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.safe_path_join"><code class="docutils literal notranslate"><span class="pre">safe_path_join()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp-auto-generate-set-vasp-setup-module">phymlp.auto_generate_set.vasp_setup module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.auto_generate_set.html#phymlp-auto-generate-set-vasp-submit-module">phymlp.auto_generate_set.vasp_submit module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.auto_generate_set.html#module-phymlp.auto_generate_set">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="phymlp.cli.html">phymlp.cli package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.cli.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.cli.html#module-phymlp.cli.main">phymlp.cli.main module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.cli.html#phymlp.cli.main.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.cli.html#module-phymlp.cli">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="phymlp.converters.html">phymlp.converters package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.converters.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.converters.html#module-phymlp.converters.cfg2extxyz">phymlp.converters.cfg2extxyz module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.converters.html#phymlp.converters.cfg2extxyz.parse_cfg_file"><code class="docutils literal notranslate"><span class="pre">parse_cfg_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.converters.html#phymlp.converters.cfg2extxyz.write_extxyz"><code class="docutils literal notranslate"><span class="pre">write_extxyz()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.converters.html#module-phymlp.converters.outcar_converter">phymlp.converters.outcar_converter module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.converters.html#phymlp.converters.outcar_converter.extract_structures_from_outcar"><code class="docutils literal notranslate"><span class="pre">extract_structures_from_outcar()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.converters.html#module-phymlp.converters">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="phymlp.tools.html">phymlp.tools package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.tools.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.tools.html#module-phymlp.tools.get_KPATH">phymlp.tools.get_KPATH module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.tools.html#phymlp.tools.get_KPATH.generate_kpath"><code class="docutils literal notranslate"><span class="pre">generate_kpath()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.tools.html#module-phymlp.tools.split_set">phymlp.tools.split_set module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.tools.html#phymlp.tools.split_set.split_extxyz_structures"><code class="docutils literal notranslate"><span class="pre">split_extxyz_structures()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.tools.html#module-phymlp.tools">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="phymlp.utils.html">phymlp.utils package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.utils.html#module-phymlp.utils.core">phymlp.utils.core module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.utils.html#phymlp.utils.core.PUBLIC"><code class="docutils literal notranslate"><span class="pre">PUBLIC</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.utils.html#phymlp.utils.core.RUN"><code class="docutils literal notranslate"><span class="pre">RUN</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.utils.html#module-phymlp.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">PhyMLP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">快速开始</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/quickstart.rst.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>快速开始<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>PhyMLP Kit 是一个功能强大的机器学习势函数工具包，提供训练、验证、数据处理及自动训练集生成的全套命令行工具。</p>
+<section id="id2">
+<h2>安装<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>phymlp-kit
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h2>基础使用<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>查看所有可用命令：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>phymlp-kit<span class="w"> </span>-h
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h2>核心功能模块<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<section id="id5">
+<h3>训练与验证<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<p>使用 <code class="docutils literal notranslate"><span class="pre">Inputfile.txt</span></code> 配置文件训练 PhyMLP 模型：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>phymlp-kit<span class="w"> </span>train<span class="w"> </span>--train_input<span class="w"> </span>Inputfile.txt
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h3>数据格式转换<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<p>OUTCAR 转 extxyz 格式：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>phymlp-kit<span class="w"> </span>outcar2extxyz<span class="w"> </span>--outcar2extxyz_input<span class="w"> </span>OUTCAR<span class="w"> </span>--outcar2extxyz_output<span class="w"> </span>train.extxyz<span class="w"> </span>--step<span class="w"> </span><span class="m">1</span>
+</pre></div>
+</div>
+<p>CFG 转 extxyz 格式：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>phymlp-kit<span class="w"> </span>cfg2extxyz<span class="w"> </span>--cfg2extxyz_input<span class="w"> </span>train.cfg<span class="w"> </span>--cfg2extxyz_output<span class="w"> </span>train.extxyz<span class="w"> </span>--elements<span class="w"> </span>Ni<span class="w"> </span>Cr<span class="w"> </span>Co
+</pre></div>
+</div>
+<p>数据集分割：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>phymlp-kit<span class="w"> </span>split_set<span class="w"> </span>--input_file<span class="w"> </span>dataset.extxyz<span class="w"> </span>--set_train<span class="w"> </span>train.extxyz<span class="w"> </span>--set_val<span class="w"> </span>validation.extxyz<span class="w"> </span>--val_ratio<span class="w"> </span><span class="m">0</span>.1
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h3>工具函数<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<p>生成 K 路径：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>phymlp-kit<span class="w"> </span>generate_kpath<span class="w"> </span>--vaspkit_load<span class="w"> </span>/path/to/vaspkit
+</pre></div>
+</div>
+<p>初始化 PhyMLP：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>phymlp-kit<span class="w"> </span>init_phymlp<span class="w"> </span>--phymlp_load<span class="w"> </span>/path/to/phymlp<span class="w"> </span>--complexity<span class="w"> </span><span class="m">10</span>.PhyMLP
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id8">
+<h2>自动训练集生成工作流<a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
+<p>使用 <code class="docutils literal notranslate"><span class="pre">input.yaml</span></code> 配置文件自动化生成训练集：</p>
+<section id="materials-project">
+<h3>1. 从 Materials Project 获取结构<a class="headerlink" href="#materials-project" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>phymlp-kit<span class="w"> </span>from_mp_structures<span class="w"> </span>--input_file<span class="w"> </span>input.yaml
+</pre></div>
+</div>
+<p>配置示例（input.yaml 相关部分）：</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Materials Project API配置</span>
+<span class="nt">api</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;your_api_key_here&quot;</span>
+
+<span class="c1"># 元素配置</span>
+<span class="nt">elements</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Ni&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Cr&quot;</span>
+
+<span class="c1"># 输出路径配置</span>
+<span class="nt">paths</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">base_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;./materials_project&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="id9">
+<h3>2. 生成形变结构<a class="headerlink" href="#id9" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>phymlp-kit<span class="w"> </span>deform_structures<span class="w"> </span>--input_file<span class="w"> </span>input.yaml
+</pre></div>
+</div>
+<p>配置示例：</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># 形变参数配置</span>
+<span class="nt">deformation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">max_atoms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">150</span>
+<span class="w">  </span><span class="nt">scaling_factors</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.8</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.9</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">1.0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">1.1</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">1.2</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">max_supercell</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span>
+</pre></div>
+</div>
+</section>
+<section id="id10">
+<h3>3. 生成微扰结构<a class="headerlink" href="#id10" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>phymlp-kit<span class="w"> </span>perturb_structures<span class="w"> </span>--input_file<span class="w"> </span>input.yaml
+</pre></div>
+</div>
+<p>配置示例：</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># 微扰参数配置</span>
+<span class="nt">perturbation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">max_atoms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">150</span>
+<span class="w">  </span><span class="nt">max_supercell</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span>
+<span class="w">  </span><span class="nt">n_structures</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+<span class="w">  </span><span class="nt">cell_pert_fraction</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.05</span>
+<span class="w">  </span><span class="nt">atom_pert_distance</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.05</span>
+</pre></div>
+</div>
+</section>
+<section id="vasp">
+<h3>4. 设置 VASP 计算<a class="headerlink" href="#vasp" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>phymlp-kit<span class="w"> </span>setup_vasp<span class="w"> </span>--input_file<span class="w"> </span>input.yaml
+</pre></div>
+</div>
+<p>配置示例：</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># VASP计算配置</span>
+<span class="nt">vasp</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">incar_parameters</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">ENCUT</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">400</span>
+<span class="w">    </span><span class="nt">ISIF</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">    </span><span class="nt">KSPACING</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.2</span>
+<span class="w">  </span><span class="nt">potcar</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">functional</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;PBE&quot;</span>
+<span class="w">  </span><span class="nt">submission</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">slurm_headers</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;#SBATCH</span><span class="nv"> </span><span class="s">-N</span><span class="nv"> </span><span class="s">1&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;#SBATCH</span><span class="nv"> </span><span class="s">-n</span><span class="nv"> </span><span class="s">32&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="potcar">
+<h3>5. 测试 POTCAR 生成<a class="headerlink" href="#potcar" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>phymlp-kit<span class="w"> </span>test_potcar<span class="w"> </span>--poscar<span class="w"> </span>POSCAR<span class="w"> </span>--input_file<span class="w"> </span>input.yaml
+</pre></div>
+</div>
+</section>
+<section id="id11">
+<h3>6. 提交 VASP 计算<a class="headerlink" href="#id11" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>phymlp-kit<span class="w"> </span>submit_vasp<span class="w"> </span>--input_file<span class="w"> </span>input.yaml
+</pre></div>
+</div>
+</section>
+<section id="id12">
+<h3>7. 处理形变结果<a class="headerlink" href="#id12" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>phymlp-kit<span class="w"> </span>process_deform<span class="w"> </span>--input_file<span class="w"> </span>input.yaml
+</pre></div>
+</div>
+</section>
+<section id="birch-murnaghan">
+<h3>8. Birch-Murnaghan 拟合<a class="headerlink" href="#birch-murnaghan" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>phymlp-kit<span class="w"> </span>birch_murnaghan<span class="w"> </span>--input_file<span class="w"> </span>input.yaml
+</pre></div>
+</div>
+<p>配置示例：</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Birch-Murnaghan拟合配置</span>
+<span class="nt">birch_murnaghan_fitting</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">fitting</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">initial_guess</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">B0</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+<span class="w">      </span><span class="nt">B1</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4.0</span>
+</pre></div>
+</div>
+</section>
+<section id="id13">
+<h3>9. 生成最终数据集<a class="headerlink" href="#id13" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>phymlp-kit<span class="w"> </span>generate_extxyz<span class="w"> </span>--input_file<span class="w"> </span>input.yaml
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id14">
+<h2>配置文件详解<a class="headerlink" href="#id14" title="Link to this heading"></a></h2>
+<section id="inputfile-txt">
+<h3>训练配置文件 Inputfile.txt<a class="headerlink" href="#inputfile-txt" title="Link to this heading"></a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>### 必须自定义的参数 ###
+PhyMLP_load      = &quot;/path/to/phymlp&quot;           # PhyMLP安装目录
+lmp_mpi_load     = &quot;/path/to/lmp_mpi&quot;          # LAMMPS可执行文件路径
+vaspkit_load     = &quot;/path/to/vaspkit&quot;          # VASPKIT可执行文件路径
+
+### 训练过程参数设置 ###
+train            = &quot;true&quot;                      # 训练指令
+extxyz_load      = &quot;../train.extxyz&quot;           # 训练集路径
+init_PhyMLP      = &quot;./10.PhyMLP&quot;               # 训练势函数level
+iteration_limit  = &quot;1000&quot;                      # 最大迭代次数
+al_mode          = &quot;nbh&quot;                       # 训练模式
+
+### 性质计算参数设置 ###
+calculate        = &quot;false&quot;                     # 计算指令
+crystal_structure= &quot;bcc&quot;                       # 晶体结构类型
+lattice          = &quot;3.5&quot;                       # 平衡晶格常数
+atomic_mass      = &quot;183.84&quot;                    # 元素的相对原子质量
+pot_PhyMLP_load  = &quot;./train/pot.PhyMLP&quot;        # PhyMLP势文件路径
+properties       = &quot;E-V&quot;                       # 单原子能量-体积计算
+properties       = &quot;Elastic&quot;                   # 弹性常数计算
+properties       = &quot;phonon&quot;                    # 声子谱计算
+properties       = &quot;P-V&quot;                       # 压力-体积计算
+</pre></div>
+</div>
+</section>
+<section id="input-yaml">
+<h3>自动化训练集配置文件 input.yaml<a class="headerlink" href="#input-yaml" title="Link to this heading"></a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Materials Project API配置</span>
+<span class="nt">api</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;your_api_key_here&quot;</span>
+
+<span class="c1"># 元素配置</span>
+<span class="nt">elements</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Ni&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Cr&quot;</span>
+
+<span class="c1"># 输出路径配置</span>
+<span class="nt">paths</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">base_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;./materials_project&quot;</span>
+<span class="w">  </span><span class="nt">cif_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;base/dir_CIF&quot;</span>
+<span class="w">  </span><span class="nt">poscar_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;base/dir_POSCAR&quot;</span>
+
+<span class="c1"># 用户自定义POSCAR配置</span>
+<span class="nt">user_poscar</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">source_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;./input-poscar&quot;</span>
+
+<span class="c1"># 形变参数配置</span>
+<span class="nt">deformation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">max_atoms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">150</span>
+<span class="w">  </span><span class="nt">scaling_factors</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.8</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.9</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">1.0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">1.1</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">1.2</span><span class="p p-Indicator">]</span>
+
+<span class="c1"># VASP计算配置</span>
+<span class="nt">vasp</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">incar_parameters</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">ENCUT</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">400</span>
+<span class="w">    </span><span class="nt">ISIF</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">    </span><span class="nt">KSPACING</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.2</span>
+<span class="w">  </span><span class="nt">submission</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">slurm_headers</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;#SBATCH</span><span class="nv"> </span><span class="s">-N</span><span class="nv"> </span><span class="s">1&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;#SBATCH</span><span class="nv"> </span><span class="s">-n</span><span class="nv"> </span><span class="s">32&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id15">
+<h2>典型工作流程<a class="headerlink" href="#id15" title="Link to this heading"></a></h2>
+<section id="ni-cr">
+<h3>快速开始示例：Ni-Cr 合金训练集生成<a class="headerlink" href="#ni-cr" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p><strong>准备配置文件</strong>：</p></li>
+</ol>
+<p>创建 <code class="docutils literal notranslate"><span class="pre">input.yaml</span></code>：</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">api</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;your_mp_api_key&quot;</span>
+<span class="nt">elements</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Ni&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Cr&quot;</span>
+<span class="nt">paths</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">base_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;./NiCr_training&quot;</span>
+<span class="nt">deformation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">scaling_factors</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">0.9</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">1.0</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">1.1</span><span class="p p-Indicator">]</span>
+<span class="nt">perturbation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">n_structures</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p><strong>执行完整工作流</strong>：</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>phymlp-kit<span class="w"> </span>full_workflow<span class="w"> </span>--input_file<span class="w"> </span>input.yaml
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p><strong>训练模型</strong>：</p></li>
+</ol>
+<p>创建 <code class="docutils literal notranslate"><span class="pre">Inputfile.txt</span></code>：</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>PhyMLP_load = &quot;/path/to/phymlp&quot;
+lmp_mpi_load = &quot;/path/to/lmp_mpi&quot;
+train = &quot;true&quot;
+extxyz_load = &quot;./NiCr_training/Extxyz_set/final_dataset.extxyz&quot;
+init_PhyMLP = &quot;./10.PhyMLP&quot;
+</pre></div>
+</div>
+<p>执行训练：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>phymlp-kit<span class="w"> </span>train<span class="w"> </span>--train_input<span class="w"> </span>Inputfile.txt
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p><strong>验证模型</strong>：</p></li>
+</ol>
+<p>修改 <code class="docutils literal notranslate"><span class="pre">Inputfile.txt</span></code>：</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>train = &quot;false&quot;
+calculate = &quot;true&quot;
+crystal_structure = &quot;fcc&quot;
+lattice = &quot;3.6&quot;
+pot_PhyMLP_load = &quot;./train/pot.PhyMLP&quot;
+properties = &quot;E-V&quot;
+properties = &quot;Elastic&quot;
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id16">
+<h2>进阶用法<a class="headerlink" href="#id16" title="Link to this heading"></a></h2>
+<section id="id17">
+<h3>自定义训练参数<a class="headerlink" href="#id17" title="Link to this heading"></a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># 高级训练选项
+iteration_limit = &quot;5000&quot;
+al_mode = &quot;al&quot;                    # 主动学习模式
+init_PhyMLP = &quot;./16.PhyMLP&quot;       # 更高复杂度的势函数
+</pre></div>
+</div>
+</section>
+<section id="id18">
+<h3>自定义VASP计算<a class="headerlink" href="#id18" title="Link to this heading"></a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">vasp</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">incar_parameters</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">ENCUT</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">520</span>
+<span class="w">    </span><span class="nt">PREC</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Accurate&quot;</span>
+<span class="w">    </span><span class="nt">EDIFF</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1e-6</span>
+<span class="w">  </span><span class="nt">submission</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">slurm_headers</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;#SBATCH</span><span class="nv"> </span><span class="s">-p</span><span class="nv"> </span><span class="s">gpu&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;#SBATCH</span><span class="nv"> </span><span class="s">--gres=gpu:2&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="id19">
+<h3>批量处理多个体系<a class="headerlink" href="#id19" title="Link to this heading"></a></h3>
+<p>创建多个配置文件夹：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ni-Cr体系</span>
+phymlp-kit<span class="w"> </span>full_workflow<span class="w"> </span>--input_file<span class="w"> </span>NiCr_input.yaml
+<span class="c1"># Ni-Co体系</span>
+phymlp-kit<span class="w"> </span>full_workflow<span class="w"> </span>--input_file<span class="w"> </span>NiCo_input.yaml
+<span class="c1"># Cr-Co体系</span>
+phymlp-kit<span class="w"> </span>full_workflow<span class="w"> </span>--input_file<span class="w"> </span>CrCo_input.yaml
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id20">
+<h2>故障排除<a class="headerlink" href="#id20" title="Link to this heading"></a></h2>
+<section id="id21">
+<h3>常见问题<a class="headerlink" href="#id21" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p><strong>Materials Project API 错误</strong>：
+- 检查 API 密钥是否正确
+- 确认网络连接</p></li>
+<li><p><strong>VASP 计算失败</strong>：
+- 检查 POTCAR 文件路径
+- 验证 INCAR 参数</p></li>
+<li><p><strong>内存不足</strong>：
+- 减小 <code class="docutils literal notranslate"><span class="pre">max_atoms</span></code> 参数
+- 调整 VASP 计算资源</p></li>
+<li><p><strong>训练不收敛</strong>：
+- 增加 <code class="docutils literal notranslate"><span class="pre">iteration_limit</span></code>
+- 调整训练参数</p></li>
+</ol>
+</section>
+<section id="id22">
+<h3>获取帮助<a class="headerlink" href="#id22" title="Link to this heading"></a></h3>
+<p>查看具体命令的帮助信息：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>phymlp-kit<span class="w"> </span>train<span class="w"> </span>-h
+phymlp-kit<span class="w"> </span>from_mp_structures<span class="w"> </span>-h
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id23">
+<h2>下一步<a class="headerlink" href="#id23" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>查看 <span class="xref std std-doc">高级配置</span></p></li>
+<li><p>学习 <span class="xref std std-doc">性能优化</span></p></li>
+<li><p>参考 <span class="xref std std-doc">API 文档</span></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="index.html" class="btn btn-neutral float-left" title="PhyMLP documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="modules.html" class="btn btn-neutral float-right" title="phymlp" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 NSH。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

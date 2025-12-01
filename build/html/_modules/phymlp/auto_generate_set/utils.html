@@ -1,0 +1,421 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>phymlp.auto_generate_set.utils &mdash; PhyMLP 1.0.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=34088549"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/translations.js?v=beaddf03"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            PhyMLP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">目录：</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">快速开始</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#id2">安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#id3">基础使用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#id4">核心功能模块</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id5">训练与验证</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id6">数据格式转换</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id7">工具函数</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#id8">自动训练集生成工作流</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#materials-project">1. 从 Materials Project 获取结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id9">2. 生成形变结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id10">3. 生成微扰结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#vasp">4. 设置 VASP 计算</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#potcar">5. 测试 POTCAR 生成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id11">6. 提交 VASP 计算</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id12">7. 处理形变结果</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#birch-murnaghan">8. Birch-Murnaghan 拟合</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id13">9. 生成最终数据集</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#id14">配置文件详解</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#inputfile-txt">训练配置文件 Inputfile.txt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#input-yaml">自动化训练集配置文件 input.yaml</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#id15">典型工作流程</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#ni-cr">快速开始示例：Ni-Cr 合金训练集生成</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#id16">进阶用法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id17">自定义训练参数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id18">自定义VASP计算</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id19">批量处理多个体系</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#id20">故障排除</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id21">常见问题</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id22">获取帮助</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#id23">下一步</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">phymlp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../phymlp.html">phymlp package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html">phymlp.auto_generate_set package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.cli.html">phymlp.cli package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.converters.html">phymlp.converters package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.tools.html">phymlp.tools package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.utils.html">phymlp.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.html#module-phymlp">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../phymlp.auto_generate_set.html">phymlp.auto_generate_set package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#module-phymlp.auto_generate_set.birch_murnaghan_fitting">phymlp.auto_generate_set.birch_murnaghan_fitting module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.birch_murnaghan_eqn"><code class="docutils literal notranslate"><span class="pre">birch_murnaghan_eqn()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.birch_murnaghan_residuals"><code class="docutils literal notranslate"><span class="pre">birch_murnaghan_residuals()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.create_mirror_structure"><code class="docutils literal notranslate"><span class="pre">create_mirror_structure()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.create_outcar_scale_directory"><code class="docutils literal notranslate"><span class="pre">create_outcar_scale_directory()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.ensure_numeric_parameters"><code class="docutils literal notranslate"><span class="pre">ensure_numeric_parameters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.filter_data"><code class="docutils literal notranslate"><span class="pre">filter_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.find_a_v_e_p_files"><code class="docutils literal notranslate"><span class="pre">find_a_v_e_p_files()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.find_scale_directories"><code class="docutils literal notranslate"><span class="pre">find_scale_directories()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.get_initial_guess"><code class="docutils literal notranslate"><span class="pre">get_initial_guess()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.get_reference_volume"><code class="docutils literal notranslate"><span class="pre">get_reference_volume()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.perform_fitting"><code class="docutils literal notranslate"><span class="pre">perform_fitting()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.process_all_birch_murnaghan_fitting"><code class="docutils literal notranslate"><span class="pre">process_all_birch_murnaghan_fitting()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.read_a_v_e_p_file"><code class="docutils literal notranslate"><span class="pre">read_a_v_e_p_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.save_fitting_results"><code class="docutils literal notranslate"><span class="pre">save_fitting_results()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#module-phymlp.auto_generate_set.config">phymlp.auto_generate_set.config module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.config.load_config"><code class="docutils literal notranslate"><span class="pre">load_config()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp-auto-generate-set-deform-structures-module">phymlp.auto_generate_set.deform_structures module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp-auto-generate-set-from-mp-structures-module">phymlp.auto_generate_set.from_mp_structures module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#module-phymlp.auto_generate_set.generate_extxyz_dataset">phymlp.auto_generate_set.generate_extxyz_dataset module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.calculate_pressure_from_birch_murnaghan"><code class="docutils literal notranslate"><span class="pre">calculate_pressure_from_birch_murnaghan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.extract_structures_from_outcar"><code class="docutils literal notranslate"><span class="pre">extract_structures_from_outcar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.extract_structures_from_outcar_scale"><code class="docutils literal notranslate"><span class="pre">extract_structures_from_outcar_scale()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.filter_data_by_pressure"><code class="docutils literal notranslate"><span class="pre">filter_data_by_pressure()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.find_outcar_files"><code class="docutils literal notranslate"><span class="pre">find_outcar_files()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.find_reference_structure"><code class="docutils literal notranslate"><span class="pre">find_reference_structure()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.generate_birch_murnaghan_extxyz"><code class="docutils literal notranslate"><span class="pre">generate_birch_murnaghan_extxyz()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.generate_extxyz_dataset"><code class="docutils literal notranslate"><span class="pre">generate_extxyz_dataset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.generate_extxyz_from_config"><code class="docutils literal notranslate"><span class="pre">generate_extxyz_from_config()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.generate_structures_from_fit_a_P"><code class="docutils literal notranslate"><span class="pre">generate_structures_from_fit_a_P()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.generate_structures_from_fitting_curve"><code class="docutils literal notranslate"><span class="pre">generate_structures_from_fitting_curve()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.generate_vasp_extxyz"><code class="docutils literal notranslate"><span class="pre">generate_vasp_extxyz()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.gpa_to_ev_per_ang3"><code class="docutils literal notranslate"><span class="pre">gpa_to_ev_per_ang3()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.load_birch_murnaghan_fitting_results"><code class="docutils literal notranslate"><span class="pre">load_birch_murnaghan_fitting_results()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.load_fit_a_P_data"><code class="docutils literal notranslate"><span class="pre">load_fit_a_P_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.merge_extxyz_files"><code class="docutils literal notranslate"><span class="pre">merge_extxyz_files()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp-auto-generate-set-perturb-structures-module">phymlp.auto_generate_set.perturb_structures module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#module-phymlp.auto_generate_set.potcar_generator">phymlp.auto_generate_set.potcar_generator module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.potcar_generator.concatenate_potcar_files"><code class="docutils literal notranslate"><span class="pre">concatenate_potcar_files()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.potcar_generator.find_potcar_files"><code class="docutils literal notranslate"><span class="pre">find_potcar_files()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.potcar_generator.generate_potcar"><code class="docutils literal notranslate"><span class="pre">generate_potcar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.potcar_generator.generate_potcar_auto"><code class="docutils literal notranslate"><span class="pre">generate_potcar_auto()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.potcar_generator.generate_potcar_pymatgen"><code class="docutils literal notranslate"><span class="pre">generate_potcar_pymatgen()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.potcar_generator.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.potcar_generator.read_poscar_elements"><code class="docutils literal notranslate"><span class="pre">read_poscar_elements()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#module-phymlp.auto_generate_set.process_deform_results">phymlp.auto_generate_set.process_deform_results module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.process_deform_results.classify_deform_directories"><code class="docutils literal notranslate"><span class="pre">classify_deform_directories()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.process_deform_results.create_classified_structure"><code class="docutils literal notranslate"><span class="pre">create_classified_structure()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.process_deform_results.extract_vasp_data"><code class="docutils literal notranslate"><span class="pre">extract_vasp_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.process_deform_results.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.process_deform_results.process_all_deform_results"><code class="docutils literal notranslate"><span class="pre">process_all_deform_results()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#module-phymlp.auto_generate_set.utils">phymlp.auto_generate_set.utils module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.check_file_exists"><code class="docutils literal notranslate"><span class="pre">check_file_exists()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.check_potcar_availability"><code class="docutils literal notranslate"><span class="pre">check_potcar_availability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.chemsys_comb"><code class="docutils literal notranslate"><span class="pre">chemsys_comb()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.get_formula_from_filename"><code class="docutils literal notranslate"><span class="pre">get_formula_from_filename()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.mkdir_output_load"><code class="docutils literal notranslate"><span class="pre">mkdir_output_load()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.safe_copy"><code class="docutils literal notranslate"><span class="pre">safe_copy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.safe_path_join"><code class="docutils literal notranslate"><span class="pre">safe_path_join()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp-auto-generate-set-vasp-setup-module">phymlp.auto_generate_set.vasp_setup module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp-auto-generate-set-vasp-submit-module">phymlp.auto_generate_set.vasp_submit module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#module-phymlp.auto_generate_set">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../phymlp.cli.html">phymlp.cli package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.cli.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.cli.html#module-phymlp.cli.main">phymlp.cli.main module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.cli.html#phymlp.cli.main.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.cli.html#module-phymlp.cli">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../phymlp.converters.html">phymlp.converters package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.converters.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.converters.html#module-phymlp.converters.cfg2extxyz">phymlp.converters.cfg2extxyz module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.converters.html#phymlp.converters.cfg2extxyz.parse_cfg_file"><code class="docutils literal notranslate"><span class="pre">parse_cfg_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.converters.html#phymlp.converters.cfg2extxyz.write_extxyz"><code class="docutils literal notranslate"><span class="pre">write_extxyz()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.converters.html#module-phymlp.converters.outcar_converter">phymlp.converters.outcar_converter module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.converters.html#phymlp.converters.outcar_converter.extract_structures_from_outcar"><code class="docutils literal notranslate"><span class="pre">extract_structures_from_outcar()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.converters.html#module-phymlp.converters">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../phymlp.tools.html">phymlp.tools package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.tools.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.tools.html#module-phymlp.tools.get_KPATH">phymlp.tools.get_KPATH module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.tools.html#phymlp.tools.get_KPATH.generate_kpath"><code class="docutils literal notranslate"><span class="pre">generate_kpath()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.tools.html#module-phymlp.tools.split_set">phymlp.tools.split_set module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.tools.html#phymlp.tools.split_set.split_extxyz_structures"><code class="docutils literal notranslate"><span class="pre">split_extxyz_structures()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.tools.html#module-phymlp.tools">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../phymlp.utils.html">phymlp.utils package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.utils.html#module-phymlp.utils.core">phymlp.utils.core module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.utils.html#phymlp.utils.core.PUBLIC"><code class="docutils literal notranslate"><span class="pre">PUBLIC</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.utils.html#phymlp.utils.core.RUN"><code class="docutils literal notranslate"><span class="pre">RUN</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.utils.html#module-phymlp.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">PhyMLP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">模块代码</a></li>
+      <li class="breadcrumb-item active">phymlp.auto_generate_set.utils</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>phymlp.auto_generate_set.utils 源代码</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">工具函数</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">combinations</span>
+
+<div class="viewcode-block" id="mkdir_output_load">
+<a class="viewcode-back" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.mkdir_output_load">[文档]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">mkdir_output_load</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;创建输出目录，如果已存在则清空&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="chemsys_comb">
+<a class="viewcode-back" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.chemsys_comb">[文档]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">chemsys_comb</span><span class="p">(</span><span class="n">elements</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;生成所有可能的元素组合&quot;&quot;&quot;</span>
+    <span class="n">all_combinations</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">elements</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">combo</span> <span class="ow">in</span> <span class="n">combinations</span><span class="p">(</span><span class="n">elements</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+            <span class="n">all_combinations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">combo</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">all_combinations</span></div>
+
+
+<div class="viewcode-block" id="get_formula_from_filename">
+<a class="viewcode-back" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.get_formula_from_filename">[文档]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_formula_from_filename</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;从文件名中提取化学式&quot;&quot;&quot;</span>
+    <span class="n">parts</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+    <span class="n">formula_parts</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">part</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;mp&#39;</span><span class="p">):</span>
+            <span class="k">break</span>
+        <span class="n">formula_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">part</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s1">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">formula_parts</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="safe_copy">
+<a class="viewcode-back" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.safe_copy">[文档]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">safe_copy</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;安全复制文件&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;复制文件失败: </span><span class="si">{</span><span class="n">src</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">dst</span><span class="si">}</span><span class="s2">, 错误: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="check_potcar_availability">
+<a class="viewcode-back" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.check_potcar_availability">[文档]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">check_potcar_availability</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;检查POTCAR配置是否可用&quot;&quot;&quot;</span>
+    <span class="n">potcar_config</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;vasp&#39;</span><span class="p">][</span><span class="s1">&#39;potcar&#39;</span><span class="p">]</span>
+    <span class="n">method</span> <span class="o">=</span> <span class="n">potcar_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;method&#39;</span><span class="p">,</span> <span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;auto&#39;</span><span class="p">:</span>
+        <span class="n">potcar_base_dir</span> <span class="o">=</span> <span class="n">potcar_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;potcar_base_dir&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">potcar_base_dir</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">potcar_base_dir</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;警告: POTCAR基础目录不存在: </span><span class="si">{</span><span class="n">potcar_base_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;pymatgen&#39;</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">pymatgen.io.vasp</span><span class="w"> </span><span class="kn">import</span> <span class="n">Potcar</span>
+            <span class="c1"># 简单测试pymatgen是否能工作</span>
+            <span class="n">test_potcar</span> <span class="o">=</span> <span class="n">Potcar</span><span class="p">([</span><span class="s1">&#39;H&#39;</span><span class="p">])</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;警告: pymatgen POTCAR生成不可用: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;manual&#39;</span><span class="p">:</span>
+        <span class="n">potcar_dir</span> <span class="o">=</span> <span class="n">potcar_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;potcar_dir&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">potcar_dir</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">potcar_dir</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;警告: 手动模式POTCAR目录不存在: </span><span class="si">{</span><span class="n">potcar_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;警告: 未知的POTCAR生成方法: </span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="safe_path_join">
+<a class="viewcode-back" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.safe_path_join">[文档]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">safe_path_join</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;安全的路径连接，处理混合的路径分隔符&quot;&quot;&quot;</span>
+    <span class="c1"># 将所有参数转换为字符串，并替换混合的分隔符</span>
+    <span class="n">clean_args</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">arg</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="c1"># 将混合的分隔符统一为系统分隔符</span>
+        <span class="n">clean_arg</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;//&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">)</span>
+        <span class="n">clean_args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">clean_arg</span><span class="p">)</span>
+
+    <span class="c1"># 使用os.path.join连接路径</span>
+    <span class="n">joined_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="o">*</span><span class="n">clean_args</span><span class="p">)</span>
+
+    <span class="c1"># 再次清理路径</span>
+    <span class="n">cleaned_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">joined_path</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cleaned_path</span></div>
+
+
+<div class="viewcode-block" id="check_file_exists">
+<a class="viewcode-back" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.check_file_exists">[文档]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">check_file_exists</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;检查文件是否存在，提供详细的错误信息&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;错误: 文件不存在: </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  当前工作目录: </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  文件绝对路径: </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># 检查父目录是否存在</span>
+        <span class="n">parent_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">parent_dir</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  父目录不存在: </span><span class="si">{</span><span class="n">parent_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  父目录存在，但文件不存在&quot;</span><span class="p">)</span>
+            <span class="c1"># 列出父目录中的文件</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">files_in_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">parent_dir</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  父目录中的文件: </span><span class="si">{</span><span class="n">files_in_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  无法列出父目录内容: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 NSH。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

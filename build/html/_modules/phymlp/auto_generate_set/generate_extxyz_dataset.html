@@ -1,0 +1,1367 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>phymlp.auto_generate_set.generate_extxyz_dataset &mdash; PhyMLP 1.0.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=34088549"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/translations.js?v=beaddf03"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            PhyMLP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">目录：</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">快速开始</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#id2">安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#id3">基础使用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#id4">核心功能模块</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id5">训练与验证</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id6">数据格式转换</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id7">工具函数</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#id8">自动训练集生成工作流</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#materials-project">1. 从 Materials Project 获取结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id9">2. 生成形变结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id10">3. 生成微扰结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#vasp">4. 设置 VASP 计算</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#potcar">5. 测试 POTCAR 生成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id11">6. 提交 VASP 计算</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id12">7. 处理形变结果</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#birch-murnaghan">8. Birch-Murnaghan 拟合</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id13">9. 生成最终数据集</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#id14">配置文件详解</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#inputfile-txt">训练配置文件 Inputfile.txt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#input-yaml">自动化训练集配置文件 input.yaml</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#id15">典型工作流程</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#ni-cr">快速开始示例：Ni-Cr 合金训练集生成</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#id16">进阶用法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id17">自定义训练参数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id18">自定义VASP计算</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id19">批量处理多个体系</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#id20">故障排除</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id21">常见问题</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id22">获取帮助</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#id23">下一步</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">phymlp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../phymlp.html">phymlp package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html">phymlp.auto_generate_set package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.cli.html">phymlp.cli package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.converters.html">phymlp.converters package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.tools.html">phymlp.tools package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.utils.html">phymlp.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.html#module-phymlp">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../phymlp.auto_generate_set.html">phymlp.auto_generate_set package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#module-phymlp.auto_generate_set.birch_murnaghan_fitting">phymlp.auto_generate_set.birch_murnaghan_fitting module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.birch_murnaghan_eqn"><code class="docutils literal notranslate"><span class="pre">birch_murnaghan_eqn()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.birch_murnaghan_residuals"><code class="docutils literal notranslate"><span class="pre">birch_murnaghan_residuals()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.create_mirror_structure"><code class="docutils literal notranslate"><span class="pre">create_mirror_structure()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.create_outcar_scale_directory"><code class="docutils literal notranslate"><span class="pre">create_outcar_scale_directory()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.ensure_numeric_parameters"><code class="docutils literal notranslate"><span class="pre">ensure_numeric_parameters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.filter_data"><code class="docutils literal notranslate"><span class="pre">filter_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.find_a_v_e_p_files"><code class="docutils literal notranslate"><span class="pre">find_a_v_e_p_files()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.find_scale_directories"><code class="docutils literal notranslate"><span class="pre">find_scale_directories()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.get_initial_guess"><code class="docutils literal notranslate"><span class="pre">get_initial_guess()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.get_reference_volume"><code class="docutils literal notranslate"><span class="pre">get_reference_volume()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.perform_fitting"><code class="docutils literal notranslate"><span class="pre">perform_fitting()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.process_all_birch_murnaghan_fitting"><code class="docutils literal notranslate"><span class="pre">process_all_birch_murnaghan_fitting()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.read_a_v_e_p_file"><code class="docutils literal notranslate"><span class="pre">read_a_v_e_p_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.save_fitting_results"><code class="docutils literal notranslate"><span class="pre">save_fitting_results()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#module-phymlp.auto_generate_set.config">phymlp.auto_generate_set.config module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.config.load_config"><code class="docutils literal notranslate"><span class="pre">load_config()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp-auto-generate-set-deform-structures-module">phymlp.auto_generate_set.deform_structures module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp-auto-generate-set-from-mp-structures-module">phymlp.auto_generate_set.from_mp_structures module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#module-phymlp.auto_generate_set.generate_extxyz_dataset">phymlp.auto_generate_set.generate_extxyz_dataset module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.calculate_pressure_from_birch_murnaghan"><code class="docutils literal notranslate"><span class="pre">calculate_pressure_from_birch_murnaghan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.extract_structures_from_outcar"><code class="docutils literal notranslate"><span class="pre">extract_structures_from_outcar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.extract_structures_from_outcar_scale"><code class="docutils literal notranslate"><span class="pre">extract_structures_from_outcar_scale()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.filter_data_by_pressure"><code class="docutils literal notranslate"><span class="pre">filter_data_by_pressure()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.find_outcar_files"><code class="docutils literal notranslate"><span class="pre">find_outcar_files()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.find_reference_structure"><code class="docutils literal notranslate"><span class="pre">find_reference_structure()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.generate_birch_murnaghan_extxyz"><code class="docutils literal notranslate"><span class="pre">generate_birch_murnaghan_extxyz()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.generate_extxyz_dataset"><code class="docutils literal notranslate"><span class="pre">generate_extxyz_dataset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.generate_extxyz_from_config"><code class="docutils literal notranslate"><span class="pre">generate_extxyz_from_config()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.generate_structures_from_fit_a_P"><code class="docutils literal notranslate"><span class="pre">generate_structures_from_fit_a_P()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.generate_structures_from_fitting_curve"><code class="docutils literal notranslate"><span class="pre">generate_structures_from_fitting_curve()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.generate_vasp_extxyz"><code class="docutils literal notranslate"><span class="pre">generate_vasp_extxyz()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.gpa_to_ev_per_ang3"><code class="docutils literal notranslate"><span class="pre">gpa_to_ev_per_ang3()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.load_birch_murnaghan_fitting_results"><code class="docutils literal notranslate"><span class="pre">load_birch_murnaghan_fitting_results()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.load_fit_a_P_data"><code class="docutils literal notranslate"><span class="pre">load_fit_a_P_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.merge_extxyz_files"><code class="docutils literal notranslate"><span class="pre">merge_extxyz_files()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp-auto-generate-set-perturb-structures-module">phymlp.auto_generate_set.perturb_structures module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#module-phymlp.auto_generate_set.potcar_generator">phymlp.auto_generate_set.potcar_generator module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.potcar_generator.concatenate_potcar_files"><code class="docutils literal notranslate"><span class="pre">concatenate_potcar_files()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.potcar_generator.find_potcar_files"><code class="docutils literal notranslate"><span class="pre">find_potcar_files()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.potcar_generator.generate_potcar"><code class="docutils literal notranslate"><span class="pre">generate_potcar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.potcar_generator.generate_potcar_auto"><code class="docutils literal notranslate"><span class="pre">generate_potcar_auto()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.potcar_generator.generate_potcar_pymatgen"><code class="docutils literal notranslate"><span class="pre">generate_potcar_pymatgen()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.potcar_generator.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.potcar_generator.read_poscar_elements"><code class="docutils literal notranslate"><span class="pre">read_poscar_elements()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#module-phymlp.auto_generate_set.process_deform_results">phymlp.auto_generate_set.process_deform_results module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.process_deform_results.classify_deform_directories"><code class="docutils literal notranslate"><span class="pre">classify_deform_directories()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.process_deform_results.create_classified_structure"><code class="docutils literal notranslate"><span class="pre">create_classified_structure()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.process_deform_results.extract_vasp_data"><code class="docutils literal notranslate"><span class="pre">extract_vasp_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.process_deform_results.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.process_deform_results.process_all_deform_results"><code class="docutils literal notranslate"><span class="pre">process_all_deform_results()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#module-phymlp.auto_generate_set.utils">phymlp.auto_generate_set.utils module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.check_file_exists"><code class="docutils literal notranslate"><span class="pre">check_file_exists()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.check_potcar_availability"><code class="docutils literal notranslate"><span class="pre">check_potcar_availability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.chemsys_comb"><code class="docutils literal notranslate"><span class="pre">chemsys_comb()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.get_formula_from_filename"><code class="docutils literal notranslate"><span class="pre">get_formula_from_filename()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.mkdir_output_load"><code class="docutils literal notranslate"><span class="pre">mkdir_output_load()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.safe_copy"><code class="docutils literal notranslate"><span class="pre">safe_copy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.safe_path_join"><code class="docutils literal notranslate"><span class="pre">safe_path_join()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp-auto-generate-set-vasp-setup-module">phymlp.auto_generate_set.vasp_setup module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp-auto-generate-set-vasp-submit-module">phymlp.auto_generate_set.vasp_submit module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#module-phymlp.auto_generate_set">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../phymlp.cli.html">phymlp.cli package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.cli.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.cli.html#module-phymlp.cli.main">phymlp.cli.main module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.cli.html#phymlp.cli.main.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.cli.html#module-phymlp.cli">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../phymlp.converters.html">phymlp.converters package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.converters.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.converters.html#module-phymlp.converters.cfg2extxyz">phymlp.converters.cfg2extxyz module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.converters.html#phymlp.converters.cfg2extxyz.parse_cfg_file"><code class="docutils literal notranslate"><span class="pre">parse_cfg_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.converters.html#phymlp.converters.cfg2extxyz.write_extxyz"><code class="docutils literal notranslate"><span class="pre">write_extxyz()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.converters.html#module-phymlp.converters.outcar_converter">phymlp.converters.outcar_converter module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.converters.html#phymlp.converters.outcar_converter.extract_structures_from_outcar"><code class="docutils literal notranslate"><span class="pre">extract_structures_from_outcar()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.converters.html#module-phymlp.converters">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../phymlp.tools.html">phymlp.tools package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.tools.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.tools.html#module-phymlp.tools.get_KPATH">phymlp.tools.get_KPATH module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.tools.html#phymlp.tools.get_KPATH.generate_kpath"><code class="docutils literal notranslate"><span class="pre">generate_kpath()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.tools.html#module-phymlp.tools.split_set">phymlp.tools.split_set module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.tools.html#phymlp.tools.split_set.split_extxyz_structures"><code class="docutils literal notranslate"><span class="pre">split_extxyz_structures()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.tools.html#module-phymlp.tools">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../phymlp.utils.html">phymlp.utils package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.utils.html#module-phymlp.utils.core">phymlp.utils.core module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.utils.html#phymlp.utils.core.PUBLIC"><code class="docutils literal notranslate"><span class="pre">PUBLIC</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.utils.html#phymlp.utils.core.RUN"><code class="docutils literal notranslate"><span class="pre">RUN</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.utils.html#module-phymlp.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">PhyMLP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">模块代码</a></li>
+      <li class="breadcrumb-item active">phymlp.auto_generate_set.generate_extxyz_dataset</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>phymlp.auto_generate_set.generate_extxyz_dataset 源代码</h1><div class="highlight"><pre>
+<span></span><span class="c1"># [file name]: generate_extxyz_dataset.py</span>
+<span class="c1"># [file content begin]</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Extxyz数据集生成模块</span>
+<span class="sd">从VASP计算结果和Birch-Murnaghan拟合结果生成extxyz格式数据集</span>
+<span class="sd">新增功能：根据fit_a_P.data数据生成extxyz结构</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">argparse</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ase.io</span><span class="w"> </span><span class="kn">import</span> <span class="n">read</span><span class="p">,</span> <span class="n">write</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ase</span><span class="w"> </span><span class="kn">import</span> <span class="n">Atoms</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">glob</span>
+
+
+<div class="viewcode-block" id="find_outcar_files">
+<a class="viewcode-back" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.find_outcar_files">[文档]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">find_outcar_files</span><span class="p">(</span><span class="n">search_dir</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    在目录树中查找所有的OUTCAR文件</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        search_dir: 搜索目录</span>
+<span class="sd">        recursive: 是否递归搜索</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: OUTCAR文件路径列表</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">outcar_files</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">if</span> <span class="n">recursive</span><span class="p">:</span>
+        <span class="c1"># 递归搜索所有子目录</span>
+        <span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">search_dir</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">file</span> <span class="o">==</span> <span class="s1">&#39;OUTCAR&#39;</span><span class="p">:</span>
+                    <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+                    <span class="n">outcar_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># 只在根目录搜索</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">search_dir</span><span class="p">):</span>
+            <span class="n">item_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">search_dir</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">item_path</span><span class="p">):</span>
+                <span class="n">outcar_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">item_path</span><span class="p">,</span> <span class="s1">&#39;OUTCAR&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">outcar_file</span><span class="p">):</span>
+                    <span class="n">outcar_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">outcar_file</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">outcar_files</span></div>
+
+
+
+<div class="viewcode-block" id="extract_structures_from_outcar">
+<a class="viewcode-back" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.extract_structures_from_outcar">[文档]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">extract_structures_from_outcar</span><span class="p">(</span><span class="n">outcar_file</span><span class="p">,</span> <span class="n">output_file</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    从OUTCAR文件中提取结构并保存为extxyz格式</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        outcar_file: OUTCAR文件路径</span>
+<span class="sd">        output_file: 输出文件路径</span>
+<span class="sd">        step: 提取步长</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        int: 提取的结构总数</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># 读取 OUTCAR 文件中的所有帧</span>
+        <span class="n">atoms_list</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">outcar_file</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+
+        <span class="n">extracted_count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># 将指定步长的帧写入 extxyz 文件</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">atoms</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">atoms_list</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="n">step</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="c1"># 添加来源信息</span>
+                <span class="n">atoms</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;source&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;vasp_calculation&#39;</span>
+                <span class="n">atoms</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;outcar_file&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">outcar_file</span><span class="p">)</span>
+                <span class="n">write</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="n">atoms</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;extxyz&#39;</span><span class="p">,</span> <span class="n">append</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">extracted_count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    Extracted </span><span class="si">{</span><span class="n">extracted_count</span><span class="si">}</span><span class="s2"> structures from </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">outcar_file</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">extracted_count</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    Error extracting from </span><span class="si">{</span><span class="n">outcar_file</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">0</span></div>
+
+
+
+<div class="viewcode-block" id="generate_vasp_extxyz">
+<a class="viewcode-back" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.generate_vasp_extxyz">[文档]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_vasp_extxyz</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    从VASP计算结果生成extxyz文件</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        config: 配置字典</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        int: 提取的结构总数</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">vasp_config</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;vasp&#39;</span><span class="p">,</span> <span class="p">{})</span>
+    <span class="n">search_dir</span> <span class="o">=</span> <span class="n">vasp_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;outcar_search_dir&#39;</span><span class="p">,</span> <span class="s1">&#39;./materials_project/vasp_calculations&#39;</span><span class="p">)</span>
+    <span class="n">recursive</span> <span class="o">=</span> <span class="n">vasp_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;search_recursive&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="n">step</span> <span class="o">=</span> <span class="n">vasp_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;extraction_step&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+    <span class="n">paths</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;paths&#39;</span><span class="p">]</span>
+    <span class="n">extxyz_dir</span> <span class="o">=</span> <span class="n">paths</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;extxyz_set_dir&#39;</span><span class="p">,</span> <span class="s1">&#39;Extxyz_set&#39;</span><span class="p">)</span>
+    <span class="n">vasp_output_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">extxyz_dir</span><span class="p">,</span> <span class="s1">&#39;vasp&#39;</span><span class="p">)</span>
+    <span class="n">output_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">vasp_output_dir</span><span class="p">,</span> <span class="s1">&#39;vasp.extxyz&#39;</span><span class="p">)</span>
+
+    <span class="c1"># 创建输出目录</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">vasp_output_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">search_dir</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Warning: VASP search directory &#39;</span><span class="si">{</span><span class="n">search_dir</span><span class="si">}</span><span class="s2">&#39; not found!&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">0</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Step 1: Searching for OUTCAR files...&quot;</span><span class="p">)</span>
+    <span class="n">outcar_files</span> <span class="o">=</span> <span class="n">find_outcar_files</span><span class="p">(</span><span class="n">search_dir</span><span class="p">,</span> <span class="n">recursive</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">outcar_files</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No OUTCAR files found in &#39;</span><span class="si">{</span><span class="n">search_dir</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">0</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">outcar_files</span><span class="p">)</span><span class="si">}</span><span class="s2"> OUTCAR files&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 如果输出文件已存在，删除它</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">output_file</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">output_file</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Step 2: Extracting structures from OUTCAR files...&quot;</span><span class="p">)</span>
+    <span class="n">total_structures</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">outcar_file</span> <span class="ow">in</span> <span class="n">outcar_files</span><span class="p">:</span>
+        <span class="n">structures_count</span> <span class="o">=</span> <span class="n">extract_structures_from_outcar</span><span class="p">(</span><span class="n">outcar_file</span><span class="p">,</span> <span class="n">output_file</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span>
+        <span class="n">total_structures</span> <span class="o">+=</span> <span class="n">structures_count</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total VASP structures extracted: </span><span class="si">{</span><span class="n">total_structures</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;VASP extxyz file saved to: </span><span class="si">{</span><span class="n">output_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">total_structures</span></div>
+
+
+
+<div class="viewcode-block" id="load_birch_murnaghan_fitting_results">
+<a class="viewcode-back" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.load_birch_murnaghan_fitting_results">[文档]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_birch_murnaghan_fitting_results</span><span class="p">(</span><span class="n">bm_dir</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    加载Birch-Murnaghan拟合结果</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        bm_dir: Birch-Murnaghan拟合目录</span>
+<span class="sd">        recursive: 是否递归搜索子目录</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: 拟合结果信息</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fitting_results</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">if</span> <span class="n">recursive</span><span class="p">:</span>
+        <span class="c1"># 递归搜索所有子目录</span>
+        <span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">bm_dir</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">dir_name</span> <span class="ow">in</span> <span class="n">dirs</span><span class="p">:</span>
+                <span class="n">dir_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">dir_name</span><span class="p">)</span>
+                <span class="c1"># 查找拟合参数文件</span>
+                <span class="n">param_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_path</span><span class="p">,</span> <span class="s1">&#39;fitting_parameters.txt&#39;</span><span class="p">)</span>
+                <span class="n">data_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_path</span><span class="p">,</span> <span class="s1">&#39;a_V_E_P.txt&#39;</span><span class="p">)</span>
+                <span class="n">fitted_data_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_path</span><span class="p">,</span> <span class="s1">&#39;fitted_data.csv&#39;</span><span class="p">)</span>
+                <span class="n">outcar_scale_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_path</span><span class="p">,</span> <span class="s1">&#39;OUTCAR_scale&#39;</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">param_file</span><span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">data_file</span><span class="p">):</span>
+                    <span class="c1"># 读取拟合参数</span>
+                    <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
+                    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">param_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="s1">&#39;Equilibrium Energy (E0):&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                                <span class="n">params</span><span class="p">[</span><span class="s1">&#39;E0&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+                            <span class="k">elif</span> <span class="s1">&#39;Equilibrium Volume (V0):&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                                <span class="n">params</span><span class="p">[</span><span class="s1">&#39;V0&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+                            <span class="k">elif</span> <span class="s1">&#39;Bulk Modulus (B0):&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                                <span class="n">params</span><span class="p">[</span><span class="s1">&#39;B0&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+                            <span class="k">elif</span> <span class="s1">&#39;Pressure Derivative (B1):&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                                <span class="n">params</span><span class="p">[</span><span class="s1">&#39;B1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+
+                    <span class="c1"># 读取原始数据 - 使用原始字符串修复警告</span>
+                    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data_file</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;\s+&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+                    <span class="c1"># 读取拟合数据</span>
+                    <span class="n">fitted_df</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">fitted_data_file</span><span class="p">):</span>
+                        <span class="n">fitted_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fitted_data_file</span><span class="p">)</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    Loaded </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">fitted_df</span><span class="p">)</span><span class="si">}</span><span class="s2"> fitted data points from </span><span class="si">{</span><span class="n">fitted_data_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+                    <span class="c1"># 检查OUTCAR_scale目录</span>
+                    <span class="n">has_outcar_scale</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">outcar_scale_dir</span><span class="p">)</span>
+
+                    <span class="c1"># 使用目录名作为结构名称</span>
+                    <span class="n">structure_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">dir_path</span><span class="p">)</span>
+                    <span class="n">fitting_results</span><span class="p">[</span><span class="n">structure_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="s1">&#39;parameters&#39;</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span>
+                        <span class="s1">&#39;original_data&#39;</span><span class="p">:</span> <span class="n">df</span><span class="p">,</span>
+                        <span class="s1">&#39;fitted_data&#39;</span><span class="p">:</span> <span class="n">fitted_df</span><span class="p">,</span>
+                        <span class="s1">&#39;source_dir&#39;</span><span class="p">:</span> <span class="n">dir_path</span><span class="p">,</span>
+                        <span class="s1">&#39;has_outcar_scale&#39;</span><span class="p">:</span> <span class="n">has_outcar_scale</span><span class="p">,</span>
+                        <span class="s1">&#39;outcar_scale_dir&#39;</span><span class="p">:</span> <span class="n">outcar_scale_dir</span> <span class="k">if</span> <span class="n">has_outcar_scale</span> <span class="k">else</span> <span class="kc">None</span>
+                    <span class="p">}</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># 只在根目录搜索</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">bm_dir</span><span class="p">):</span>
+            <span class="n">item_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">bm_dir</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">item_path</span><span class="p">):</span>
+                <span class="c1"># 查找拟合参数文件</span>
+                <span class="n">param_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">item_path</span><span class="p">,</span> <span class="s1">&#39;fitting_parameters.txt&#39;</span><span class="p">)</span>
+                <span class="n">data_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">item_path</span><span class="p">,</span> <span class="s1">&#39;a_V_E_P.txt&#39;</span><span class="p">)</span>
+                <span class="n">fitted_data_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">item_path</span><span class="p">,</span> <span class="s1">&#39;fitted_data.csv&#39;</span><span class="p">)</span>
+                <span class="n">outcar_scale_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">item_path</span><span class="p">,</span> <span class="s1">&#39;OUTCAR_scale&#39;</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">param_file</span><span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">data_file</span><span class="p">):</span>
+                    <span class="c1"># 读取拟合参数</span>
+                    <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
+                    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">param_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="s1">&#39;Equilibrium Energy (E0):&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                                <span class="n">params</span><span class="p">[</span><span class="s1">&#39;E0&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+                            <span class="k">elif</span> <span class="s1">&#39;Equilibrium Volume (V0):&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                                <span class="n">params</span><span class="p">[</span><span class="s1">&#39;V0&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+                            <span class="k">elif</span> <span class="s1">&#39;Bulk Modulus (B0):&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                                <span class="n">params</span><span class="p">[</span><span class="s1">&#39;B0&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+                            <span class="k">elif</span> <span class="s1">&#39;Pressure Derivative (B1):&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                                <span class="n">params</span><span class="p">[</span><span class="s1">&#39;B1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+
+                    <span class="c1"># 读取原始数据 - 使用原始字符串修复警告</span>
+                    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data_file</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;\s+&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+                    <span class="c1"># 读取拟合数据</span>
+                    <span class="n">fitted_df</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">fitted_data_file</span><span class="p">):</span>
+                        <span class="n">fitted_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fitted_data_file</span><span class="p">)</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    Loaded </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">fitted_df</span><span class="p">)</span><span class="si">}</span><span class="s2"> fitted data points from </span><span class="si">{</span><span class="n">fitted_data_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+                    <span class="c1"># 检查OUTCAR_scale目录</span>
+                    <span class="n">has_outcar_scale</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">outcar_scale_dir</span><span class="p">)</span>
+
+                    <span class="n">fitting_results</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="s1">&#39;parameters&#39;</span><span class="p">:</span> <span class="n">params</span><span class="p">,</span>
+                        <span class="s1">&#39;original_data&#39;</span><span class="p">:</span> <span class="n">df</span><span class="p">,</span>
+                        <span class="s1">&#39;fitted_data&#39;</span><span class="p">:</span> <span class="n">fitted_df</span><span class="p">,</span>
+                        <span class="s1">&#39;source_dir&#39;</span><span class="p">:</span> <span class="n">item_path</span><span class="p">,</span>
+                        <span class="s1">&#39;has_outcar_scale&#39;</span><span class="p">:</span> <span class="n">has_outcar_scale</span><span class="p">,</span>
+                        <span class="s1">&#39;outcar_scale_dir&#39;</span><span class="p">:</span> <span class="n">outcar_scale_dir</span> <span class="k">if</span> <span class="n">has_outcar_scale</span> <span class="k">else</span> <span class="kc">None</span>
+                    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">fitting_results</span></div>
+
+
+
+<div class="viewcode-block" id="extract_structures_from_outcar_scale">
+<a class="viewcode-back" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.extract_structures_from_outcar_scale">[文档]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">extract_structures_from_outcar_scale</span><span class="p">(</span><span class="n">outcar_scale_dir</span><span class="p">,</span> <span class="n">output_file</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    从OUTCAR_scale目录中的OUTCAR文件提取结构</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        outcar_scale_dir: OUTCAR_scale目录路径</span>
+<span class="sd">        output_file: 输出文件路径</span>
+<span class="sd">        step: 提取步长</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        int: 提取的结构总数</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">total_structures</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># 查找所有OUTCAR_scale_*文件</span>
+    <span class="n">outcar_files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">outcar_scale_dir</span><span class="p">,</span> <span class="s1">&#39;OUTCAR_scale_*&#39;</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">outcar_file</span> <span class="ow">in</span> <span class="n">outcar_files</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># 从文件名提取缩放系数</span>
+            <span class="n">scale_factor</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">outcar_file</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;OUTCAR_scale_&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+            <span class="c1"># 读取 OUTCAR 文件中的所有帧</span>
+            <span class="n">atoms_list</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">outcar_file</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+
+            <span class="n">extracted_count</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="c1"># 将指定步长的帧写入 extxyz 文件</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">atoms</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">atoms_list</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="n">step</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="c1"># 添加缩放系数和来源信息</span>
+                    <span class="n">atoms</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;scale_factor&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">scale_factor</span><span class="p">)</span>
+                    <span class="n">atoms</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;source&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;outcar_scale&#39;</span>
+                    <span class="n">atoms</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;outcar_file&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">outcar_file</span><span class="p">)</span>
+                    <span class="n">write</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="n">atoms</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;extxyz&#39;</span><span class="p">,</span> <span class="n">append</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                    <span class="n">extracted_count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    Extracted </span><span class="si">{</span><span class="n">extracted_count</span><span class="si">}</span><span class="s2"> structures from </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">outcar_file</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">total_structures</span> <span class="o">+=</span> <span class="n">extracted_count</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    Error extracting from </span><span class="si">{</span><span class="n">outcar_file</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">total_structures</span></div>
+
+
+
+<div class="viewcode-block" id="find_reference_structure">
+<a class="viewcode-back" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.find_reference_structure">[文档]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">find_reference_structure</span><span class="p">(</span><span class="n">outcar_scale_dir</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    在OUTCAR_scale目录中查找参考结构</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        outcar_scale_dir: OUTCAR_scale目录路径</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Atoms: 参考原子结构</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># 查找任意一个OUTCAR文件作为参考</span>
+    <span class="n">outcar_files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">outcar_scale_dir</span><span class="p">,</span> <span class="s1">&#39;OUTCAR_scale_*&#39;</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">outcar_files</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># 使用第一个OUTCAR文件的第一帧作为参考结构</span>
+            <span class="n">atoms_list</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">outcar_files</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">atoms_list</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">atoms_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    Error reading reference structure from </span><span class="si">{</span><span class="n">outcar_files</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 如果找不到OUTCAR，尝试查找POSCAR文件</span>
+    <span class="n">poscar_files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">outcar_scale_dir</span><span class="p">,</span> <span class="s1">&#39;../POSCAR&#39;</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">poscar_files</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">read</span><span class="p">(</span><span class="n">poscar_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    Error reading POSCAR file: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No reference structure found in </span><span class="si">{</span><span class="n">outcar_scale_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="filter_data_by_pressure">
+<a class="viewcode-back" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.filter_data_by_pressure">[文档]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">filter_data_by_pressure</span><span class="p">(</span><span class="n">data_file</span><span class="p">,</span> <span class="n">pressure_range</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    根据压力范围筛选数据</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data_file: 数据文件路径</span>
+<span class="sd">        pressure_range: 压力范围 [min, max]</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        DataFrame: 筛选后的数据</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># 读取原始数据 - 使用原始字符串修复警告</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data_file</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;\s+&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># 筛选压力范围内的数据</span>
+        <span class="k">if</span> <span class="n">pressure_range</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">pressure_range</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">min_pressure</span><span class="p">,</span> <span class="n">max_pressure</span> <span class="o">=</span> <span class="n">pressure_range</span>
+            <span class="n">filtered_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;P&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">min_pressure</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;P&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">max_pressure</span><span class="p">)]</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    Pressure filtering: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">filtered_df</span><span class="p">)</span><span class="si">}</span><span class="s2"> points &quot;</span>
+                  <span class="sa">f</span><span class="s2">&quot;(range: </span><span class="si">{</span><span class="n">min_pressure</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">max_pressure</span><span class="si">}</span><span class="s2"> GPa)&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">filtered_df</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">df</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    Error filtering data by pressure: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="c1"># 如果出错，返回原始数据 - 使用原始字符串修复警告</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">data_file</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;\s+&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="calculate_pressure_from_birch_murnaghan">
+<a class="viewcode-back" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.calculate_pressure_from_birch_murnaghan">[文档]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">calculate_pressure_from_birch_murnaghan</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">volume</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    根据Birch-Murnaghan方程计算压力</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        params: [E0, V0, B0, B1] 拟合参数</span>
+<span class="sd">        volume: 体积</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        pressure: 压力 (GPa)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">E0</span><span class="p">,</span> <span class="n">V0</span><span class="p">,</span> <span class="n">B0</span><span class="p">,</span> <span class="n">B1</span> <span class="o">=</span> <span class="n">params</span>
+
+    <span class="c1"># Birch-Murnaghan物态方程的压力表达式</span>
+    <span class="n">eta</span> <span class="o">=</span> <span class="p">(</span><span class="n">V0</span> <span class="o">/</span> <span class="n">volume</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">pressure</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">B0</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">eta</span> <span class="o">**</span> <span class="mi">7</span> <span class="o">-</span> <span class="n">eta</span> <span class="o">**</span> <span class="mi">5</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="mi">3</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">B1</span> <span class="o">-</span> <span class="mi">4</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">eta</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+
+    <span class="c1"># 转换为GPa</span>
+    <span class="k">return</span> <span class="n">pressure</span> <span class="o">*</span> <span class="mf">160.21766208</span></div>
+
+
+
+<div class="viewcode-block" id="generate_structures_from_fitting_curve">
+<a class="viewcode-back" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.generate_structures_from_fitting_curve">[文档]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_structures_from_fitting_curve</span><span class="p">(</span><span class="n">reference_atoms</span><span class="p">,</span> <span class="n">fitted_data</span><span class="p">,</span> <span class="n">output_file</span><span class="p">,</span> <span class="n">structure_name</span><span class="p">,</span>
+                                           <span class="n">n_structures</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">pressure_range</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">original_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                           <span class="n">scaling_factors_range</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bm_params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    根据拟合曲线数据生成扩展结构</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        reference_atoms: 参考原子结构</span>
+<span class="sd">        fitted_data: 拟合数据DataFrame</span>
+<span class="sd">        output_file: 输出文件路径</span>
+<span class="sd">        structure_name: 结构名称</span>
+<span class="sd">        n_structures: 生成的结构数量</span>
+<span class="sd">        pressure_range: 压力范围筛选 [min, max]</span>
+<span class="sd">        original_data: 原始数据用于压力筛选</span>
+<span class="sd">        scaling_factors_range: 缩放因子范围 [min, max]</span>
+<span class="sd">        bm_params: Birch-Murnaghan拟合参数 [E0, V0, B0, B1]</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        int: 生成的结构总数</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">fitted_data</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">fitted_data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    No fitted data available for structure generation&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">0</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    Starting structure generation with </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">fitted_data</span><span class="p">)</span><span class="si">}</span><span class="s2"> fitted data points&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 筛选数据</span>
+    <span class="n">filtered_data</span> <span class="o">=</span> <span class="n">fitted_data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">initial_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">filtered_data</span><span class="p">)</span>
+
+    <span class="c1"># 1. 首先应用缩放因子范围筛选</span>
+    <span class="k">if</span> <span class="n">scaling_factors_range</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">scaling_factors_range</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">min_scale</span><span class="p">,</span> <span class="n">max_scale</span> <span class="o">=</span> <span class="n">scaling_factors_range</span>
+        <span class="k">if</span> <span class="s1">&#39;scale_factor&#39;</span> <span class="ow">in</span> <span class="n">filtered_data</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="c1"># 如果fitted_data中已经有scale_factor列，直接使用</span>
+            <span class="n">scale_mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">filtered_data</span><span class="p">[</span><span class="s1">&#39;scale_factor&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">min_scale</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">filtered_data</span><span class="p">[</span><span class="s1">&#39;scale_factor&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">max_scale</span><span class="p">)</span>
+            <span class="n">filtered_data</span> <span class="o">=</span> <span class="n">filtered_data</span><span class="p">[</span><span class="n">scale_mask</span><span class="p">]</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;    Scaling factor filter [</span><span class="si">{</span><span class="n">min_scale</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">max_scale</span><span class="si">}</span><span class="s2">]: </span><span class="si">{</span><span class="n">initial_count</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">filtered_data</span><span class="p">)</span><span class="si">}</span><span class="s2"> points&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    Warning: No scale_factor column in fitted_data.csv&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">0</span>
+
+    <span class="c1"># 2. 然后应用压力范围筛选</span>
+    <span class="k">if</span> <span class="n">pressure_range</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">pressure_range</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">min_pressure</span><span class="p">,</span> <span class="n">max_pressure</span> <span class="o">=</span> <span class="n">pressure_range</span>
+
+        <span class="k">if</span> <span class="n">bm_params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># 使用Birch-Murnaghan方程计算每个体积对应的压力</span>
+            <span class="n">filtered_data</span><span class="p">[</span><span class="s1">&#39;pressure_calculated&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">filtered_data</span><span class="p">[</span><span class="s1">&#39;Volume_fit&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+                <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="n">calculate_pressure_from_birch_murnaghan</span><span class="p">(</span><span class="n">bm_params</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">pressure_mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">filtered_data</span><span class="p">[</span><span class="s1">&#39;pressure_calculated&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">min_pressure</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span>
+                    <span class="n">filtered_data</span><span class="p">[</span><span class="s1">&#39;pressure_calculated&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">max_pressure</span><span class="p">)</span>
+            <span class="n">filtered_data</span> <span class="o">=</span> <span class="n">filtered_data</span><span class="p">[</span><span class="n">pressure_mask</span><span class="p">]</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;    Pressure filter [</span><span class="si">{</span><span class="n">min_pressure</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">max_pressure</span><span class="si">}</span><span class="s2">] GPa: </span><span class="si">{</span><span class="n">initial_count</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">filtered_data</span><span class="p">)</span><span class="si">}</span><span class="s2"> points&quot;</span><span class="p">)</span>
+
+            <span class="c1"># 输出压力范围信息</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">filtered_data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">actual_pressure_min</span> <span class="o">=</span> <span class="n">filtered_data</span><span class="p">[</span><span class="s1">&#39;pressure_calculated&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+                <span class="n">actual_pressure_max</span> <span class="o">=</span> <span class="n">filtered_data</span><span class="p">[</span><span class="s1">&#39;pressure_calculated&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+                <span class="nb">print</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;    Actual pressure range in filtered data: [</span><span class="si">{</span><span class="n">actual_pressure_min</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">actual_pressure_max</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">] GPa&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    Warning: No BM parameters available for pressure calculation, skipping pressure filter&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 检查筛选后是否有足够的数据</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">filtered_data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    No data points satisfy the filtering conditions&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">0</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    After filtering: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">filtered_data</span><span class="p">)</span><span class="si">}</span><span class="s2"> data points available&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 3. 从筛选后的数据中均匀采样指定数量的结构</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">filtered_data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">n_structures</span><span class="p">:</span>
+        <span class="c1"># 均匀采样</span>
+        <span class="n">step</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">filtered_data</span><span class="p">)</span> <span class="o">//</span> <span class="n">n_structures</span><span class="p">)</span>
+        <span class="n">selected_indices</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">filtered_data</span><span class="p">),</span> <span class="n">step</span><span class="p">)</span>
+        <span class="n">selected_data</span> <span class="o">=</span> <span class="n">filtered_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">selected_indices</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n_structures</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    Sampled </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">selected_data</span><span class="p">)</span><span class="si">}</span><span class="s2"> structures from </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">filtered_data</span><span class="p">)</span><span class="si">}</span><span class="s2"> filtered points&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">selected_data</span> <span class="o">=</span> <span class="n">filtered_data</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    Using all </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">selected_data</span><span class="p">)</span><span class="si">}</span><span class="s2"> filtered structures (requested </span><span class="si">{</span><span class="n">n_structures</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 4. 生成结构</span>
+    <span class="n">generated_count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">reference_volume</span> <span class="o">=</span> <span class="n">reference_atoms</span><span class="o">.</span><span class="n">get_volume</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">selected_data</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">volume_fit</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Volume_fit&#39;</span><span class="p">]</span>
+            <span class="n">energy_fit</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Energy_fit&#39;</span><span class="p">]</span>
+
+            <span class="c1"># 获取缩放因子</span>
+            <span class="k">if</span> <span class="s1">&#39;scale_factor&#39;</span> <span class="ow">in</span> <span class="n">row</span><span class="p">:</span>
+                <span class="n">scale_factor</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;scale_factor&#39;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># 如果没有scale_factor列，计算缩放因子</span>
+                <span class="n">scale_factor</span> <span class="o">=</span> <span class="p">(</span><span class="n">volume_fit</span> <span class="o">/</span> <span class="n">reference_volume</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span>
+
+            <span class="c1"># 创建新结构</span>
+            <span class="n">new_atoms</span> <span class="o">=</span> <span class="n">reference_atoms</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+            <span class="c1"># 缩放晶格和原子坐标</span>
+            <span class="n">new_atoms</span><span class="o">.</span><span class="n">set_cell</span><span class="p">(</span><span class="n">new_atoms</span><span class="o">.</span><span class="n">get_cell</span><span class="p">()</span> <span class="o">*</span> <span class="n">scale_factor</span><span class="p">,</span> <span class="n">scale_atoms</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="c1"># 设置能量和体积信息</span>
+            <span class="n">new_atoms</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;energy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">energy_fit</span>
+            <span class="n">new_atoms</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;volume&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">volume_fit</span>
+            <span class="n">new_atoms</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;scale_factor&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">scale_factor</span>
+            <span class="n">new_atoms</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;source&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;fitting_extension&#39;</span>
+            <span class="n">new_atoms</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;structure_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">structure_name</span>
+
+            <span class="c1"># 添加压力信息（如果计算了）</span>
+            <span class="k">if</span> <span class="s1">&#39;pressure_calculated&#39;</span> <span class="ow">in</span> <span class="n">row</span><span class="p">:</span>
+                <span class="n">new_atoms</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;pressure&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;pressure_calculated&#39;</span><span class="p">]</span>
+
+            <span class="c1"># 确保不包含应力和力信息</span>
+            <span class="k">if</span> <span class="s1">&#39;forces&#39;</span> <span class="ow">in</span> <span class="n">new_atoms</span><span class="o">.</span><span class="n">arrays</span><span class="p">:</span>
+                <span class="k">del</span> <span class="n">new_atoms</span><span class="o">.</span><span class="n">arrays</span><span class="p">[</span><span class="s1">&#39;forces&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s1">&#39;stress&#39;</span> <span class="ow">in</span> <span class="n">new_atoms</span><span class="o">.</span><span class="n">info</span><span class="p">:</span>
+                <span class="k">del</span> <span class="n">new_atoms</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;stress&#39;</span><span class="p">]</span>
+
+            <span class="c1"># 使用ASE的write函数，设置正确的Properties格式</span>
+            <span class="c1"># 对于没有力的结构，使用forces:R:0</span>
+            <span class="c1"># 对于没有力的结构，添加空的力数组</span>
+            <span class="c1"># 这样ASE会自动写入forces:R:0</span>
+            <span class="k">if</span> <span class="s1">&#39;forces&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">new_atoms</span><span class="o">.</span><span class="n">arrays</span><span class="p">:</span>
+                <span class="c1"># 创建一个空的力数组</span>
+                <span class="n">empty_forces</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">new_atoms</span><span class="p">),</span> <span class="mi">3</span><span class="p">))</span>
+                <span class="n">new_atoms</span><span class="o">.</span><span class="n">arrays</span><span class="p">[</span><span class="s1">&#39;forces&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">empty_forces</span>
+
+            <span class="n">write</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="n">new_atoms</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;extxyz&#39;</span><span class="p">,</span> <span class="n">append</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">generated_count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    Error generating structure from fitting data: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 输出统计信息</span>
+    <span class="k">if</span> <span class="n">generated_count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">scale_min</span> <span class="o">=</span> <span class="n">selected_data</span><span class="p">[</span><span class="s1">&#39;scale_factor&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+        <span class="n">scale_max</span> <span class="o">=</span> <span class="n">selected_data</span><span class="p">[</span><span class="s1">&#39;scale_factor&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="n">volume_min</span> <span class="o">=</span> <span class="n">selected_data</span><span class="p">[</span><span class="s1">&#39;Volume_fit&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+        <span class="n">volume_max</span> <span class="o">=</span> <span class="n">selected_data</span><span class="p">[</span><span class="s1">&#39;Volume_fit&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="n">energy_min</span> <span class="o">=</span> <span class="n">selected_data</span><span class="p">[</span><span class="s1">&#39;Energy_fit&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+        <span class="n">energy_max</span> <span class="o">=</span> <span class="n">selected_data</span><span class="p">[</span><span class="s1">&#39;Energy_fit&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    Generated </span><span class="si">{</span><span class="n">generated_count</span><span class="si">}</span><span class="s2"> structures with:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;      Scale factors: [</span><span class="si">{</span><span class="n">scale_min</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">scale_max</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;      Volumes: [</span><span class="si">{</span><span class="n">volume_min</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">volume_max</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">] Å³&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;      Energies: [</span><span class="si">{</span><span class="n">energy_min</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">energy_max</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">] eV&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s1">&#39;pressure_calculated&#39;</span> <span class="ow">in</span> <span class="n">selected_data</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="n">pressure_min</span> <span class="o">=</span> <span class="n">selected_data</span><span class="p">[</span><span class="s1">&#39;pressure_calculated&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+            <span class="n">pressure_max</span> <span class="o">=</span> <span class="n">selected_data</span><span class="p">[</span><span class="s1">&#39;pressure_calculated&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;      Pressures: [</span><span class="si">{</span><span class="n">pressure_min</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">pressure_max</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">] GPa&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">generated_count</span></div>
+
+
+
+<div class="viewcode-block" id="generate_birch_murnaghan_extxyz">
+<a class="viewcode-back" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.generate_birch_murnaghan_extxyz">[文档]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_birch_murnaghan_extxyz</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    从Birch-Murnaghan拟合结果生成extxyz文件</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        config: 配置字典</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        int: 生成的结构总数</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">bm_config</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;extxyz_generation&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;birch_murnaghan&#39;</span><span class="p">,</span> <span class="p">{})</span>
+    <span class="n">fitting_results_dir</span> <span class="o">=</span> <span class="n">bm_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;fitting_results_dir&#39;</span><span class="p">,</span> <span class="s1">&#39;./Birch_Murnaghan_fit&#39;</span><span class="p">)</span>
+    <span class="n">search_recursive</span> <span class="o">=</span> <span class="n">bm_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;search_recursive&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="n">n_structures</span> <span class="o">=</span> <span class="n">bm_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;n_structures_per_fit&#39;</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+    <span class="n">include_original</span> <span class="o">=</span> <span class="n">bm_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;include_original_points&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="n">use_outcar_structures</span> <span class="o">=</span> <span class="n">bm_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;use_outcar_structures&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># 获取缩放因子范围配置</span>
+    <span class="n">scaling_factors_range</span> <span class="o">=</span> <span class="n">bm_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;scaling_factors&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">])</span>
+
+    <span class="c1"># 获取压力筛选配置</span>
+    <span class="n">pressure_filter_config</span> <span class="o">=</span> <span class="n">bm_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;pressure_filter&#39;</span><span class="p">,</span> <span class="p">{})</span>
+    <span class="n">pressure_filter_enabled</span> <span class="o">=</span> <span class="n">pressure_filter_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;enabled&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="n">pressure_range</span> <span class="o">=</span> <span class="n">pressure_filter_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;pressure_range&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="c1"># 如果压力筛选未启用，则使用拟合配置中的压力范围作为备选</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">pressure_filter_enabled</span><span class="p">:</span>
+        <span class="n">bm_fitting_config</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;birch_murnaghan_fitting&#39;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="n">data_filter</span> <span class="o">=</span> <span class="n">bm_fitting_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;data_filter&#39;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="n">pressure_range</span> <span class="o">=</span> <span class="n">data_filter</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;pressure_range&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">pressure_range</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    Using pressure range from fitting config: </span><span class="si">{</span><span class="n">pressure_range</span><span class="si">}</span><span class="s2"> GPa&quot;</span><span class="p">)</span>
+
+    <span class="n">paths</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;paths&#39;</span><span class="p">]</span>
+    <span class="n">extxyz_dir</span> <span class="o">=</span> <span class="n">paths</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;extxyz_set_dir&#39;</span><span class="p">,</span> <span class="s1">&#39;Extxyz_set&#39;</span><span class="p">)</span>
+    <span class="n">bm_output_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">extxyz_dir</span><span class="p">,</span> <span class="s1">&#39;birch_murnaghan_fitting&#39;</span><span class="p">)</span>
+    <span class="n">output_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">bm_output_dir</span><span class="p">,</span> <span class="s1">&#39;birch.extxyz&#39;</span><span class="p">)</span>
+
+    <span class="c1"># 创建输出目录</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">bm_output_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">fitting_results_dir</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Warning: Birch-Murnaghan fitting results directory &#39;</span><span class="si">{</span><span class="n">fitting_results_dir</span><span class="si">}</span><span class="s2">&#39; not found!&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">0</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Step 1: Loading Birch-Murnaghan fitting results...&quot;</span><span class="p">)</span>
+    <span class="n">fitting_results</span> <span class="o">=</span> <span class="n">load_birch_murnaghan_fitting_results</span><span class="p">(</span><span class="n">fitting_results_dir</span><span class="p">,</span> <span class="n">search_recursive</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">fitting_results</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No Birch-Murnaghan fitting results found!&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">0</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">fitting_results</span><span class="p">)</span><span class="si">}</span><span class="s2"> fitting results&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Using scaling factors range: </span><span class="si">{</span><span class="n">scaling_factors_range</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">pressure_range</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Using pressure range: </span><span class="si">{</span><span class="n">pressure_range</span><span class="si">}</span><span class="s2"> GPa&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Target structures per fit: </span><span class="si">{</span><span class="n">n_structures</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 如果输出文件已存在，删除它</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">output_file</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">output_file</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Step 2: Generating structures from fitting results...&quot;</span><span class="p">)</span>
+    <span class="n">total_structures</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">structure_name</span><span class="p">,</span> <span class="n">result_info</span> <span class="ow">in</span> <span class="n">fitting_results</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Processing: </span><span class="si">{</span><span class="n">structure_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">structure_count</span> <span class="o">=</span> <span class="mi">0</span>
+
+            <span class="c1"># 1. 首先从OUTCAR_scale目录提取原始结构</span>
+            <span class="k">if</span> <span class="n">use_outcar_structures</span> <span class="ow">and</span> <span class="n">result_info</span><span class="p">[</span><span class="s1">&#39;has_outcar_scale&#39;</span><span class="p">]:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    Extracting structures from OUTCAR_scale directory...&quot;</span><span class="p">)</span>
+                <span class="n">outcar_structures</span> <span class="o">=</span> <span class="n">extract_structures_from_outcar_scale</span><span class="p">(</span>
+                    <span class="n">result_info</span><span class="p">[</span><span class="s1">&#39;outcar_scale_dir&#39;</span><span class="p">],</span> <span class="n">output_file</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">10</span>
+                <span class="p">)</span>
+                <span class="n">structure_count</span> <span class="o">+=</span> <span class="n">outcar_structures</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    Extracted </span><span class="si">{</span><span class="n">outcar_structures</span><span class="si">}</span><span class="s2"> structures from OUTCAR_scale&quot;</span><span class="p">)</span>
+
+            <span class="c1"># 2. 然后根据拟合曲线生成扩展结构</span>
+            <span class="k">if</span> <span class="n">result_info</span><span class="p">[</span><span class="s1">&#39;fitted_data&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">result_info</span><span class="p">[</span><span class="s1">&#39;fitted_data&#39;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    Generating structures from fitting curve...&quot;</span><span class="p">)</span>
+
+                <span class="c1"># 获取参考结构</span>
+                <span class="k">if</span> <span class="n">result_info</span><span class="p">[</span><span class="s1">&#39;has_outcar_scale&#39;</span><span class="p">]:</span>
+                    <span class="n">reference_atoms</span> <span class="o">=</span> <span class="n">find_reference_structure</span><span class="p">(</span><span class="n">result_info</span><span class="p">[</span><span class="s1">&#39;outcar_scale_dir&#39;</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># 如果没有OUTCAR_scale目录，使用原始数据中的第一个点作为参考</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No reference structure available for </span><span class="si">{</span><span class="n">structure_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+                <span class="c1"># 准备Birch-Murnaghan参数 [E0, V0, B0, B1]</span>
+                <span class="n">bm_params</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="k">if</span> <span class="s1">&#39;parameters&#39;</span> <span class="ow">in</span> <span class="n">result_info</span><span class="p">:</span>
+                    <span class="n">params</span> <span class="o">=</span> <span class="n">result_info</span><span class="p">[</span><span class="s1">&#39;parameters&#39;</span><span class="p">]</span>
+                    <span class="c1"># 将B0从GPa转换回原始单位</span>
+                    <span class="n">B0_original</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;B0&#39;</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span> <span class="o">/</span> <span class="mf">160.21766208</span>
+                    <span class="n">bm_params</span> <span class="o">=</span> <span class="p">[</span>
+                        <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;E0&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                        <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;V0&#39;</span><span class="p">,</span> <span class="n">reference_atoms</span><span class="o">.</span><span class="n">get_volume</span><span class="p">()),</span>
+                        <span class="n">B0_original</span><span class="p">,</span>
+                        <span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;B1&#39;</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">)</span>
+                    <span class="p">]</span>
+                    <span class="nb">print</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;    Using BM parameters: E0=</span><span class="si">{</span><span class="n">bm_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, V0=</span><span class="si">{</span><span class="n">bm_params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, B0=</span><span class="si">{</span><span class="n">bm_params</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">160.21766208</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> GPa, B1=</span><span class="si">{</span><span class="n">bm_params</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+                <span class="c1"># 生成扩展结构</span>
+                <span class="n">extension_structures</span> <span class="o">=</span> <span class="n">generate_structures_from_fitting_curve</span><span class="p">(</span>
+                    <span class="n">reference_atoms</span><span class="p">,</span>
+                    <span class="n">result_info</span><span class="p">[</span><span class="s1">&#39;fitted_data&#39;</span><span class="p">],</span>
+                    <span class="n">output_file</span><span class="p">,</span>
+                    <span class="n">structure_name</span><span class="p">,</span>
+                    <span class="n">n_structures</span><span class="o">=</span><span class="n">n_structures</span><span class="p">,</span>
+                    <span class="n">pressure_range</span><span class="o">=</span><span class="n">pressure_range</span><span class="p">,</span>
+                    <span class="n">original_data</span><span class="o">=</span><span class="n">result_info</span><span class="p">[</span><span class="s1">&#39;original_data&#39;</span><span class="p">],</span>
+                    <span class="n">scaling_factors_range</span><span class="o">=</span><span class="n">scaling_factors_range</span><span class="p">,</span>
+                    <span class="n">bm_params</span><span class="o">=</span><span class="n">bm_params</span>
+                <span class="p">)</span>
+                <span class="n">structure_count</span> <span class="o">+=</span> <span class="n">extension_structures</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    Generated </span><span class="si">{</span><span class="n">extension_structures</span><span class="si">}</span><span class="s2"> structures from fitting curve&quot;</span><span class="p">)</span>
+
+            <span class="n">total_structures</span> <span class="o">+=</span> <span class="n">structure_count</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    Total structures for </span><span class="si">{</span><span class="n">structure_name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">structure_count</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    Error processing </span><span class="si">{</span><span class="n">structure_name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
+            <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total Birch-Murnaghan structures generated: </span><span class="si">{</span><span class="n">total_structures</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Birch-Murnaghan extxyz file saved to: </span><span class="si">{</span><span class="n">output_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">total_structures</span></div>
+
+
+
+<div class="viewcode-block" id="load_fit_a_P_data">
+<a class="viewcode-back" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.load_fit_a_P_data">[文档]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_fit_a_P_data</span><span class="p">(</span><span class="n">fit_a_P_file</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    加载fit_a_P.data文件数据</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        fit_a_P_file: fit_a_P.data文件路径</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        DataFrame: 包含晶格常数、缩放因子和压力的数据</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># 读取数据文件，跳过注释行</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fit_a_P_file</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;\s+&#39;</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="s1">&#39;#&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                         <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;lattice_constant&#39;</span><span class="p">,</span> <span class="s1">&#39;scaling_factor&#39;</span><span class="p">,</span> <span class="s1">&#39;pressure_GPa&#39;</span><span class="p">])</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    Loaded </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2"> data points from </span><span class="si">{</span><span class="n">fit_a_P_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">df</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    Error loading fit_a_P.data file: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="gpa_to_ev_per_ang3">
+<a class="viewcode-back" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.gpa_to_ev_per_ang3">[文档]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">gpa_to_ev_per_ang3</span><span class="p">(</span><span class="n">pressure_gpa</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    将压力从GPa转换为eV/Å³</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        pressure_gpa: 压力值 (GPa)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        float: 压力值 (eV/Å³)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># 转换因子: 1 GPa = 0.006241509074 eV/Å³</span>
+    <span class="k">return</span> <span class="n">pressure_gpa</span> <span class="o">*</span> <span class="mf">0.006241509074</span></div>
+
+
+
+<div class="viewcode-block" id="generate_structures_from_fit_a_P">
+<a class="viewcode-back" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.generate_structures_from_fit_a_P">[文档]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_structures_from_fit_a_P</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    根据fit_a_P.data数据生成extxyz结构</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        config: 配置字典</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        int: 生成的结构总数</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fit_a_P_config</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;extxyz_generation&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;fit_a_P&#39;</span><span class="p">,</span> <span class="p">{})</span>
+
+    <span class="c1"># 获取配置参数</span>
+    <span class="n">reference_structure_file</span> <span class="o">=</span> <span class="n">fit_a_P_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;reference_structure&#39;</span><span class="p">,</span> <span class="s1">&#39;./init.txt&#39;</span><span class="p">)</span>
+    <span class="n">fit_a_P_file</span> <span class="o">=</span> <span class="n">fit_a_P_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;fit_a_P_data&#39;</span><span class="p">,</span> <span class="s1">&#39;./fit_a_P.data&#39;</span><span class="p">)</span>
+    <span class="n">pressure_range</span> <span class="o">=</span> <span class="n">fit_a_P_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;pressure_range&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">])</span>
+    <span class="n">n_structures</span> <span class="o">=</span> <span class="n">fit_a_P_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;n_structures&#39;</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+
+    <span class="n">paths</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;paths&#39;</span><span class="p">]</span>
+    <span class="n">extxyz_dir</span> <span class="o">=</span> <span class="n">paths</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;extxyz_set_dir&#39;</span><span class="p">,</span> <span class="s1">&#39;Extxyz_set&#39;</span><span class="p">)</span>
+    <span class="n">fit_a_P_output_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">extxyz_dir</span><span class="p">,</span> <span class="s1">&#39;fit_a_P&#39;</span><span class="p">)</span>
+    <span class="n">output_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fit_a_P_output_dir</span><span class="p">,</span> <span class="s1">&#39;fit_a_P.extxyz&#39;</span><span class="p">)</span>
+
+    <span class="c1"># 创建输出目录</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">fit_a_P_output_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># 检查输入文件是否存在</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">reference_structure_file</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: Reference structure file &#39;</span><span class="si">{</span><span class="n">reference_structure_file</span><span class="si">}</span><span class="s2">&#39; not found!&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">0</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">fit_a_P_file</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: fit_a_P.data file &#39;</span><span class="si">{</span><span class="n">fit_a_P_file</span><span class="si">}</span><span class="s2">&#39; not found!&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">0</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Step: Generating structures from fit_a_P.data...&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Reference structure: </span><span class="si">{</span><span class="n">reference_structure_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Fit data file: </span><span class="si">{</span><span class="n">fit_a_P_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Pressure range: </span><span class="si">{</span><span class="n">pressure_range</span><span class="si">}</span><span class="s2"> GPa&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Target structures: </span><span class="si">{</span><span class="n">n_structures</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 加载参考结构</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">reference_atoms</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">reference_structure_file</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;extxyz&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Loaded reference structure with </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">reference_atoms</span><span class="p">)</span><span class="si">}</span><span class="s2"> atoms&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Reference lattice: </span><span class="si">{</span><span class="n">reference_atoms</span><span class="o">.</span><span class="n">get_cell</span><span class="p">()</span><span class="o">.</span><span class="n">array</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Error loading reference structure: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">0</span>
+
+    <span class="c1"># 加载fit_a_P.data数据</span>
+    <span class="n">fit_data</span> <span class="o">=</span> <span class="n">load_fit_a_P_data</span><span class="p">(</span><span class="n">fit_a_P_file</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">fit_data</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">fit_data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  No data loaded from fit_a_P.data file!&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">0</span>
+
+    <span class="c1"># 筛选压力范围内的数据</span>
+    <span class="n">min_pressure</span><span class="p">,</span> <span class="n">max_pressure</span> <span class="o">=</span> <span class="n">pressure_range</span>
+    <span class="n">filtered_data</span> <span class="o">=</span> <span class="n">fit_data</span><span class="p">[(</span><span class="n">fit_data</span><span class="p">[</span><span class="s1">&#39;pressure_GPa&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">min_pressure</span><span class="p">)</span> <span class="o">&amp;</span>
+                             <span class="p">(</span><span class="n">fit_data</span><span class="p">[</span><span class="s1">&#39;pressure_GPa&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">max_pressure</span><span class="p">)]</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">filtered_data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  No data points in pressure range [</span><span class="si">{</span><span class="n">min_pressure</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">max_pressure</span><span class="si">}</span><span class="s2">] GPa&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">0</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Data points after pressure filtering: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">filtered_data</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 从筛选后的数据中均匀采样指定数量的结构</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">filtered_data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">n_structures</span><span class="p">:</span>
+        <span class="c1"># 均匀采样</span>
+        <span class="n">step</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">filtered_data</span><span class="p">)</span> <span class="o">//</span> <span class="n">n_structures</span><span class="p">)</span>
+        <span class="n">selected_indices</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">filtered_data</span><span class="p">),</span> <span class="n">step</span><span class="p">)</span>
+        <span class="n">selected_data</span> <span class="o">=</span> <span class="n">filtered_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">selected_indices</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n_structures</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Sampled </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">selected_data</span><span class="p">)</span><span class="si">}</span><span class="s2"> structures from </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">filtered_data</span><span class="p">)</span><span class="si">}</span><span class="s2"> filtered points&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">selected_data</span> <span class="o">=</span> <span class="n">filtered_data</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Using all </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">selected_data</span><span class="p">)</span><span class="si">}</span><span class="s2"> filtered structures (requested </span><span class="si">{</span><span class="n">n_structures</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 如果输出文件已存在，删除它</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">output_file</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">output_file</span><span class="p">)</span>
+
+    <span class="c1"># 生成结构</span>
+    <span class="n">generated_count</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">selected_data</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">scaling_factor</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;scaling_factor&#39;</span><span class="p">]</span>
+            <span class="n">pressure_gpa</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;pressure_GPa&#39;</span><span class="p">]</span>
+            <span class="n">lattice_constant</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;lattice_constant&#39;</span><span class="p">]</span>
+
+            <span class="c1"># 创建新结构</span>
+            <span class="n">new_atoms</span> <span class="o">=</span> <span class="n">reference_atoms</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+            <span class="c1"># 缩放晶格和原子坐标</span>
+            <span class="n">new_atoms</span><span class="o">.</span><span class="n">set_cell</span><span class="p">(</span><span class="n">new_atoms</span><span class="o">.</span><span class="n">get_cell</span><span class="p">()</span> <span class="o">*</span> <span class="n">scaling_factor</span><span class="p">,</span> <span class="n">scale_atoms</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="c1"># 计算应力张量 (假设为静水压力)</span>
+            <span class="n">pressure_ev_per_ang3</span> <span class="o">=</span> <span class="n">gpa_to_ev_per_ang3</span><span class="p">(</span><span class="n">pressure_gpa</span><span class="p">)</span>
+            <span class="n">stress_tensor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="n">pressure_ev_per_ang3</span><span class="p">,</span> <span class="o">-</span><span class="n">pressure_ev_per_ang3</span><span class="p">,</span> <span class="o">-</span><span class="n">pressure_ev_per_ang3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+
+            <span class="c1"># 设置结构信息</span>
+            <span class="n">new_atoms</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;source&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;fit_a_P_generation&#39;</span>
+            <span class="n">new_atoms</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;scaling_factor&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">scaling_factor</span>
+            <span class="n">new_atoms</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;pressure_GPa&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pressure_gpa</span>
+            <span class="n">new_atoms</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;pressure_eV_per_ang3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pressure_ev_per_ang3</span>
+            <span class="n">new_atoms</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;lattice_constant&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lattice_constant</span>
+            <span class="n">new_atoms</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;volume&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_atoms</span><span class="o">.</span><span class="n">get_volume</span><span class="p">()</span>
+
+            <span class="c1"># 设置应力信息 (extxyz格式需要6个分量的应力)</span>
+            <span class="n">new_atoms</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;stress&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">stress_tensor</span>
+
+            <span class="c1"># 确保力数组存在 (设置为零)</span>
+            <span class="k">if</span> <span class="s1">&#39;forces&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">new_atoms</span><span class="o">.</span><span class="n">arrays</span><span class="p">:</span>
+                <span class="n">empty_forces</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">new_atoms</span><span class="p">),</span> <span class="mi">3</span><span class="p">))</span>
+                <span class="n">new_atoms</span><span class="o">.</span><span class="n">arrays</span><span class="p">[</span><span class="s1">&#39;forces&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">empty_forces</span>
+
+            <span class="c1"># 写入extxyz文件</span>
+            <span class="n">write</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="n">new_atoms</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;extxyz&#39;</span><span class="p">,</span> <span class="n">append</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">generated_count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Error generating structure: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 输出统计信息</span>
+    <span class="k">if</span> <span class="n">generated_count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">scale_min</span> <span class="o">=</span> <span class="n">selected_data</span><span class="p">[</span><span class="s1">&#39;scaling_factor&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+        <span class="n">scale_max</span> <span class="o">=</span> <span class="n">selected_data</span><span class="p">[</span><span class="s1">&#39;scaling_factor&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="n">pressure_min</span> <span class="o">=</span> <span class="n">selected_data</span><span class="p">[</span><span class="s1">&#39;pressure_GPa&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+        <span class="n">pressure_max</span> <span class="o">=</span> <span class="n">selected_data</span><span class="p">[</span><span class="s1">&#39;pressure_GPa&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="n">lattice_min</span> <span class="o">=</span> <span class="n">selected_data</span><span class="p">[</span><span class="s1">&#39;lattice_constant&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+        <span class="n">lattice_max</span> <span class="o">=</span> <span class="n">selected_data</span><span class="p">[</span><span class="s1">&#39;lattice_constant&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Generated </span><span class="si">{</span><span class="n">generated_count</span><span class="si">}</span><span class="s2"> structures with:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    Scaling factors: [</span><span class="si">{</span><span class="n">scale_min</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">scale_max</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    Lattice constants: [</span><span class="si">{</span><span class="n">lattice_min</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">lattice_max</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">] Å&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    Pressures: [</span><span class="si">{</span><span class="n">pressure_min</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">pressure_max</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">] GPa&quot;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Fit_a_P extxyz file saved to: </span><span class="si">{</span><span class="n">output_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">generated_count</span></div>
+
+
+
+<div class="viewcode-block" id="merge_extxyz_files">
+<a class="viewcode-back" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.merge_extxyz_files">[文档]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">merge_extxyz_files</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    合并VASP、Birch-Murnaghan和fit_a_P的extxyz文件</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        config: 配置字典</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        int: 合并后的结构总数</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">paths</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;paths&#39;</span><span class="p">]</span>
+    <span class="n">extxyz_dir</span> <span class="o">=</span> <span class="n">paths</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;extxyz_set_dir&#39;</span><span class="p">,</span> <span class="s1">&#39;Extxyz_set&#39;</span><span class="p">)</span>
+    <span class="n">vasp_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">extxyz_dir</span><span class="p">,</span> <span class="s1">&#39;vasp&#39;</span><span class="p">,</span> <span class="s1">&#39;vasp.extxyz&#39;</span><span class="p">)</span>
+    <span class="n">bm_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">extxyz_dir</span><span class="p">,</span> <span class="s1">&#39;birch_murnaghan_fitting&#39;</span><span class="p">,</span> <span class="s1">&#39;birch.extxyz&#39;</span><span class="p">)</span>
+    <span class="n">fit_a_P_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">extxyz_dir</span><span class="p">,</span> <span class="s1">&#39;fit_a_P&#39;</span><span class="p">,</span> <span class="s1">&#39;fit_a_P.extxyz&#39;</span><span class="p">)</span>
+    <span class="n">merged_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">extxyz_dir</span><span class="p">,</span> <span class="s1">&#39;merged_dataset.extxyz&#39;</span><span class="p">)</span>
+
+    <span class="n">total_structures</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># 如果输出文件已存在，删除它</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">merged_file</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">merged_file</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Step: Merging extxyz files...&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 合并VASP结构</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">vasp_file</span><span class="p">):</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="n">vasp_file</span><span class="p">,</span> <span class="n">merged_file</span><span class="p">)</span>
+        <span class="c1"># 计算VASP结构数量</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">vasp_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">vasp_count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="ow">and</span> <span class="s1">&#39;Lattice=&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">)</span>
+        <span class="n">total_structures</span> <span class="o">+=</span> <span class="n">vasp_count</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Added </span><span class="si">{</span><span class="n">vasp_count</span><span class="si">}</span><span class="s2"> structures from VASP calculations&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  Warning: VASP extxyz file not found&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 合并Birch-Murnaghan结构</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">bm_file</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">bm_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">source</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">merged_file</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">target</span><span class="p">:</span>
+                <span class="n">target</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">source</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+
+        <span class="c1"># 计算Birch-Murnaghan结构数量</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">bm_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">bm_count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="ow">and</span> <span class="s1">&#39;Lattice=&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">)</span>
+        <span class="n">total_structures</span> <span class="o">+=</span> <span class="n">bm_count</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Added </span><span class="si">{</span><span class="n">bm_count</span><span class="si">}</span><span class="s2"> structures from Birch-Murnaghan fitting&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  Warning: Birch-Murnaghan extxyz file not found&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 合并fit_a_P结构</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">fit_a_P_file</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fit_a_P_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">source</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">merged_file</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">target</span><span class="p">:</span>
+                <span class="n">target</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">source</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+
+        <span class="c1"># 计算fit_a_P结构数量</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fit_a_P_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">fit_a_P_count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="ow">and</span> <span class="s1">&#39;Lattice=&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">)</span>
+        <span class="n">total_structures</span> <span class="o">+=</span> <span class="n">fit_a_P_count</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Added </span><span class="si">{</span><span class="n">fit_a_P_count</span><span class="si">}</span><span class="s2"> structures from fit_a_P data&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  Warning: fit_a_P extxyz file not found&quot;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total structures in merged dataset: </span><span class="si">{</span><span class="n">total_structures</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Merged dataset saved to: </span><span class="si">{</span><span class="n">merged_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">total_structures</span></div>
+
+
+
+<div class="viewcode-block" id="generate_extxyz_dataset">
+<a class="viewcode-back" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.generate_extxyz_dataset">[文档]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_extxyz_dataset</span><span class="p">(</span><span class="n">config_path</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    生成完整的Extxyz数据集</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        config_path: 配置文件路径</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># 加载配置 - 明确指定 UTF-8 编码</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config_path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">config</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">UnicodeDecodeError</span><span class="p">:</span>
+        <span class="c1"># 如果 UTF-8 失败，尝试其他编码</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config_path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;gbk&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">config</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">UnicodeDecodeError</span><span class="p">:</span>
+            <span class="c1"># 如果还是失败，使用 latin-1 编码（最宽松）</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config_path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;latin-1&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">config</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+    <span class="n">paths</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;paths&#39;</span><span class="p">]</span>
+    <span class="n">extxyz_dir</span> <span class="o">=</span> <span class="n">paths</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;extxyz_set_dir&#39;</span><span class="p">,</span> <span class="s1">&#39;Extxyz_set&#39;</span><span class="p">)</span>
+
+    <span class="c1"># 创建主目录</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">extxyz_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Generating Extxyz Dataset&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+
+    <span class="n">total_count</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># 生成VASP数据</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- VASP Data Extraction ---&quot;</span><span class="p">)</span>
+    <span class="n">vasp_count</span> <span class="o">=</span> <span class="n">generate_vasp_extxyz</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+    <span class="n">total_count</span> <span class="o">+=</span> <span class="n">vasp_count</span>
+
+    <span class="c1"># 生成Birch-Murnaghan数据</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Birch-Murnaghan Data Generation ---&quot;</span><span class="p">)</span>
+    <span class="n">bm_count</span> <span class="o">=</span> <span class="n">generate_birch_murnaghan_extxyz</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+    <span class="n">total_count</span> <span class="o">+=</span> <span class="n">bm_count</span>
+
+    <span class="c1"># 生成fit_a_P数据</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Fit_a_P Data Generation ---&quot;</span><span class="p">)</span>
+    <span class="n">fit_a_P_count</span> <span class="o">=</span> <span class="n">generate_structures_from_fit_a_P</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+    <span class="n">total_count</span> <span class="o">+=</span> <span class="n">fit_a_P_count</span>
+
+    <span class="c1"># 合并数据集</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Dataset Merging ---&quot;</span><span class="p">)</span>
+    <span class="n">merged_count</span> <span class="o">=</span> <span class="n">merge_extxyz_files</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+    <span class="c1"># 汇总结果</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Extxyz Dataset Generation Summary&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;VASP structures: </span><span class="si">{</span><span class="n">vasp_count</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Birch-Murnaghan structures: </span><span class="si">{</span><span class="n">bm_count</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Fit_a_P structures: </span><span class="si">{</span><span class="n">fit_a_P_count</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total structures: </span><span class="si">{</span><span class="n">merged_count</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dataset saved to: </span><span class="si">{</span><span class="n">extxyz_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 输出文件信息</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Generated files:&quot;</span><span class="p">)</span>
+    <span class="n">vasp_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">extxyz_dir</span><span class="p">,</span> <span class="s1">&#39;vasp&#39;</span><span class="p">,</span> <span class="s1">&#39;vasp.extxyz&#39;</span><span class="p">)</span>
+    <span class="n">bm_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">extxyz_dir</span><span class="p">,</span> <span class="s1">&#39;birch_murnaghan_fitting&#39;</span><span class="p">,</span> <span class="s1">&#39;birch.extxyz&#39;</span><span class="p">)</span>
+    <span class="n">fit_a_P_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">extxyz_dir</span><span class="p">,</span> <span class="s1">&#39;fit_a_P&#39;</span><span class="p">,</span> <span class="s1">&#39;fit_a_P.extxyz&#39;</span><span class="p">)</span>
+    <span class="n">merged_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">extxyz_dir</span><span class="p">,</span> <span class="s1">&#39;merged_dataset.extxyz&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">vasp_file</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - VASP data: </span><span class="si">{</span><span class="n">vasp_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">bm_file</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - Birch-Murnaghan data: </span><span class="si">{</span><span class="n">bm_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">fit_a_P_file</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - Fit_a_P data: </span><span class="si">{</span><span class="n">fit_a_P_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">merged_file</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - Merged dataset: </span><span class="si">{</span><span class="n">merged_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">merged_count</span></div>
+
+
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.main">[文档]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">&#39;Generate extxyz dataset from VASP and Birch-Murnaghan results&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--input_file&#39;</span><span class="p">,</span> <span class="s1">&#39;-i&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;input.yaml&#39;</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Input configuration file (default: input.yaml)&#39;</span><span class="p">)</span>
+
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_file</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: Input file &#39;</span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">input_file</span><span class="si">}</span><span class="s2">&#39; not found!&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="n">total_structures</span> <span class="o">=</span> <span class="n">generate_extxyz_dataset</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_file</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Extxyz dataset generation completed! Total structures: </span><span class="si">{</span><span class="n">total_structures</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># 添加这个函数，使其可以被其他模块调用</span>
+<div class="viewcode-block" id="generate_extxyz_from_config">
+<a class="viewcode-back" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.generate_extxyz_from_config">[文档]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_extxyz_from_config</span><span class="p">(</span><span class="n">config_path</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    从配置文件生成extxyz数据集的入口函数</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        config_path: 配置文件路径</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">generate_extxyz_dataset</span><span class="p">(</span><span class="n">config_path</span><span class="p">)</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+<span class="c1"># [file content end]</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 NSH。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

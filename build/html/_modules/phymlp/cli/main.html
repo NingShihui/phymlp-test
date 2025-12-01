@@ -1,0 +1,739 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>phymlp.cli.main &mdash; PhyMLP 1.0.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=34088549"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/translations.js?v=beaddf03"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            PhyMLP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">目录：</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">快速开始</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#id2">安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#id3">基础使用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#id4">核心功能模块</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id5">训练与验证</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id6">数据格式转换</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id7">工具函数</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#id8">自动训练集生成工作流</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#materials-project">1. 从 Materials Project 获取结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id9">2. 生成形变结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id10">3. 生成微扰结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#vasp">4. 设置 VASP 计算</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#potcar">5. 测试 POTCAR 生成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id11">6. 提交 VASP 计算</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id12">7. 处理形变结果</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#birch-murnaghan">8. Birch-Murnaghan 拟合</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id13">9. 生成最终数据集</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#id14">配置文件详解</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#inputfile-txt">训练配置文件 Inputfile.txt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#input-yaml">自动化训练集配置文件 input.yaml</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#id15">典型工作流程</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#ni-cr">快速开始示例：Ni-Cr 合金训练集生成</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#id16">进阶用法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id17">自定义训练参数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id18">自定义VASP计算</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id19">批量处理多个体系</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#id20">故障排除</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id21">常见问题</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id22">获取帮助</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#id23">下一步</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">phymlp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../phymlp.html">phymlp package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html">phymlp.auto_generate_set package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.cli.html">phymlp.cli package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.converters.html">phymlp.converters package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.tools.html">phymlp.tools package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.utils.html">phymlp.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.html#module-phymlp">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../phymlp.auto_generate_set.html">phymlp.auto_generate_set package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#module-phymlp.auto_generate_set.birch_murnaghan_fitting">phymlp.auto_generate_set.birch_murnaghan_fitting module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.birch_murnaghan_eqn"><code class="docutils literal notranslate"><span class="pre">birch_murnaghan_eqn()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.birch_murnaghan_residuals"><code class="docutils literal notranslate"><span class="pre">birch_murnaghan_residuals()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.create_mirror_structure"><code class="docutils literal notranslate"><span class="pre">create_mirror_structure()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.create_outcar_scale_directory"><code class="docutils literal notranslate"><span class="pre">create_outcar_scale_directory()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.ensure_numeric_parameters"><code class="docutils literal notranslate"><span class="pre">ensure_numeric_parameters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.filter_data"><code class="docutils literal notranslate"><span class="pre">filter_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.find_a_v_e_p_files"><code class="docutils literal notranslate"><span class="pre">find_a_v_e_p_files()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.find_scale_directories"><code class="docutils literal notranslate"><span class="pre">find_scale_directories()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.get_initial_guess"><code class="docutils literal notranslate"><span class="pre">get_initial_guess()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.get_reference_volume"><code class="docutils literal notranslate"><span class="pre">get_reference_volume()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.perform_fitting"><code class="docutils literal notranslate"><span class="pre">perform_fitting()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.process_all_birch_murnaghan_fitting"><code class="docutils literal notranslate"><span class="pre">process_all_birch_murnaghan_fitting()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.read_a_v_e_p_file"><code class="docutils literal notranslate"><span class="pre">read_a_v_e_p_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.save_fitting_results"><code class="docutils literal notranslate"><span class="pre">save_fitting_results()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#module-phymlp.auto_generate_set.config">phymlp.auto_generate_set.config module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.config.load_config"><code class="docutils literal notranslate"><span class="pre">load_config()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp-auto-generate-set-deform-structures-module">phymlp.auto_generate_set.deform_structures module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp-auto-generate-set-from-mp-structures-module">phymlp.auto_generate_set.from_mp_structures module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#module-phymlp.auto_generate_set.generate_extxyz_dataset">phymlp.auto_generate_set.generate_extxyz_dataset module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.calculate_pressure_from_birch_murnaghan"><code class="docutils literal notranslate"><span class="pre">calculate_pressure_from_birch_murnaghan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.extract_structures_from_outcar"><code class="docutils literal notranslate"><span class="pre">extract_structures_from_outcar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.extract_structures_from_outcar_scale"><code class="docutils literal notranslate"><span class="pre">extract_structures_from_outcar_scale()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.filter_data_by_pressure"><code class="docutils literal notranslate"><span class="pre">filter_data_by_pressure()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.find_outcar_files"><code class="docutils literal notranslate"><span class="pre">find_outcar_files()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.find_reference_structure"><code class="docutils literal notranslate"><span class="pre">find_reference_structure()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.generate_birch_murnaghan_extxyz"><code class="docutils literal notranslate"><span class="pre">generate_birch_murnaghan_extxyz()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.generate_extxyz_dataset"><code class="docutils literal notranslate"><span class="pre">generate_extxyz_dataset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.generate_extxyz_from_config"><code class="docutils literal notranslate"><span class="pre">generate_extxyz_from_config()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.generate_structures_from_fit_a_P"><code class="docutils literal notranslate"><span class="pre">generate_structures_from_fit_a_P()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.generate_structures_from_fitting_curve"><code class="docutils literal notranslate"><span class="pre">generate_structures_from_fitting_curve()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.generate_vasp_extxyz"><code class="docutils literal notranslate"><span class="pre">generate_vasp_extxyz()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.gpa_to_ev_per_ang3"><code class="docutils literal notranslate"><span class="pre">gpa_to_ev_per_ang3()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.load_birch_murnaghan_fitting_results"><code class="docutils literal notranslate"><span class="pre">load_birch_murnaghan_fitting_results()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.load_fit_a_P_data"><code class="docutils literal notranslate"><span class="pre">load_fit_a_P_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.merge_extxyz_files"><code class="docutils literal notranslate"><span class="pre">merge_extxyz_files()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp-auto-generate-set-perturb-structures-module">phymlp.auto_generate_set.perturb_structures module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#module-phymlp.auto_generate_set.potcar_generator">phymlp.auto_generate_set.potcar_generator module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.potcar_generator.concatenate_potcar_files"><code class="docutils literal notranslate"><span class="pre">concatenate_potcar_files()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.potcar_generator.find_potcar_files"><code class="docutils literal notranslate"><span class="pre">find_potcar_files()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.potcar_generator.generate_potcar"><code class="docutils literal notranslate"><span class="pre">generate_potcar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.potcar_generator.generate_potcar_auto"><code class="docutils literal notranslate"><span class="pre">generate_potcar_auto()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.potcar_generator.generate_potcar_pymatgen"><code class="docutils literal notranslate"><span class="pre">generate_potcar_pymatgen()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.potcar_generator.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.potcar_generator.read_poscar_elements"><code class="docutils literal notranslate"><span class="pre">read_poscar_elements()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#module-phymlp.auto_generate_set.process_deform_results">phymlp.auto_generate_set.process_deform_results module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.process_deform_results.classify_deform_directories"><code class="docutils literal notranslate"><span class="pre">classify_deform_directories()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.process_deform_results.create_classified_structure"><code class="docutils literal notranslate"><span class="pre">create_classified_structure()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.process_deform_results.extract_vasp_data"><code class="docutils literal notranslate"><span class="pre">extract_vasp_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.process_deform_results.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.process_deform_results.process_all_deform_results"><code class="docutils literal notranslate"><span class="pre">process_all_deform_results()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#module-phymlp.auto_generate_set.utils">phymlp.auto_generate_set.utils module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.check_file_exists"><code class="docutils literal notranslate"><span class="pre">check_file_exists()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.check_potcar_availability"><code class="docutils literal notranslate"><span class="pre">check_potcar_availability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.chemsys_comb"><code class="docutils literal notranslate"><span class="pre">chemsys_comb()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.get_formula_from_filename"><code class="docutils literal notranslate"><span class="pre">get_formula_from_filename()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.mkdir_output_load"><code class="docutils literal notranslate"><span class="pre">mkdir_output_load()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.safe_copy"><code class="docutils literal notranslate"><span class="pre">safe_copy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.safe_path_join"><code class="docutils literal notranslate"><span class="pre">safe_path_join()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp-auto-generate-set-vasp-setup-module">phymlp.auto_generate_set.vasp_setup module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp-auto-generate-set-vasp-submit-module">phymlp.auto_generate_set.vasp_submit module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#module-phymlp.auto_generate_set">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../phymlp.cli.html">phymlp.cli package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.cli.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.cli.html#module-phymlp.cli.main">phymlp.cli.main module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.cli.html#phymlp.cli.main.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.cli.html#module-phymlp.cli">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../phymlp.converters.html">phymlp.converters package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.converters.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.converters.html#module-phymlp.converters.cfg2extxyz">phymlp.converters.cfg2extxyz module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.converters.html#phymlp.converters.cfg2extxyz.parse_cfg_file"><code class="docutils literal notranslate"><span class="pre">parse_cfg_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.converters.html#phymlp.converters.cfg2extxyz.write_extxyz"><code class="docutils literal notranslate"><span class="pre">write_extxyz()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.converters.html#module-phymlp.converters.outcar_converter">phymlp.converters.outcar_converter module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.converters.html#phymlp.converters.outcar_converter.extract_structures_from_outcar"><code class="docutils literal notranslate"><span class="pre">extract_structures_from_outcar()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.converters.html#module-phymlp.converters">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../phymlp.tools.html">phymlp.tools package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.tools.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.tools.html#module-phymlp.tools.get_KPATH">phymlp.tools.get_KPATH module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.tools.html#phymlp.tools.get_KPATH.generate_kpath"><code class="docutils literal notranslate"><span class="pre">generate_kpath()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.tools.html#module-phymlp.tools.split_set">phymlp.tools.split_set module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.tools.html#phymlp.tools.split_set.split_extxyz_structures"><code class="docutils literal notranslate"><span class="pre">split_extxyz_structures()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.tools.html#module-phymlp.tools">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../phymlp.utils.html">phymlp.utils package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.utils.html#module-phymlp.utils.core">phymlp.utils.core module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.utils.html#phymlp.utils.core.PUBLIC"><code class="docutils literal notranslate"><span class="pre">PUBLIC</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.utils.html#phymlp.utils.core.RUN"><code class="docutils literal notranslate"><span class="pre">RUN</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.utils.html#module-phymlp.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">PhyMLP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">模块代码</a></li>
+      <li class="breadcrumb-item active">phymlp.cli.main</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>phymlp.cli.main 源代码</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">PhyMLP Kit 命令行接口主模块</span>
+
+<span class="sd">提供PhyMLP训练、验证、数据处理及自动训练集生成的各种命令行工具。</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">argparse</span><span class="w"> </span><span class="kn">import</span> <span class="n">ArgumentParser</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="c1"># 将项目根目录加入 sys.path，支持绝对导入</span>
+<span class="n">current_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+<span class="n">project_root</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">current_dir</span><span class="p">))</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">project_root</span><span class="p">)</span>
+
+<span class="c1"># 原有导入</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phymlp.converters.cfg2extxyz</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse_cfg_file</span><span class="p">,</span> <span class="n">write_extxyz</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phymlp.converters.outcar_converter</span><span class="w"> </span><span class="kn">import</span> <span class="n">extract_structures_from_outcar</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phymlp.tools.get_KPATH</span><span class="w"> </span><span class="kn">import</span> <span class="n">generate_kpath</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phymlp.tools.split_set</span><span class="w"> </span><span class="kn">import</span> <span class="n">split_extxyz_structures</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phymlp.utils.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">PUBLIC</span><span class="p">,</span> <span class="n">RUN</span>
+
+
+<span class="c1"># ------------------------------------------------------------------</span>
+<span class="c1"># 新增子命令处理函数 - 使用动态导入避免启动时错误</span>
+<span class="c1"># ------------------------------------------------------------------</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_cmd_from_mp_structures</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;从Materials Project获取结构&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># 添加 auto_generate_set 目录到 Python 路径</span>
+        <span class="n">auto_gen_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">project_root</span><span class="p">,</span> <span class="s1">&#39;phymlp&#39;</span><span class="p">,</span> <span class="s1">&#39;auto_generate_set&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">auto_gen_dir</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">auto_gen_dir</span><span class="p">)</span>
+
+        <span class="kn">from</span><span class="w"> </span><span class="nn">from_mp_structures</span><span class="w"> </span><span class="kn">import</span> <span class="n">main</span> <span class="k">as</span> <span class="n">from_mp_main</span>
+        <span class="n">from_mp_main</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_file</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: Could not import from_mp_structures module: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_cmd_deform_structures</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;生成形变结构&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">auto_gen_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">project_root</span><span class="p">,</span> <span class="s1">&#39;phymlp&#39;</span><span class="p">,</span> <span class="s1">&#39;auto_generate_set&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">auto_gen_dir</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">auto_gen_dir</span><span class="p">)</span>
+
+        <span class="kn">from</span><span class="w"> </span><span class="nn">deform_structures</span><span class="w"> </span><span class="kn">import</span> <span class="n">main</span> <span class="k">as</span> <span class="n">deform_main</span>
+        <span class="n">deform_main</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_file</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: Could not import deform_structures module: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_cmd_perturb_structures</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;生成微扰结构&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">auto_gen_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">project_root</span><span class="p">,</span> <span class="s1">&#39;phymlp&#39;</span><span class="p">,</span> <span class="s1">&#39;auto_generate_set&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">auto_gen_dir</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">auto_gen_dir</span><span class="p">)</span>
+
+        <span class="kn">from</span><span class="w"> </span><span class="nn">perturb_structures</span><span class="w"> </span><span class="kn">import</span> <span class="n">main</span> <span class="k">as</span> <span class="n">perturb_main</span>
+        <span class="n">perturb_main</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_file</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: Could not import perturb_structures module: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_cmd_setup_vasp</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;设置VASP计算&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">auto_gen_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">project_root</span><span class="p">,</span> <span class="s1">&#39;phymlp&#39;</span><span class="p">,</span> <span class="s1">&#39;auto_generate_set&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">auto_gen_dir</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">auto_gen_dir</span><span class="p">)</span>
+
+        <span class="kn">from</span><span class="w"> </span><span class="nn">vasp_setup</span><span class="w"> </span><span class="kn">import</span> <span class="n">main</span> <span class="k">as</span> <span class="n">setup_vasp_main</span>
+        <span class="n">setup_vasp_main</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_file</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: Could not import vasp_setup module: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_cmd_submit_vasp</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;提交VASP计算&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">auto_gen_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">project_root</span><span class="p">,</span> <span class="s1">&#39;phymlp&#39;</span><span class="p">,</span> <span class="s1">&#39;auto_generate_set&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">auto_gen_dir</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">auto_gen_dir</span><span class="p">)</span>
+
+        <span class="kn">from</span><span class="w"> </span><span class="nn">vasp_submit</span><span class="w"> </span><span class="kn">import</span> <span class="n">main</span> <span class="k">as</span> <span class="n">submit_vasp_main</span>
+        <span class="n">submit_vasp_main</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_file</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: Could not import vasp_submit module: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_cmd_test_potcar</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;测试POTCAR生成&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">auto_gen_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">project_root</span><span class="p">,</span> <span class="s1">&#39;phymlp&#39;</span><span class="p">,</span> <span class="s1">&#39;auto_generate_set&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">auto_gen_dir</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">auto_gen_dir</span><span class="p">)</span>
+
+        <span class="kn">from</span><span class="w"> </span><span class="nn">potcar_generator</span><span class="w"> </span><span class="kn">import</span> <span class="n">main</span> <span class="k">as</span> <span class="n">test_potcar_main</span>
+        <span class="n">test_potcar_main</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">poscar</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">input_file</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: Could not import potcar_generator module: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_cmd_process_deform</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;处理形变结果&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">auto_gen_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">project_root</span><span class="p">,</span> <span class="s1">&#39;phymlp&#39;</span><span class="p">,</span> <span class="s1">&#39;auto_generate_set&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">auto_gen_dir</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">auto_gen_dir</span><span class="p">)</span>
+
+        <span class="kn">from</span><span class="w"> </span><span class="nn">process_deform_results</span><span class="w"> </span><span class="kn">import</span> <span class="n">main</span> <span class="k">as</span> <span class="n">process_deform_main</span>
+        <span class="n">process_deform_main</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_file</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: Could not import process_deform_results module: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_cmd_birch_murnaghan</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Birch-Murnaghan拟合&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">auto_gen_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">project_root</span><span class="p">,</span> <span class="s1">&#39;phymlp&#39;</span><span class="p">,</span> <span class="s1">&#39;auto_generate_set&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">auto_gen_dir</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">auto_gen_dir</span><span class="p">)</span>
+
+        <span class="kn">from</span><span class="w"> </span><span class="nn">birch_murnaghan_fitting</span><span class="w"> </span><span class="kn">import</span> <span class="n">main</span> <span class="k">as</span> <span class="n">birch_murnaghan_main</span>
+        <span class="n">birch_murnaghan_main</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_file</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: Could not import birch_murnaghan_fitting module: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_cmd_generate_extxyz</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;生成Extxyz数据集&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">auto_gen_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">project_root</span><span class="p">,</span> <span class="s1">&#39;phymlp&#39;</span><span class="p">,</span> <span class="s1">&#39;auto_generate_set&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">auto_gen_dir</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">auto_gen_dir</span><span class="p">)</span>
+
+        <span class="kn">from</span><span class="w"> </span><span class="nn">generate_extxyz_dataset</span><span class="w"> </span><span class="kn">import</span> <span class="n">generate_extxyz_from_config</span>
+        <span class="n">total_structures</span> <span class="o">=</span> <span class="n">generate_extxyz_from_config</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_file</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Extxyz dataset generation completed! Total structures: </span><span class="si">{</span><span class="n">total_structures</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: Could not import generate_extxyz_dataset module: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_cmd_exp_pv_structures</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;实验P-V数据拟合&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># 添加实验数据拟合模块路径</span>
+        <span class="n">exp_fit_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">project_root</span><span class="p">,</span> <span class="s1">&#39;phymlp&#39;</span><span class="p">,</span> <span class="s1">&#39;auto_generate_set&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">exp_fit_dir</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">exp_fit_dir</span><span class="p">)</span>
+
+        <span class="kn">from</span><span class="w"> </span><span class="nn">exp_pv_structures</span><span class="w"> </span><span class="kn">import</span> <span class="n">main</span> <span class="k">as</span> <span class="n">exp_pv_main</span>
+        <span class="n">exp_pv_main</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_file</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: Could not import exp_pv_structutes module: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_cmd_dump_to_poscar</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;实验P-V数据拟合&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># 添加实验数据拟合模块路径</span>
+        <span class="n">dump_to_poscar_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">project_root</span><span class="p">,</span> <span class="s1">&#39;phymlp&#39;</span><span class="p">,</span> <span class="s1">&#39;auto_generate_set&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dump_to_poscar_dir</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">dump_to_poscar_dir</span><span class="p">)</span>
+
+        <span class="kn">from</span><span class="w"> </span><span class="nn">dump_to_poscar</span><span class="w"> </span><span class="kn">import</span> <span class="n">main</span> <span class="k">as</span> <span class="n">dump_to_poscar_main</span>
+        <span class="n">dump_to_poscar_main</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_file</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: Could not import exp_pv_structutes module: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_cmd_full_workflow</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;执行完整工作流&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">auto_gen_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">project_root</span><span class="p">,</span> <span class="s1">&#39;phymlp&#39;</span><span class="p">,</span> <span class="s1">&#39;auto_generate_set&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">auto_gen_dir</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">auto_gen_dir</span><span class="p">)</span>
+
+        <span class="c1"># 这里假设完整工作流在 config.py 中</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">config</span><span class="w"> </span><span class="kn">import</span> <span class="n">main</span> <span class="k">as</span> <span class="n">full_workflow_main</span>
+
+        <span class="n">skip_options</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s1">&#39;skip_vasp_submit&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">args</span><span class="o">.</span><span class="n">skip_vasp_submit</span><span class="p">:</span>
+            <span class="n">skip_options</span><span class="p">[</span><span class="s1">&#39;skip_vasp_submit&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s1">&#39;skip_extxyz&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">args</span><span class="o">.</span><span class="n">skip_extxyz</span><span class="p">:</span>
+            <span class="n">skip_options</span><span class="p">[</span><span class="s1">&#39;skip_extxyz&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="n">full_workflow_main</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_file</span><span class="p">,</span> <span class="o">**</span><span class="n">skip_options</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: Could not import config module for full workflow: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># ------------------------------------------------------------------</span>
+<span class="c1"># 主函数</span>
+<span class="c1"># ------------------------------------------------------------------</span>
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../../phymlp.cli.html#phymlp.cli.main.main">[文档]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    PhyMLP Kit 主函数。</span>
+
+<span class="sd">    处理所有命令行参数并执行相应子命令。</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">ArgumentParser</span><span class="p">(</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;PhyMLP: A Python Package for PhyMLP Training and Validation&quot;</span><span class="p">,</span>
+        <span class="n">epilog</span><span class="o">=</span><span class="s2">&quot;For more information about PhyMLP commands, use phymlp-kit &lt;command&gt; -h&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">subparsers</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">(</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;command&quot;</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Sub-commands&quot;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Choose a command to execute&quot;</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+    <span class="c1"># 1. train</span>
+    <span class="n">parser_train</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s2">&quot;train&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Train and validate PhyMLP, e.g. phymlp-kit train --train_input Inputfile&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parser_train</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--train_input&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Input file for training&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># 2. generate_kpath</span>
+    <span class="n">parser_gk</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s2">&quot;generate_kpath&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Generate KPATH for unit-POSCAR, e.g. phymlp-kit generate_kpath --vaspkit_load xx/vaspkit&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parser_gk</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--vaspkit_load&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to vaspkit executable&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># 3. init_phymlp</span>
+    <span class="n">parser_init</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s2">&quot;init_phymlp&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Get initial init.PhyMLP, e.g. phymlp-kit init_phymlp --phymlp_load xx/phymlp&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parser_init</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--phymlp_load&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to phymlp-kit install&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">parser_init</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--complexity&quot;</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;06.PhyMLP&quot;</span><span class="p">,</span> <span class="s2">&quot;08.PhyMLP&quot;</span><span class="p">,</span> <span class="s2">&quot;10.PhyMLP&quot;</span><span class="p">,</span> <span class="s2">&quot;12.PhyMLP&quot;</span><span class="p">,</span> <span class="s2">&quot;14.PhyMLP&quot;</span><span class="p">,</span> <span class="s2">&quot;16.PhyMLP&quot;</span><span class="p">],</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;10.PhyMLP&quot;</span>
+    <span class="p">)</span>
+
+    <span class="c1"># 4. outcar2extxyz</span>
+    <span class="n">parser_oc</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s2">&quot;outcar2extxyz&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Convert OUTCAR to extxyz, e.g. phymlp-kit outcar2extxyz --outcar2extxyz_input ./OUTCAR&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parser_oc</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--outcar2extxyz_input&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;./OUTCAR&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;OUTCAR file path&quot;</span><span class="p">)</span>
+    <span class="n">parser_oc</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--outcar2extxyz_output&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;./train.extxyz&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Output extxyz file path&quot;</span><span class="p">)</span>
+    <span class="n">parser_oc</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--step&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Step for extracting structures&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 5. cfg2extxyz</span>
+    <span class="n">parser_cfg</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s2">&quot;cfg2extxyz&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Convert cfg to extxyz, e.g. phymlp-kit cfg2extxyz --cfg2extxyz_input ./train.cfg --elements Ni Cr ...&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parser_cfg</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--cfg2extxyz_input&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;./train.cfg&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;.cfg file path&quot;</span><span class="p">)</span>
+    <span class="n">parser_cfg</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--cfg2extxyz_output&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;./train.extxyz&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Output extxyz file path&quot;</span><span class="p">)</span>
+    <span class="n">parser_cfg</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--elements&quot;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The mapping from atom types to elements&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># 6. split_set</span>
+    <span class="n">parser_split</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s2">&quot;split_set&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Split set to set_train and set_validation&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parser_split</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--input_file&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Input extxyz file&#39;</span><span class="p">)</span>
+    <span class="n">parser_split</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--set_train&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;train.extxyz&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Name of training set&#39;</span><span class="p">)</span>
+    <span class="n">parser_split</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--set_val&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;validation.extxyz&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Name of validation set&#39;</span><span class="p">)</span>
+    <span class="n">parser_split</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--val_ratio&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Ratio of validation set&#39;</span><span class="p">)</span>
+
+    <span class="c1"># 7. 新增：从Materials Project获取结构</span>
+    <span class="n">parser_mp</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s2">&quot;from_mp_structures&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Get structures from Materials Project, e.g. phymlp-kit from_mp_structures --input_file input.yaml&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parser_mp</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--input_file&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;YAML configuration file&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 8. 新增：生成形变结构</span>
+    <span class="n">parser_deform</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s2">&quot;deform_structures&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Generate deformed structures, e.g. phymlp-kit deform_structures --input_file input.yaml&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parser_deform</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--input_file&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;YAML configuration file&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 9. 新增：生成微扰结构</span>
+    <span class="n">parser_perturb</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s2">&quot;perturb_structures&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Generate perturbed structures, e.g. phymlp-kit perturb_structures --input_file input.yaml&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parser_perturb</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--input_file&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;YAML configuration file&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 10. 新增：设置VASP计算</span>
+    <span class="n">parser_setup</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s2">&quot;setup_vasp&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Setup VASP calculations, e.g. phymlp-kit setup_vasp --input_file input.yaml&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parser_setup</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--input_file&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;YAML configuration file&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 11. 新增：提交VASP计算</span>
+    <span class="n">parser_submit</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s2">&quot;submit_vasp&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Submit VASP calculations, e.g. phymlp-kit submit_vasp --input_file input.yaml&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parser_submit</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--input_file&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;YAML configuration file&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 12. 新增：测试POTCAR生成</span>
+    <span class="n">parser_potcar</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s2">&quot;test_potcar&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Test POTCAR generation, e.g. phymlp-kit test_potcar --poscar POSCAR --input_file input.yaml&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parser_potcar</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--poscar&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;POSCAR file path&quot;</span><span class="p">)</span>
+    <span class="n">parser_potcar</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--input_file&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;YAML configuration file&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 13. 新增：处理形变结果</span>
+    <span class="n">parser_process</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s2">&quot;process_deform&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Process deformation results, e.g. phymlp-kit process_deform --input_file input.yaml&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parser_process</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--input_file&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;YAML configuration file&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 14. 新增：Birch-Murnaghan拟合</span>
+    <span class="n">parser_bm</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s2">&quot;birch_murnaghan&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Perform Birch-Murnaghan fitting, e.g. phymlp-kit birch_murnaghan --input_file input.yaml&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parser_bm</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--input_file&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;YAML configuration file&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 15. 新增：生成Extxyz数据集</span>
+    <span class="n">parser_extxyz</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s2">&quot;generate_extxyz&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Generate extxyz dataset, e.g. phymlp-kit generate_extxyz --input_file input.yaml&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parser_extxyz</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--input_file&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;YAML configuration file&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 16. 新增：执行完整工作流</span>
+    <span class="n">parser_workflow</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s2">&quot;full_workflow&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Execute full workflow, e.g. phymlp-kit full_workflow --input_file input.yaml&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parser_workflow</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--input_file&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;YAML configuration file&quot;</span><span class="p">)</span>
+    <span class="n">parser_workflow</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--skip_vasp_submit&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Skip VASP submission step&quot;</span><span class="p">)</span>
+    <span class="n">parser_workflow</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--skip_extxyz&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Skip extxyz generation step&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 17. 新增：实验P-V数据拟合</span>
+    <span class="n">parser_exp_pv</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s2">&quot;exp_pv_structures&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Fit experimental P-V data and generate structures, e.g. phymlp-kit exp_pv_structures --input_file input.yaml&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parser_exp_pv</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--input_file&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;YAML configuration file&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 18. 新增：dump数据拟合</span>
+    <span class="n">parser_dump_to_poscar</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s2">&quot;dump_to_poscar&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;dump data to poscar, e.g. phymlp-kit dump_to_poscar --input_file input.yaml&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parser_dump_to_poscar</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--input_file&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;YAML configuration file&quot;</span><span class="p">)</span>
+
+    <span class="c1"># ---------------- 解析并执行 ----------------</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;generate_kpath&quot;</span><span class="p">:</span>
+        <span class="n">generate_kpath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">vaspkit_load</span><span class="p">))</span>
+
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;init_phymlp&quot;</span><span class="p">:</span>
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;cp </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">phymlp_load</span><span class="p">)</span><span class="si">}</span><span class="s2">/PhyMLP_init/</span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">complexity</span><span class="si">}</span><span class="s2"> ./&quot;</span><span class="p">,</span>
+                       <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">check_returncode</span><span class="p">()</span>
+
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;outcar2extxyz&quot;</span><span class="p">:</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">outcar2extxyz_output</span><span class="p">)</span>
+        <span class="n">out</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">extract_structures_from_outcar</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">outcar2extxyz_input</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">out</span><span class="p">),</span> <span class="n">args</span><span class="o">.</span><span class="n">step</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;cfg2extxyz&quot;</span><span class="p">:</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">cfg2extxyz_output</span><span class="p">)</span>
+        <span class="n">out</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">configs</span> <span class="o">=</span> <span class="n">parse_cfg_file</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">cfg2extxyz_input</span><span class="p">)</span>
+        <span class="n">type_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="n">el</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">el</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">elements</span><span class="p">)}</span>
+        <span class="n">write_extxyz</span><span class="p">(</span><span class="n">configs</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">out</span><span class="p">),</span> <span class="n">type_map</span><span class="o">=</span><span class="n">type_map</span><span class="p">,</span> <span class="n">float_fmt</span><span class="o">=</span><span class="s2">&quot;.6f&quot;</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;split_set&quot;</span><span class="p">:</span>
+        <span class="n">split_extxyz_structures</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_file</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">set_train</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">set_val</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">val_ratio</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;train&quot;</span><span class="p">:</span>
+        <span class="n">run</span> <span class="o">=</span> <span class="n">RUN</span><span class="p">()</span>
+        <span class="n">info</span> <span class="o">=</span> <span class="n">run</span><span class="o">.</span><span class="n">Read</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">train_input</span><span class="p">)</span>
+        <span class="n">run</span><span class="o">.</span><span class="n">Key_and_parament</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
+        <span class="n">bool_train</span> <span class="o">=</span> <span class="n">run</span><span class="o">.</span><span class="n">Bool_commands</span><span class="p">(</span><span class="n">run</span><span class="o">.</span><span class="n">train</span><span class="p">)</span>
+        <span class="n">train_dir</span><span class="p">,</span> <span class="n">train_cmd</span> <span class="o">=</span> <span class="n">run</span><span class="o">.</span><span class="n">Train_commands</span><span class="p">(</span><span class="n">bool_train</span><span class="p">)</span>
+        <span class="n">run</span><span class="o">.</span><span class="n">Train</span><span class="p">(</span><span class="n">bool_train</span><span class="p">,</span> <span class="n">train_dir</span><span class="p">,</span> <span class="n">train_cmd</span><span class="p">)</span>
+        <span class="n">bool_calc</span> <span class="o">=</span> <span class="n">run</span><span class="o">.</span><span class="n">Bool_commands</span><span class="p">(</span><span class="n">run</span><span class="o">.</span><span class="n">calculate</span><span class="p">)</span>
+        <span class="n">run</span><span class="o">.</span><span class="n">Calculate_dir</span><span class="p">(</span><span class="n">bool_calc</span><span class="p">)</span>
+        <span class="n">run</span><span class="o">.</span><span class="n">Rewrite_lammps_in</span><span class="p">(</span><span class="n">bool_calc</span><span class="p">)</span>
+        <span class="n">run</span><span class="o">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">bool_calc</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;----------------------所有指定的计算任务均已完成！-----------------------&quot;</span><span class="p">)</span>
+
+    <span class="c1"># ===== 新增：自动训练集生成相关命令 =====</span>
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;from_mp_structures&quot;</span><span class="p">:</span>
+        <span class="n">_cmd_from_mp_structures</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;deform_structures&quot;</span><span class="p">:</span>
+        <span class="n">_cmd_deform_structures</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;perturb_structures&quot;</span><span class="p">:</span>
+        <span class="n">_cmd_perturb_structures</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;setup_vasp&quot;</span><span class="p">:</span>
+        <span class="n">_cmd_setup_vasp</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;submit_vasp&quot;</span><span class="p">:</span>
+        <span class="n">_cmd_submit_vasp</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;test_potcar&quot;</span><span class="p">:</span>
+        <span class="n">_cmd_test_potcar</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;process_deform&quot;</span><span class="p">:</span>
+        <span class="n">_cmd_process_deform</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;birch_murnaghan&quot;</span><span class="p">:</span>
+        <span class="n">_cmd_birch_murnaghan</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;exp_pv_structures&quot;</span><span class="p">:</span>
+        <span class="n">_cmd_exp_pv_structures</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;generate_extxyz&quot;</span><span class="p">:</span>
+        <span class="n">_cmd_generate_extxyz</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;dump_to_poscar&quot;</span><span class="p">:</span>
+        <span class="n">_cmd_dump_to_poscar</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;full_workflow&quot;</span><span class="p">:</span>
+        <span class="n">_cmd_full_workflow</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">()</span>
+        <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 NSH。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
