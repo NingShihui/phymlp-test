@@ -19,4 +19,8 @@ python:
 # 输出格式（可选）
 formats:
   - htmlzip
+<<<<<<< HEAD
   - pdf
+=======
+  - pdf
+>>>>>>> 7a6a5473e5cf811ab04cbe26f0f092ca4909e88c

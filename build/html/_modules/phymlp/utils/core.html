@@ -1,0 +1,904 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>phymlp.utils.core &mdash; PhyMLP 1.0.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=34088549"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/translations.js?v=beaddf03"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            PhyMLP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">目录：</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">快速开始</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#id2">安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#id3">基础使用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#id4">核心功能模块</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id5">训练与验证</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id6">数据格式转换</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id7">工具函数</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#id8">自动训练集生成工作流</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#materials-project">1. 从 Materials Project 获取结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id9">2. 生成形变结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id10">3. 生成微扰结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#vasp">4. 设置 VASP 计算</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#potcar">5. 测试 POTCAR 生成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id11">6. 提交 VASP 计算</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id12">7. 处理形变结果</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#birch-murnaghan">8. Birch-Murnaghan 拟合</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id13">9. 生成最终数据集</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#id14">配置文件详解</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#inputfile-txt">训练配置文件 Inputfile.txt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#input-yaml">自动化训练集配置文件 input.yaml</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#id15">典型工作流程</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#ni-cr">快速开始示例：Ni-Cr 合金训练集生成</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#id16">进阶用法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id17">自定义训练参数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id18">自定义VASP计算</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id19">批量处理多个体系</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#id20">故障排除</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id21">常见问题</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#id22">获取帮助</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#id23">下一步</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">phymlp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../phymlp.html">phymlp package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html">phymlp.auto_generate_set package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.cli.html">phymlp.cli package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.converters.html">phymlp.converters package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.tools.html">phymlp.tools package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.utils.html">phymlp.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.html#module-phymlp">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../phymlp.auto_generate_set.html">phymlp.auto_generate_set package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#module-phymlp.auto_generate_set.birch_murnaghan_fitting">phymlp.auto_generate_set.birch_murnaghan_fitting module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.birch_murnaghan_eqn"><code class="docutils literal notranslate"><span class="pre">birch_murnaghan_eqn()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.birch_murnaghan_residuals"><code class="docutils literal notranslate"><span class="pre">birch_murnaghan_residuals()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.create_mirror_structure"><code class="docutils literal notranslate"><span class="pre">create_mirror_structure()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.create_outcar_scale_directory"><code class="docutils literal notranslate"><span class="pre">create_outcar_scale_directory()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.ensure_numeric_parameters"><code class="docutils literal notranslate"><span class="pre">ensure_numeric_parameters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.filter_data"><code class="docutils literal notranslate"><span class="pre">filter_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.find_a_v_e_p_files"><code class="docutils literal notranslate"><span class="pre">find_a_v_e_p_files()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.find_scale_directories"><code class="docutils literal notranslate"><span class="pre">find_scale_directories()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.get_initial_guess"><code class="docutils literal notranslate"><span class="pre">get_initial_guess()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.get_reference_volume"><code class="docutils literal notranslate"><span class="pre">get_reference_volume()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.perform_fitting"><code class="docutils literal notranslate"><span class="pre">perform_fitting()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.process_all_birch_murnaghan_fitting"><code class="docutils literal notranslate"><span class="pre">process_all_birch_murnaghan_fitting()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.read_a_v_e_p_file"><code class="docutils literal notranslate"><span class="pre">read_a_v_e_p_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.birch_murnaghan_fitting.save_fitting_results"><code class="docutils literal notranslate"><span class="pre">save_fitting_results()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#module-phymlp.auto_generate_set.config">phymlp.auto_generate_set.config module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.config.load_config"><code class="docutils literal notranslate"><span class="pre">load_config()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp-auto-generate-set-deform-structures-module">phymlp.auto_generate_set.deform_structures module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp-auto-generate-set-from-mp-structures-module">phymlp.auto_generate_set.from_mp_structures module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#module-phymlp.auto_generate_set.generate_extxyz_dataset">phymlp.auto_generate_set.generate_extxyz_dataset module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.calculate_pressure_from_birch_murnaghan"><code class="docutils literal notranslate"><span class="pre">calculate_pressure_from_birch_murnaghan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.extract_structures_from_outcar"><code class="docutils literal notranslate"><span class="pre">extract_structures_from_outcar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.extract_structures_from_outcar_scale"><code class="docutils literal notranslate"><span class="pre">extract_structures_from_outcar_scale()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.filter_data_by_pressure"><code class="docutils literal notranslate"><span class="pre">filter_data_by_pressure()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.find_outcar_files"><code class="docutils literal notranslate"><span class="pre">find_outcar_files()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.find_reference_structure"><code class="docutils literal notranslate"><span class="pre">find_reference_structure()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.generate_birch_murnaghan_extxyz"><code class="docutils literal notranslate"><span class="pre">generate_birch_murnaghan_extxyz()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.generate_extxyz_dataset"><code class="docutils literal notranslate"><span class="pre">generate_extxyz_dataset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.generate_extxyz_from_config"><code class="docutils literal notranslate"><span class="pre">generate_extxyz_from_config()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.generate_structures_from_fit_a_P"><code class="docutils literal notranslate"><span class="pre">generate_structures_from_fit_a_P()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.generate_structures_from_fitting_curve"><code class="docutils literal notranslate"><span class="pre">generate_structures_from_fitting_curve()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.generate_vasp_extxyz"><code class="docutils literal notranslate"><span class="pre">generate_vasp_extxyz()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.gpa_to_ev_per_ang3"><code class="docutils literal notranslate"><span class="pre">gpa_to_ev_per_ang3()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.load_birch_murnaghan_fitting_results"><code class="docutils literal notranslate"><span class="pre">load_birch_murnaghan_fitting_results()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.load_fit_a_P_data"><code class="docutils literal notranslate"><span class="pre">load_fit_a_P_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.generate_extxyz_dataset.merge_extxyz_files"><code class="docutils literal notranslate"><span class="pre">merge_extxyz_files()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp-auto-generate-set-perturb-structures-module">phymlp.auto_generate_set.perturb_structures module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#module-phymlp.auto_generate_set.potcar_generator">phymlp.auto_generate_set.potcar_generator module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.potcar_generator.concatenate_potcar_files"><code class="docutils literal notranslate"><span class="pre">concatenate_potcar_files()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.potcar_generator.find_potcar_files"><code class="docutils literal notranslate"><span class="pre">find_potcar_files()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.potcar_generator.generate_potcar"><code class="docutils literal notranslate"><span class="pre">generate_potcar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.potcar_generator.generate_potcar_auto"><code class="docutils literal notranslate"><span class="pre">generate_potcar_auto()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.potcar_generator.generate_potcar_pymatgen"><code class="docutils literal notranslate"><span class="pre">generate_potcar_pymatgen()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.potcar_generator.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.potcar_generator.read_poscar_elements"><code class="docutils literal notranslate"><span class="pre">read_poscar_elements()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#module-phymlp.auto_generate_set.process_deform_results">phymlp.auto_generate_set.process_deform_results module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.process_deform_results.classify_deform_directories"><code class="docutils literal notranslate"><span class="pre">classify_deform_directories()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.process_deform_results.create_classified_structure"><code class="docutils literal notranslate"><span class="pre">create_classified_structure()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.process_deform_results.extract_vasp_data"><code class="docutils literal notranslate"><span class="pre">extract_vasp_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.process_deform_results.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.process_deform_results.process_all_deform_results"><code class="docutils literal notranslate"><span class="pre">process_all_deform_results()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#module-phymlp.auto_generate_set.utils">phymlp.auto_generate_set.utils module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.check_file_exists"><code class="docutils literal notranslate"><span class="pre">check_file_exists()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.check_potcar_availability"><code class="docutils literal notranslate"><span class="pre">check_potcar_availability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.chemsys_comb"><code class="docutils literal notranslate"><span class="pre">chemsys_comb()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.get_formula_from_filename"><code class="docutils literal notranslate"><span class="pre">get_formula_from_filename()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.mkdir_output_load"><code class="docutils literal notranslate"><span class="pre">mkdir_output_load()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.safe_copy"><code class="docutils literal notranslate"><span class="pre">safe_copy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp.auto_generate_set.utils.safe_path_join"><code class="docutils literal notranslate"><span class="pre">safe_path_join()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp-auto-generate-set-vasp-setup-module">phymlp.auto_generate_set.vasp_setup module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#phymlp-auto-generate-set-vasp-submit-module">phymlp.auto_generate_set.vasp_submit module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.auto_generate_set.html#module-phymlp.auto_generate_set">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../phymlp.cli.html">phymlp.cli package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.cli.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.cli.html#module-phymlp.cli.main">phymlp.cli.main module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.cli.html#phymlp.cli.main.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.cli.html#module-phymlp.cli">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../phymlp.converters.html">phymlp.converters package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.converters.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.converters.html#module-phymlp.converters.cfg2extxyz">phymlp.converters.cfg2extxyz module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.converters.html#phymlp.converters.cfg2extxyz.parse_cfg_file"><code class="docutils literal notranslate"><span class="pre">parse_cfg_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.converters.html#phymlp.converters.cfg2extxyz.write_extxyz"><code class="docutils literal notranslate"><span class="pre">write_extxyz()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.converters.html#module-phymlp.converters.outcar_converter">phymlp.converters.outcar_converter module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.converters.html#phymlp.converters.outcar_converter.extract_structures_from_outcar"><code class="docutils literal notranslate"><span class="pre">extract_structures_from_outcar()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.converters.html#module-phymlp.converters">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../phymlp.tools.html">phymlp.tools package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.tools.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.tools.html#module-phymlp.tools.get_KPATH">phymlp.tools.get_KPATH module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.tools.html#phymlp.tools.get_KPATH.generate_kpath"><code class="docutils literal notranslate"><span class="pre">generate_kpath()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.tools.html#module-phymlp.tools.split_set">phymlp.tools.split_set module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.tools.html#phymlp.tools.split_set.split_extxyz_structures"><code class="docutils literal notranslate"><span class="pre">split_extxyz_structures()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.tools.html#module-phymlp.tools">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../phymlp.utils.html">phymlp.utils package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.utils.html#module-phymlp.utils.core">phymlp.utils.core module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.utils.html#phymlp.utils.core.PUBLIC"><code class="docutils literal notranslate"><span class="pre">PUBLIC</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../phymlp.utils.html#phymlp.utils.core.RUN"><code class="docutils literal notranslate"><span class="pre">RUN</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../phymlp.utils.html#module-phymlp.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">PhyMLP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">模块代码</a></li>
+      <li class="breadcrumb-item active">phymlp.utils.core</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>phymlp.utils.core 源代码</h1><div class="highlight"><pre>
+<span></span><span class="c1"># phymlp-kit/utils/core.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">PhyMLP Kit 核心工具类和函数</span>
+
+<span class="sd">提供配置文件读取、参数解析、作业提交等核心功能。</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">threading</span>
+
+<span class="c1"># phymlp-kit/utils/core.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">PhyMLP Kit 核心工具类和函数</span>
+
+<span class="sd">提供配置文件读取、参数解析、作业提交等核心功能。</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">threading</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ast</span>
+
+<span class="c1"># phymlp-kit/utils/core.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">PhyMLP Kit 核心工具类和函数</span>
+
+<span class="sd">提供配置文件读取、参数解析、作业提交等核心功能。</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">threading</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ast</span>
+
+
+<div class="viewcode-block" id="PUBLIC">
+<a class="viewcode-back" href="../../../phymlp.utils.html#phymlp.utils.core.PUBLIC">[文档]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PUBLIC</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;公共配置类</span>
+
+<span class="sd">    管理PhyMLP的所有配置参数和输入文件解析。</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;初始化公共配置参数&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Inputfile</span> <span class="o">=</span> <span class="s2">&quot;Inputfile&quot;</span>
+
+        <span class="c1"># 所有允许的命令 - 确保这些与Inputfile中的键名匹配</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_keys</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;PhyMLP_load&quot;</span><span class="p">,</span> <span class="s2">&quot;lmp_mpi_load&quot;</span><span class="p">,</span> <span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="s1">&#39;extxyz_load&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;init_PhyMLP&#39;</span><span class="p">,</span> <span class="s1">&#39;iteration_limit&#39;</span><span class="p">,</span> <span class="s1">&#39;al_mode&#39;</span><span class="p">,</span> <span class="s1">&#39;save_to&#39;</span><span class="p">,</span>
+            <span class="s2">&quot;pot_PhyMLP_load&quot;</span><span class="p">,</span> <span class="s1">&#39;calculate&#39;</span><span class="p">,</span> <span class="s1">&#39;properties&#39;</span><span class="p">,</span> <span class="s2">&quot;crystal_structure&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;lattice&quot;</span><span class="p">,</span> <span class="s2">&quot;atomic_mass&quot;</span><span class="p">,</span> <span class="s2">&quot;vaspkit_load&quot;</span>
+        <span class="p">]</span>
+
+        <span class="c1"># 所有支持的计算属性</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_properties</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;E-V&quot;</span><span class="p">,</span> <span class="s2">&quot;Elastic&quot;</span><span class="p">,</span> <span class="s2">&quot;phonon&quot;</span><span class="p">,</span> <span class="s2">&quot;P-V&quot;</span><span class="p">]</span>
+
+        <span class="c1"># 默认参数</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_default_parameters</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_default_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;设置默认参数&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vaspkit_load</span> <span class="o">=</span> <span class="s1">&#39;./&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PhyMLP_load</span> <span class="o">=</span> <span class="s2">&quot;./&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lmp_mpi_load</span> <span class="o">=</span> <span class="s2">&quot;./lmp_mpi&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">train</span> <span class="o">=</span> <span class="s2">&quot;True&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">extxyz_load</span> <span class="o">=</span> <span class="s2">&quot;./train.exyz&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">init_PhyMLP</span> <span class="o">=</span> <span class="s2">&quot;06.PhyMLP&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">init_PhyMLP_load</span> <span class="o">=</span> <span class="s2">&quot;./&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iteration_limit</span> <span class="o">=</span> <span class="s2">&quot;5000&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">al_mode</span> <span class="o">=</span> <span class="s2">&quot;nbh&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_to</span> <span class="o">=</span> <span class="s2">&quot;./pot.PhyMLP&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pot_PhyMLP_load</span> <span class="o">=</span> <span class="s2">&quot;./train/pot.PhyMLP&quot;</span>  <span class="c1"># 修正了变量名</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">calculate</span> <span class="o">=</span> <span class="s2">&quot;True&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">properties</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;E-V&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">crystal_structure</span> <span class="o">=</span> <span class="s2">&quot;bcc&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lattice</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">atomic_mass</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
+
+<div class="viewcode-block" id="PUBLIC.Read">
+<a class="viewcode-back" href="../../../phymlp.utils.html#phymlp.utils.core.PUBLIC.Read">[文档]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">Read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Inputfile</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;读取Inputfile配置文件&quot;&quot;&quot;</span>
+        <span class="n">input_informations</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">Inputfile</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">readfile</span><span class="p">:</span>
+                <span class="n">read_informations</span> <span class="o">=</span> <span class="n">readfile</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">read_information</span> <span class="ow">in</span> <span class="n">read_informations</span><span class="p">:</span>
+                    <span class="n">new_line</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">read_information</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+                    <span class="k">if</span> <span class="n">new_line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_line</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="k">continue</span>
+                    <span class="n">new_line</span> <span class="o">=</span> <span class="n">new_line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="n">input_informations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_line</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">input_informations</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;文件读取错误: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value_str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;安全地解析配置值&quot;&quot;&quot;</span>
+        <span class="n">value_str</span> <span class="o">=</span> <span class="n">value_str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+        <span class="c1"># 处理字符串类型的值（带引号的）</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">value_str</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">value_str</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">))</span> <span class="ow">or</span> \
+                <span class="p">(</span><span class="n">value_str</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">value_str</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="n">value_str</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="c1"># 尝试解析为Python字面量</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">parsed_value</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">value_str</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">parsed_value</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">SyntaxError</span><span class="p">):</span>
+            <span class="c1"># 如果解析失败，返回原始字符串</span>
+            <span class="k">return</span> <span class="n">value_str</span>
+
+<div class="viewcode-block" id="PUBLIC.Key_and_parament">
+<a class="viewcode-back" href="../../../phymlp.utils.html#phymlp.utils.core.PUBLIC.Key_and_parament">[文档]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">Key_and_parament</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_informations</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;解析Inputfile中的参数并设置类属性&quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;############识别到的设置的Inputfile中的指令#################&quot;</span><span class="p">)</span>
+
+        <span class="c1"># 创建属性名到配置键的映射（处理大小写和命名差异）</span>
+        <span class="n">key_mapping</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;phymlp_load&#39;</span><span class="p">:</span> <span class="s1">&#39;PhyMLP_load&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;lmp_mpi_load&#39;</span><span class="p">:</span> <span class="s1">&#39;lmp_mpi_load&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;train&#39;</span><span class="p">:</span> <span class="s1">&#39;train&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;extxyz_load&#39;</span><span class="p">:</span> <span class="s1">&#39;extxyz_load&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;init_phymlp&#39;</span><span class="p">:</span> <span class="s1">&#39;init_PhyMLP&#39;</span><span class="p">,</span>  <span class="c1"># 处理大小写差异</span>
+            <span class="s1">&#39;iteration_limit&#39;</span><span class="p">:</span> <span class="s1">&#39;iteration_limit&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;al_mode&#39;</span><span class="p">:</span> <span class="s1">&#39;al_mode&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;save_to&#39;</span><span class="p">:</span> <span class="s1">&#39;save_to&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;pot_phymlp_load&#39;</span><span class="p">:</span> <span class="s1">&#39;pot_PhyMLP_load&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;calculate&#39;</span><span class="p">:</span> <span class="s1">&#39;calculate&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;properties&#39;</span><span class="p">:</span> <span class="s1">&#39;properties&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;crystal_structure&#39;</span><span class="p">:</span> <span class="s1">&#39;crystal_structure&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;lattice&#39;</span><span class="p">:</span> <span class="s1">&#39;lattice&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;atomic_mass&#39;</span><span class="p">:</span> <span class="s1">&#39;atomic_mass&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;vaspkit_load&#39;</span><span class="p">:</span> <span class="s1">&#39;vaspkit_load&#39;</span>
+        <span class="p">}</span>
+
+        <span class="n">temp_properties</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">input_information</span> <span class="ow">in</span> <span class="n">input_informations</span><span class="p">:</span>
+            <span class="c1"># 分割键值对</span>
+            <span class="k">if</span> <span class="s1">&#39;=&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">input_information</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;警告: 跳过无效的配置行: </span><span class="si">{</span><span class="n">input_information</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">continue</span>
+
+            <span class="n">parts</span> <span class="o">=</span> <span class="n">input_information</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">raw_key</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="n">input_key</span> <span class="o">=</span> <span class="n">raw_key</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>  <span class="c1"># 转换为小写进行比较</span>
+            <span class="n">value_str</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+            <span class="c1"># 检查键是否在允许的列表中</span>
+            <span class="k">if</span> <span class="n">input_key</span> <span class="ow">in</span> <span class="n">key_mapping</span><span class="p">:</span>
+                <span class="c1"># 获取正确的属性名</span>
+                <span class="n">attribute_name</span> <span class="o">=</span> <span class="n">key_mapping</span><span class="p">[</span><span class="n">input_key</span><span class="p">]</span>
+
+                <span class="k">if</span> <span class="n">attribute_name</span> <span class="o">==</span> <span class="s2">&quot;properties&quot;</span><span class="p">:</span>
+                    <span class="c1"># 处理properties参数</span>
+                    <span class="n">property_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_value</span><span class="p">(</span><span class="n">value_str</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">property_value</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                        <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">property_value</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="n">prop</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_properties</span><span class="p">:</span>
+                                <span class="n">temp_properties</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prop</span><span class="p">)</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;不支持的计算属性: </span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                                <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">properties</span> <span class="o">=</span> <span class="n">temp_properties</span>
+                    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">property_value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                        <span class="n">props</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">property_value</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)]</span>
+                        <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">props</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="n">prop</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_properties</span><span class="p">:</span>
+                                <span class="n">temp_properties</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prop</span><span class="p">)</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;不支持的计算属性: </span><span class="si">{</span><span class="n">prop</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                                <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">properties</span> <span class="o">=</span> <span class="n">temp_properties</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;properties参数格式错误: </span><span class="si">{</span><span class="n">property_value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># 解析值并设置属性</span>
+                    <span class="n">parsed_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_value</span><span class="p">(</span><span class="n">value_str</span><span class="p">)</span>
+                    <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute_name</span><span class="p">,</span> <span class="n">parsed_value</span><span class="p">)</span>
+
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">raw_key</span><span class="si">}</span><span class="s2">=</span><span class="si">{</span><span class="n">value_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;不支持的指令: </span><span class="si">{</span><span class="n">raw_key</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;#############未设置的指令将保持默认#########################&quot;</span><span class="p">)</span>
+
+        <span class="c1"># 打印更新后的参数用于调试</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_print_updated_parameters</span><span class="p">()</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_print_updated_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;打印更新后的参数值用于调试&quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">#############更新后的参数值#########################&quot;</span><span class="p">)</span>
+        <span class="n">parameters_to_display</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;vaspkit_load&#39;</span><span class="p">:</span> <span class="s1">&#39;VASPkit路径&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;PhyMLP_load&#39;</span><span class="p">:</span> <span class="s1">&#39;PhyMLP路径&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;lmp_mpi_load&#39;</span><span class="p">:</span> <span class="s1">&#39;LAMMPS路径&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;train&#39;</span><span class="p">:</span> <span class="s1">&#39;训练开关&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;extxyz_load&#39;</span><span class="p">:</span> <span class="s1">&#39;训练集路径&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;init_PhyMLP&#39;</span><span class="p">:</span> <span class="s1">&#39;初始势函数&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;init_PhyMLP_load&#39;</span><span class="p">:</span> <span class="s1">&#39;初始势函数路径&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;iteration_limit&#39;</span><span class="p">:</span> <span class="s1">&#39;迭代次数&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;al_mode&#39;</span><span class="p">:</span> <span class="s1">&#39;训练模式&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;save_to&#39;</span><span class="p">:</span> <span class="s1">&#39;保存路径&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;pot_PhyMLP_load&#39;</span><span class="p">:</span> <span class="s1">&#39;势函数路径&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;calculate&#39;</span><span class="p">:</span> <span class="s1">&#39;计算开关&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;properties&#39;</span><span class="p">:</span> <span class="s1">&#39;计算性质&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;crystal_structure&#39;</span><span class="p">:</span> <span class="s1">&#39;晶体结构&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;lattice&#39;</span><span class="p">:</span> <span class="s1">&#39;晶格常数&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;atomic_mass&#39;</span><span class="p">:</span> <span class="s1">&#39;原子质量&#39;</span>
+        <span class="p">}</span>
+
+        <span class="k">for</span> <span class="n">attr_name</span><span class="p">,</span> <span class="n">description</span> <span class="ow">in</span> <span class="n">parameters_to_display</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">):</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">description</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2"> (类型: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="PUBLIC.Bool_commands">
+<a class="viewcode-back" href="../../../phymlp.utils.html#phymlp.utils.core.PUBLIC.Bool_commands">[文档]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">Bool_commands</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bool_command</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;验证并转换布尔命令&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">bool_command</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">bool_command</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">bool_command</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">bool_command</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;true&quot;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">elif</span> <span class="n">bool_command</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;false&quot;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;请检查参数的书写是否正确，期望布尔值但得到: </span><span class="si">{</span><span class="n">bool_command</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="RUN">
+<a class="viewcode-back" href="../../../phymlp.utils.html#phymlp.utils.core.RUN">[文档]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">RUN</span><span class="p">(</span><span class="n">PUBLIC</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;运行管理类</span>
+
+<span class="sd">    负责训练和计算任务的执行管理，包括SLURM作业提交和监控。</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        run = RUN()</span>
+<span class="sd">        # 读取配置</span>
+<span class="sd">        input_info = run.Read(&quot;Inputfile&quot;)</span>
+<span class="sd">        run.Key_and_parament(input_info)</span>
+<span class="sd">        # 执行训练</span>
+<span class="sd">        train_drive = run.Bool_commands(run.train)</span>
+<span class="sd">        train_dir, train_cmd = run.Train_commands(train_drive)</span>
+<span class="sd">        run.Train(train_drive, train_dir, train_cmd)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="RUN.slurm_sub">
+<a class="viewcode-back" href="../../../phymlp.utils.html#phymlp.utils.core.RUN.slurm_sub">[文档]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">slurm_sub</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job_name</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;提交SLURM作业</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            job_name (str): 作业名称</span>
+<span class="sd">            command (str, optional): 训练命令，仅用于训练作业</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            subprocess.CalledProcessError: 当作业提交失败时</span>
+<span class="sd">            RuntimeError: 当作业监控过程中出现错误时</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">job_name</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;train&quot;</span><span class="p">:</span>
+            <span class="n">job_script</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;#!/bin/bash</span>
+<span class="s2">#SBATCH -J calculate_</span><span class="si">{</span><span class="n">job_name</span><span class="si">}</span>
+<span class="s2">#SBATCH -N 1</span>
+<span class="s2">#SBATCH -p xahcnormal</span>
+<span class="s2">#SBATCH --ntasks-per-node=32</span>
+<span class="s2">mpirun -n 32 </span><span class="si">{</span><span class="n">command</span><span class="si">}</span><span class="s2"> &gt; train-output.log</span>
+<span class="s2">            &quot;&quot;&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">job_script</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;#!/bin/bash</span>
+<span class="s2">#SBATCH -J calculate_</span><span class="si">{</span><span class="n">job_name</span><span class="si">}</span>
+<span class="s2">#SBATCH -N 1</span>
+<span class="s2">#SBATCH -p xahcnormal</span>
+<span class="s2">#SBATCH --ntasks-per-node=32</span>
+<span class="s2">mpirun -n 32 </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">lmp_mpi_load</span><span class="si">}</span><span class="s2"> -i </span><span class="si">{</span><span class="n">job_name</span><span class="si">}</span><span class="s2">.in &gt; output.log</span>
+<span class="s2">            &quot;&quot;&quot;</span>
+
+        <span class="n">current_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+        <span class="n">job_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">current_path</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">job_name</span><span class="p">))</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">job_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">script_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">job_dir</span><span class="p">,</span> <span class="s2">&quot;test_job_script.sh&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">script_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">job_script</span><span class="p">)</span>
+
+        <span class="n">process</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;cd </span><span class="si">{</span><span class="n">job_dir</span><span class="si">}</span><span class="s2"> &amp;&amp; sbatch test_job_script.sh&quot;</span><span class="p">,</span>
+            <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+            <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+            <span class="n">shell</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
+        <span class="n">process</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+        <span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">process</span><span class="o">.</span><span class="n">returncode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;作业提交失败: </span><span class="si">{</span><span class="n">stderr</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="n">job_id</span> <span class="o">=</span> <span class="n">stdout</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;计算 </span><span class="si">{</span><span class="n">job_name</span><span class="si">}</span><span class="s2"> 任务已经提交，作业号: </span><span class="si">{</span><span class="n">job_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;运行中......&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_wait_for_job_completion</span><span class="p">(</span><span class="n">job_id</span><span class="p">,</span> <span class="n">job_name</span><span class="p">,</span> <span class="n">current_path</span><span class="p">,</span> <span class="n">job_dir</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_wait_for_job_completion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job_id</span><span class="p">,</span> <span class="n">job_name</span><span class="p">,</span> <span class="n">current_path</span><span class="p">,</span> <span class="n">job_dir</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;等待作业完成并执行后处理</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            job_id (str): SLURM作业ID</span>
+<span class="sd">            job_name (str): 作业名称</span>
+<span class="sd">            current_path (str): 当前工作目录</span>
+<span class="sd">            job_dir (str): 作业目录</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">waiting_event</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">waiting</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+            <span class="n">chars</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;|&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">]</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">while</span> <span class="ow">not</span> <span class="n">event</span><span class="o">.</span><span class="n">is_set</span><span class="p">():</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\r</span><span class="si">{</span><span class="n">chars</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">i</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">chars</span><span class="p">)</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">waiting_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">waiting</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">waiting_event</span><span class="p">,))</span>
+            <span class="n">waiting_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">check_process</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span>
+                    <span class="p">[</span><span class="s2">&quot;squeue&quot;</span><span class="p">,</span> <span class="s2">&quot;-j&quot;</span><span class="p">,</span> <span class="n">job_id</span><span class="p">],</span>
+                    <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+                    <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span>
+                <span class="p">)</span>
+                <span class="n">check_stdout</span><span class="p">,</span> <span class="n">check_stderr</span> <span class="o">=</span> <span class="n">check_process</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="n">job_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">check_stdout</span><span class="o">.</span><span class="n">decode</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_post_process</span><span class="p">(</span><span class="n">job_name</span><span class="p">,</span> <span class="n">current_path</span><span class="p">)</span>
+                    <span class="k">break</span>
+                <span class="k">elif</span> <span class="s2">&quot;R&quot;</span> <span class="ow">in</span> <span class="n">check_stdout</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span> <span class="ow">or</span> <span class="s2">&quot;PD&quot;</span> <span class="ow">in</span> <span class="n">check_stdout</span><span class="o">.</span><span class="n">decode</span><span class="p">():</span>
+                    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+            <span class="n">waiting_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+            <span class="n">waiting_thread</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;作业等待错误: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">job_dir</span><span class="p">,</span> <span class="s2">&quot;test_job_script.sh&quot;</span><span class="p">))</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_post_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job_name</span><span class="p">,</span> <span class="n">current_path</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;作业完成后处理</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            job_name (str): 作业名称</span>
+<span class="sd">            current_path (str): 当前工作目录</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">job_name_lower</span> <span class="o">=</span> <span class="n">job_name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">job_name_lower</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;e-v&quot;</span><span class="p">,</span> <span class="s2">&quot;ev&quot;</span><span class="p">]:</span>
+            <span class="n">plot_command</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;cd </span><span class="si">{</span><span class="n">current_path</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">job_name</span><span class="si">}</span><span class="s2"> &amp;&amp; python plot.py &amp;&amp; rm plot.py&quot;</span>
+            <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">plot_command</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+        <span class="k">elif</span> <span class="n">job_name_lower</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;p-v&quot;</span><span class="p">,</span> <span class="s2">&quot;pv&quot;</span><span class="p">]:</span>
+            <span class="n">plot_command</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;cd </span><span class="si">{</span><span class="n">current_path</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">job_name</span><span class="si">}</span><span class="s2"> &amp;&amp; python plot.py &amp;&amp; rm plot.py&quot;</span>
+            <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">plot_command</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+        <span class="k">elif</span> <span class="n">job_name_lower</span> <span class="o">==</span> <span class="s2">&quot;phonon&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_process_phonon</span><span class="p">(</span><span class="n">current_path</span><span class="p">,</span> <span class="n">job_name</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;计算已经完成，请到 </span><span class="si">{</span><span class="n">job_name</span><span class="si">}</span><span class="s2"> 目录下查看结果&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_process_phonon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current_path</span><span class="p">,</span> <span class="n">job_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;处理声子计算的后处理</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            current_path (str): 当前工作目录</span>
+<span class="sd">            job_name (str): 作业名称</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">commands</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;phonolammps PHONON.in -c POSCAR --dim 2 2 2&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;python get_KPATH.py &gt;&gt; PHONON.log&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;rm ./get_KPATH.py&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;sed -i &#39;s/DIM =/DIM = 2 2 2/&#39; ./KPATH.phonopy&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;phonopy -c POSCAR -p -s KPATH.phonopy&quot;</span>
+        <span class="p">]</span>
+        <span class="n">full_command</span> <span class="o">=</span> <span class="s2">&quot; &amp;&amp; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">commands</span><span class="p">)</span>
+        <span class="n">plot_command</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;cd </span><span class="si">{</span><span class="n">current_path</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">job_name</span><span class="si">}</span><span class="s2"> &amp;&amp; </span><span class="si">{</span><span class="n">full_command</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">plot_command</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+<div class="viewcode-block" id="RUN.Train_commands">
+<a class="viewcode-back" href="../../../phymlp.utils.html#phymlp.utils.core.RUN.Train_commands">[文档]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">Train_commands</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">drive</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;生成训练命令和目录</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            drive (bool): 是否执行训练</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple: (训练目录路径, 训练命令) 或 (&quot;No_path&quot;, &quot;Skip_step&quot;)</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            SystemExit: 当训练目录创建失败时</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">drive</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;由于train参数设置为false，跳过势函数训练步骤&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="s2">&quot;No_path&quot;</span><span class="p">,</span> <span class="s2">&quot;Skip_step&quot;</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;*************进行矩张量势被动训练***************&quot;</span><span class="p">)</span>
+        <span class="n">make_train_dir</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;mkdir -p train &amp;&amp; cp -f </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">init_PhyMLP_load</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">init_PhyMLP</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">extxyz_load</span><span class="si">}</span><span class="s2"> ./train&quot;</span><span class="p">,</span>
+            <span class="n">shell</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
+        <span class="n">make_train_dir</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">make_train_dir</span><span class="o">.</span><span class="n">returncode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;请检查Inputfile中init_PhyMLP_load或extxyz_load路径是否正确&quot;</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;在当前目录下创建了用于训练PhyMLP势的train子目录&quot;</span><span class="p">)</span>
+
+        <span class="n">train_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_path</span><span class="p">,</span> <span class="s2">&quot;train&quot;</span><span class="p">)</span>
+        <span class="n">train_command</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">PhyMLP_load</span><span class="si">}</span><span class="s2">/bin/MLP train </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">init_PhyMLP</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">extxyz_load</span><span class="si">}</span><span class="s2"> &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;--save_to=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">save_to</span><span class="si">}</span><span class="s2"> --iteration_limit=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">iteration_limit</span><span class="si">}</span><span class="s2"> &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;--al_mode=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">al_mode</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">train_dir</span><span class="p">,</span> <span class="n">train_command</span></div>
+
+
+<div class="viewcode-block" id="RUN.Train">
+<a class="viewcode-back" href="../../../phymlp.utils.html#phymlp.utils.core.RUN.Train">[文档]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">Train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train_drive</span><span class="p">,</span> <span class="n">train_dir</span><span class="p">,</span> <span class="n">train_command</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;执行训练任务</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            train_drive (bool): 是否执行训练</span>
+<span class="sd">            train_dir (str): 训练目录路径</span>
+<span class="sd">            train_command (str): 训练命令</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">train_drive</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-------------------------PhyMLP势开始训练-------------------------------&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">slurm_sub</span><span class="p">(</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="n">train_command</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-----------------------PhyMLP势已经训练完成-----------------------------&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="RUN.Calculate_dir">
+<a class="viewcode-back" href="../../../phymlp.utils.html#phymlp.utils.core.RUN.Calculate_dir">[文档]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">Calculate_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">drive</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;创建计算目录并复制必要文件</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            drive (bool): 是否执行计算</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            SystemExit: 当目录创建或文件复制失败时</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">drive</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;由于calculate参数设置为false，跳过性质计算步骤&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">properties</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">))</span>
+        <span class="k">for</span> <span class="nb">property</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">:</span>
+            <span class="n">property_upper</span> <span class="o">=</span> <span class="nb">property</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+            <span class="n">make_properties_dir</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;cp -rf </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">PhyMLP_load</span><span class="si">}</span><span class="s2">/test/</span><span class="si">{</span><span class="n">property_upper</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">current_path</span><span class="si">}</span><span class="s2"> &amp;&amp; &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;cp </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">pot_PhyMLP_load</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">current_path</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">property_upper</span><span class="si">}</span><span class="s2">/&quot;</span><span class="p">,</span>
+                <span class="n">shell</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
+            <span class="n">make_properties_dir</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">make_properties_dir</span><span class="o">.</span><span class="n">returncode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;创建了用于计算</span><span class="si">{</span><span class="n">property_upper</span><span class="si">}</span><span class="s2">的子目录&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;请检查Inputfile中PhyMLP_load路径或pot_PhyMLP_load是否正确&quot;</span><span class="p">)</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="RUN.Rewrite_lammps_in">
+<a class="viewcode-back" href="../../../phymlp.utils.html#phymlp.utils.core.RUN.Rewrite_lammps_in">[文档]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">Rewrite_lammps_in</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">drive</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;根据配置重写LAMMPS输入文件</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            drive (bool): 是否执行计算任务</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">drive</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="k">for</span> <span class="n">calculate_property</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">:</span>
+            <span class="n">calculate_property</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">calculate_property</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_modify_property_in_file</span><span class="p">(</span><span class="n">calculate_property</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_modify_property_in_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">property</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;修改特定属性的输入文件</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            property (str): 计算属性名称</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            SystemExit: 当文件修改失败时</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">property_commands</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;E-V&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modify_ev_in</span><span class="p">,</span>
+            <span class="s2">&quot;ELASTIC&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modify_elastic_in</span><span class="p">,</span>
+            <span class="s2">&quot;P-V&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modify_pv_in</span><span class="p">,</span>
+            <span class="s2">&quot;PHONON&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modify_phonon_in</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="nb">property</span> <span class="ow">in</span> <span class="n">property_commands</span><span class="p">:</span>
+            <span class="n">property_commands</span><span class="p">[</span><span class="nb">property</span><span class="p">]()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;不支持的属性: </span><span class="si">{</span><span class="nb">property</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_modify_ev_in</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;修改E-V计算输入文件&quot;&quot;&quot;</span>
+        <span class="n">lattice_min</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%.2f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lattice</span><span class="p">)</span> <span class="o">-</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lattice</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.3</span><span class="p">)</span>
+        <span class="n">interval</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%.2f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lattice</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.3</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
+
+        <span class="n">commands</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="sa">f</span><span class="s2">&quot;sed -i &#39;s/define_mass/mass 1 </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">atomic_mass</span><span class="si">}</span><span class="s2">/&#39; ./E-V/E-V.in&quot;</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;sed -i &#39;s/crystal_structure/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">crystal_structure</span><span class="si">}</span><span class="s2">/&#39; ./E-V/E-V.in&quot;</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;sed -i &#39;s/lattice_constant/</span><span class="si">{</span><span class="n">lattice_min</span><span class="si">}</span><span class="s2">+</span><span class="si">{</span><span class="n">interval</span><span class="si">}</span><span class="s2">*$i/&#39; ./E-V/E-V.in&quot;</span>
+        <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_execute_commands</span><span class="p">(</span><span class="n">commands</span><span class="p">,</span> <span class="s2">&quot;E-V&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_modify_elastic_in</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;修改弹性常数计算输入文件&quot;&quot;&quot;</span>
+        <span class="n">commands</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="sa">f</span><span class="s2">&quot;sed -i &#39;s/define_mass/mass 1 </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">atomic_mass</span><span class="si">}</span><span class="s2">/&#39; ./ELASTIC/init.mod&quot;</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;sed -i &#39;s/crystal_structure/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">crystal_structure</span><span class="si">}</span><span class="s2">/&#39; ./ELASTIC/init.mod&quot;</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;sed -i &#39;s/lattice_constant/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">lattice</span><span class="si">}</span><span class="s2">/&#39; ./ELASTIC/init.mod&quot;</span>
+        <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_execute_commands</span><span class="p">(</span><span class="n">commands</span><span class="p">,</span> <span class="s2">&quot;ELASTIC&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_modify_pv_in</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;修改P-V计算输入文件&quot;&quot;&quot;</span>
+        <span class="n">interval</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%.6f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lattice</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.1</span> <span class="o">/</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="n">basis_volume</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lattice</span><span class="p">)</span> <span class="o">**</span> <span class="mi">3</span>
+
+        <span class="n">commands</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="sa">f</span><span class="s2">&quot;sed -i &#39;s/define_mass/mass 1 </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">atomic_mass</span><span class="si">}</span><span class="s2">/&#39; ./P-V/P-V.in&quot;</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;sed -i &#39;s/crystal_structure/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">crystal_structure</span><span class="si">}</span><span class="s2">/&#39; ./P-V/P-V.in&quot;</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;sed -i &#39;s/lattice_constant/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">lattice</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">interval</span><span class="si">}</span><span class="s2">*$i/&#39; ./P-V/P-V.in&quot;</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;sed -i &#39;s/basis_volume/</span><span class="si">{</span><span class="n">basis_volume</span><span class="si">}</span><span class="s2">/&#39; ./P-V/P-V.in&quot;</span>
+        <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_execute_commands</span><span class="p">(</span><span class="n">commands</span><span class="p">,</span> <span class="s2">&quot;P-V&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_modify_phonon_in</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;修改声子计算输入文件&quot;&quot;&quot;</span>
+        <span class="n">commands</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="sa">f</span><span class="s2">&quot;sed -i &#39;s/define_mass/mass 1 </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">atomic_mass</span><span class="si">}</span><span class="s2">/&#39; ./PHONON/PHONON.in&quot;</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;sed -i &#39;s/crystal_structure/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">crystal_structure</span><span class="si">}</span><span class="s2">/&#39; ./PHONON/PHONON.in&quot;</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;sed -i &#39;s/lattice_constant/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">lattice</span><span class="si">}</span><span class="s2">/&#39; ./PHONON/PHONON.in&quot;</span>
+        <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_execute_commands</span><span class="p">(</span><span class="n">commands</span><span class="p">,</span> <span class="s2">&quot;PHONON&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_execute_commands</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commands</span><span class="p">,</span> <span class="n">property_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;执行命令列表</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            commands (list): 命令字符串列表</span>
+<span class="sd">            property_name (str): 属性名称，用于错误信息</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            SystemExit: 当命令执行失败时</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">full_command</span> <span class="o">=</span> <span class="s2">&quot; &amp;&amp; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">commands</span><span class="p">)</span>
+        <span class="n">process</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">full_command</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">process</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">process</span><span class="o">.</span><span class="n">returncode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;请检查</span><span class="si">{</span><span class="n">property_name</span><span class="si">}</span><span class="s2">计算参数是否设置正确&quot;</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<div class="viewcode-block" id="RUN.Execute">
+<a class="viewcode-back" href="../../../phymlp.utils.html#phymlp.utils.core.RUN.Execute">[文档]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">Execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">drive</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;执行所有计算任务</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            drive (bool): 是否执行计算任务</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">drive</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-------------------------开始计算-------------------------------&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">exec_properties</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">slurm_sub</span><span class="p">(</span><span class="n">exec_properties</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-------------------------计算完成-------------------------------&quot;</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 NSH。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

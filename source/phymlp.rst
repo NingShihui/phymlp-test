@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 phymlp简介
 ==============
 
@@ -10,10 +11,18 @@ phymlp简介
 2. 自动训练集生成流程
 3. 机器学习势函数训练
 4. 性质计算与验证
+=======
+phymlp package
+==============
+
+Subpackages
+-----------
+>>>>>>> 7a6a5473e5cf811ab04cbe26f0f092ca4909e88c
 
 .. toctree::
    :maxdepth: 4
 
+<<<<<<< HEAD
    quickstart
 
 配置文件说明
@@ -41,3 +50,18 @@ PhyMLP Kit 使用两个主要配置文件：``input.yaml`` 用于控制自动训
 
    input_files/train_input
 
+=======
+   phymlp.auto_generate_set
+   phymlp.cli
+   phymlp.converters
+   phymlp.tools
+   phymlp.utils
+
+Module contents
+---------------
+
+.. automodule:: phymlp
+   :members:
+   :show-inheritance:
+   :undoc-members:
+>>>>>>> 7a6a5473e5cf811ab04cbe26f0f092ca4909e88c

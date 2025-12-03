@@ -1,0 +1,1076 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>phymlp.auto_generate_set package &mdash; PhyMLP 1.0.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=34088549"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/translations.js?v=beaddf03"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="搜索" href="search.html" />
+    <link rel="next" title="phymlp.cli package" href="phymlp.cli.html" />
+    <link rel="prev" title="phymlp package" href="phymlp.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            PhyMLP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">目录：</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">快速开始</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#id2">安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#id3">基础使用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#id4">核心功能模块</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#id5">训练与验证</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#id6">数据格式转换</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#id7">工具函数</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#id8">自动训练集生成工作流</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#materials-project">1. 从 Materials Project 获取结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#id9">2. 生成形变结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#id10">3. 生成微扰结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#vasp">4. 设置 VASP 计算</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#potcar">5. 测试 POTCAR 生成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#id11">6. 提交 VASP 计算</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#id12">7. 处理形变结果</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#birch-murnaghan">8. Birch-Murnaghan 拟合</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#id13">9. 生成最终数据集</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#id14">配置文件详解</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#inputfile-txt">训练配置文件 Inputfile.txt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#input-yaml">自动化训练集配置文件 input.yaml</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#id15">典型工作流程</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#ni-cr">快速开始示例：Ni-Cr 合金训练集生成</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#id16">进阶用法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#id17">自定义训练参数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#id18">自定义VASP计算</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#id19">批量处理多个体系</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#id20">故障排除</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#id21">常见问题</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#id22">获取帮助</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#id23">下一步</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">phymlp</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="phymlp.html">phymlp package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="phymlp.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">phymlp.auto_generate_set package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.cli.html">phymlp.cli package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.converters.html">phymlp.converters package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.tools.html">phymlp.tools package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.utils.html">phymlp.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.html#module-phymlp">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">phymlp.auto_generate_set package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-phymlp.auto_generate_set.birch_murnaghan_fitting">phymlp.auto_generate_set.birch_murnaghan_fitting module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.birch_murnaghan_fitting.birch_murnaghan_eqn"><code class="docutils literal notranslate"><span class="pre">birch_murnaghan_eqn()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.birch_murnaghan_fitting.birch_murnaghan_residuals"><code class="docutils literal notranslate"><span class="pre">birch_murnaghan_residuals()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.birch_murnaghan_fitting.create_mirror_structure"><code class="docutils literal notranslate"><span class="pre">create_mirror_structure()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.birch_murnaghan_fitting.create_outcar_scale_directory"><code class="docutils literal notranslate"><span class="pre">create_outcar_scale_directory()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.birch_murnaghan_fitting.ensure_numeric_parameters"><code class="docutils literal notranslate"><span class="pre">ensure_numeric_parameters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.birch_murnaghan_fitting.filter_data"><code class="docutils literal notranslate"><span class="pre">filter_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.birch_murnaghan_fitting.find_a_v_e_p_files"><code class="docutils literal notranslate"><span class="pre">find_a_v_e_p_files()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.birch_murnaghan_fitting.find_scale_directories"><code class="docutils literal notranslate"><span class="pre">find_scale_directories()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.birch_murnaghan_fitting.get_initial_guess"><code class="docutils literal notranslate"><span class="pre">get_initial_guess()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.birch_murnaghan_fitting.get_reference_volume"><code class="docutils literal notranslate"><span class="pre">get_reference_volume()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.birch_murnaghan_fitting.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.birch_murnaghan_fitting.perform_fitting"><code class="docutils literal notranslate"><span class="pre">perform_fitting()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.birch_murnaghan_fitting.process_all_birch_murnaghan_fitting"><code class="docutils literal notranslate"><span class="pre">process_all_birch_murnaghan_fitting()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.birch_murnaghan_fitting.read_a_v_e_p_file"><code class="docutils literal notranslate"><span class="pre">read_a_v_e_p_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.birch_murnaghan_fitting.save_fitting_results"><code class="docutils literal notranslate"><span class="pre">save_fitting_results()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-phymlp.auto_generate_set.config">phymlp.auto_generate_set.config module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.config.load_config"><code class="docutils literal notranslate"><span class="pre">load_config()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#phymlp-auto-generate-set-deform-structures-module">phymlp.auto_generate_set.deform_structures module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#phymlp-auto-generate-set-from-mp-structures-module">phymlp.auto_generate_set.from_mp_structures module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-phymlp.auto_generate_set.generate_extxyz_dataset">phymlp.auto_generate_set.generate_extxyz_dataset module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.generate_extxyz_dataset.calculate_pressure_from_birch_murnaghan"><code class="docutils literal notranslate"><span class="pre">calculate_pressure_from_birch_murnaghan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.generate_extxyz_dataset.extract_structures_from_outcar"><code class="docutils literal notranslate"><span class="pre">extract_structures_from_outcar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.generate_extxyz_dataset.extract_structures_from_outcar_scale"><code class="docutils literal notranslate"><span class="pre">extract_structures_from_outcar_scale()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.generate_extxyz_dataset.filter_data_by_pressure"><code class="docutils literal notranslate"><span class="pre">filter_data_by_pressure()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.generate_extxyz_dataset.find_outcar_files"><code class="docutils literal notranslate"><span class="pre">find_outcar_files()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.generate_extxyz_dataset.find_reference_structure"><code class="docutils literal notranslate"><span class="pre">find_reference_structure()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.generate_extxyz_dataset.generate_birch_murnaghan_extxyz"><code class="docutils literal notranslate"><span class="pre">generate_birch_murnaghan_extxyz()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.generate_extxyz_dataset.generate_extxyz_dataset"><code class="docutils literal notranslate"><span class="pre">generate_extxyz_dataset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.generate_extxyz_dataset.generate_extxyz_from_config"><code class="docutils literal notranslate"><span class="pre">generate_extxyz_from_config()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.generate_extxyz_dataset.generate_structures_from_fit_a_P"><code class="docutils literal notranslate"><span class="pre">generate_structures_from_fit_a_P()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.generate_extxyz_dataset.generate_structures_from_fitting_curve"><code class="docutils literal notranslate"><span class="pre">generate_structures_from_fitting_curve()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.generate_extxyz_dataset.generate_vasp_extxyz"><code class="docutils literal notranslate"><span class="pre">generate_vasp_extxyz()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.generate_extxyz_dataset.gpa_to_ev_per_ang3"><code class="docutils literal notranslate"><span class="pre">gpa_to_ev_per_ang3()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.generate_extxyz_dataset.load_birch_murnaghan_fitting_results"><code class="docutils literal notranslate"><span class="pre">load_birch_murnaghan_fitting_results()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.generate_extxyz_dataset.load_fit_a_P_data"><code class="docutils literal notranslate"><span class="pre">load_fit_a_P_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.generate_extxyz_dataset.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.generate_extxyz_dataset.merge_extxyz_files"><code class="docutils literal notranslate"><span class="pre">merge_extxyz_files()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#phymlp-auto-generate-set-perturb-structures-module">phymlp.auto_generate_set.perturb_structures module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-phymlp.auto_generate_set.potcar_generator">phymlp.auto_generate_set.potcar_generator module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.potcar_generator.concatenate_potcar_files"><code class="docutils literal notranslate"><span class="pre">concatenate_potcar_files()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.potcar_generator.find_potcar_files"><code class="docutils literal notranslate"><span class="pre">find_potcar_files()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.potcar_generator.generate_potcar"><code class="docutils literal notranslate"><span class="pre">generate_potcar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.potcar_generator.generate_potcar_auto"><code class="docutils literal notranslate"><span class="pre">generate_potcar_auto()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.potcar_generator.generate_potcar_pymatgen"><code class="docutils literal notranslate"><span class="pre">generate_potcar_pymatgen()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.potcar_generator.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.potcar_generator.read_poscar_elements"><code class="docutils literal notranslate"><span class="pre">read_poscar_elements()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-phymlp.auto_generate_set.process_deform_results">phymlp.auto_generate_set.process_deform_results module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.process_deform_results.classify_deform_directories"><code class="docutils literal notranslate"><span class="pre">classify_deform_directories()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.process_deform_results.create_classified_structure"><code class="docutils literal notranslate"><span class="pre">create_classified_structure()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.process_deform_results.extract_vasp_data"><code class="docutils literal notranslate"><span class="pre">extract_vasp_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.process_deform_results.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.process_deform_results.process_all_deform_results"><code class="docutils literal notranslate"><span class="pre">process_all_deform_results()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-phymlp.auto_generate_set.utils">phymlp.auto_generate_set.utils module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.utils.check_file_exists"><code class="docutils literal notranslate"><span class="pre">check_file_exists()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.utils.check_potcar_availability"><code class="docutils literal notranslate"><span class="pre">check_potcar_availability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.utils.chemsys_comb"><code class="docutils literal notranslate"><span class="pre">chemsys_comb()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.utils.get_formula_from_filename"><code class="docutils literal notranslate"><span class="pre">get_formula_from_filename()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.utils.mkdir_output_load"><code class="docutils literal notranslate"><span class="pre">mkdir_output_load()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.utils.safe_copy"><code class="docutils literal notranslate"><span class="pre">safe_copy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#phymlp.auto_generate_set.utils.safe_path_join"><code class="docutils literal notranslate"><span class="pre">safe_path_join()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#phymlp-auto-generate-set-vasp-setup-module">phymlp.auto_generate_set.vasp_setup module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#phymlp-auto-generate-set-vasp-submit-module">phymlp.auto_generate_set.vasp_submit module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-phymlp.auto_generate_set">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="phymlp.cli.html">phymlp.cli package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.cli.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.cli.html#module-phymlp.cli.main">phymlp.cli.main module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.cli.html#phymlp.cli.main.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.cli.html#module-phymlp.cli">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="phymlp.converters.html">phymlp.converters package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.converters.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.converters.html#module-phymlp.converters.cfg2extxyz">phymlp.converters.cfg2extxyz module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.converters.html#phymlp.converters.cfg2extxyz.parse_cfg_file"><code class="docutils literal notranslate"><span class="pre">parse_cfg_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.converters.html#phymlp.converters.cfg2extxyz.write_extxyz"><code class="docutils literal notranslate"><span class="pre">write_extxyz()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.converters.html#module-phymlp.converters.outcar_converter">phymlp.converters.outcar_converter module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.converters.html#phymlp.converters.outcar_converter.extract_structures_from_outcar"><code class="docutils literal notranslate"><span class="pre">extract_structures_from_outcar()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.converters.html#module-phymlp.converters">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="phymlp.tools.html">phymlp.tools package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.tools.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.tools.html#module-phymlp.tools.get_KPATH">phymlp.tools.get_KPATH module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.tools.html#phymlp.tools.get_KPATH.generate_kpath"><code class="docutils literal notranslate"><span class="pre">generate_kpath()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.tools.html#module-phymlp.tools.split_set">phymlp.tools.split_set module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.tools.html#phymlp.tools.split_set.split_extxyz_structures"><code class="docutils literal notranslate"><span class="pre">split_extxyz_structures()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.tools.html#module-phymlp.tools">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="phymlp.utils.html">phymlp.utils package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.utils.html#module-phymlp.utils.core">phymlp.utils.core module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.utils.html#phymlp.utils.core.PUBLIC"><code class="docutils literal notranslate"><span class="pre">PUBLIC</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="phymlp.utils.html#phymlp.utils.core.RUN"><code class="docutils literal notranslate"><span class="pre">RUN</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="phymlp.utils.html#module-phymlp.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">PhyMLP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">phymlp</a></li>
+          <li class="breadcrumb-item"><a href="phymlp.html">phymlp package</a></li>
+      <li class="breadcrumb-item active">phymlp.auto_generate_set package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/phymlp.auto_generate_set.rst.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="phymlp-auto-generate-set-package">
+<h1>phymlp.auto_generate_set package<a class="headerlink" href="#phymlp-auto-generate-set-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-phymlp.auto_generate_set.birch_murnaghan_fitting">
+<span id="phymlp-auto-generate-set-birch-murnaghan-fitting-module"></span><h2>phymlp.auto_generate_set.birch_murnaghan_fitting module<a class="headerlink" href="#module-phymlp.auto_generate_set.birch_murnaghan_fitting" title="Link to this heading"></a></h2>
+<p>Birch-Murnaghan物态方程拟合模块</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.birch_murnaghan_fitting.birch_murnaghan_eqn">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.birch_murnaghan_fitting.</span></span><span class="sig-name descname"><span class="pre">birch_murnaghan_eqn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">V</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/birch_murnaghan_fitting.html#birch_murnaghan_eqn"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.birch_murnaghan_fitting.birch_murnaghan_eqn" title="Link to this definition"></a></dt>
+<dd><p>Birch-Murnaghan物态方程</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> -- [E0, V0, B0, B1] 拟合参数</p></li>
+<li><p><strong>V</strong> -- 体积数组</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>能量数组</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>E</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.birch_murnaghan_fitting.birch_murnaghan_residuals">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.birch_murnaghan_fitting.</span></span><span class="sig-name descname"><span class="pre">birch_murnaghan_residuals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">V</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">E</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/birch_murnaghan_fitting.html#birch_murnaghan_residuals"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.birch_murnaghan_fitting.birch_murnaghan_residuals" title="Link to this definition"></a></dt>
+<dd><p>计算拟合残差</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> -- 拟合参数</p></li>
+<li><p><strong>V</strong> -- 体积数据</p></li>
+<li><p><strong>E</strong> -- 能量数据</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>残差数组</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>residuals</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.birch_murnaghan_fitting.create_mirror_structure">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.birch_murnaghan_fitting.</span></span><span class="sig-name descname"><span class="pre">create_mirror_structure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source_files</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bm_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/birch_murnaghan_fitting.html#create_mirror_structure"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.birch_murnaghan_fitting.create_mirror_structure" title="Link to this definition"></a></dt>
+<dd><p>根据找到的a_V_E_P.txt文件创建镜像目录结构</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source_files</strong> -- 找到的a_V_E_P.txt文件列表</p></li>
+<li><p><strong>bm_dir</strong> -- Birch-Murnaghan拟合目录</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>创建的目录结构信息</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.birch_murnaghan_fitting.create_outcar_scale_directory">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.birch_murnaghan_fitting.</span></span><span class="sig-name descname"><span class="pre">create_outcar_scale_directory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bm_structure_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">original_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/birch_murnaghan_fitting.html#create_outcar_scale_directory"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.birch_murnaghan_fitting.create_outcar_scale_directory" title="Link to this definition"></a></dt>
+<dd><p>在Birch-Murnaghan结构目录中创建OUTCAR_scale目录并收集原始OUTCAR文件</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bm_structure_dir</strong> -- Birch-Murnaghan结构目录</p></li>
+<li><p><strong>original_data</strong> -- 原始数据DataFrame</p></li>
+<li><p><strong>source_path</strong> -- 原始a_V_E_P.txt文件路径</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.birch_murnaghan_fitting.ensure_numeric_parameters">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.birch_murnaghan_fitting.</span></span><span class="sig-name descname"><span class="pre">ensure_numeric_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/birch_murnaghan_fitting.html#ensure_numeric_parameters"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.birch_murnaghan_fitting.ensure_numeric_parameters" title="Link to this definition"></a></dt>
+<dd><p>确保配置参数都是数值类型</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> -- 配置字典</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>修复后的配置字典</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>config</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.birch_murnaghan_fitting.filter_data">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.birch_murnaghan_fitting.</span></span><span class="sig-name descname"><span class="pre">filter_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter_config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/birch_murnaghan_fitting.html#filter_data"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.birch_murnaghan_fitting.filter_data" title="Link to this definition"></a></dt>
+<dd><p>根据配置筛选数据</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> -- 包含V, E, P数据的DataFrame</p></li>
+<li><p><strong>filter_config</strong> -- 筛选配置</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>筛选后的DataFrame</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>filtered_df</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.birch_murnaghan_fitting.find_a_v_e_p_files">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.birch_murnaghan_fitting.</span></span><span class="sig-name descname"><span class="pre">find_a_v_e_p_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recursive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/birch_murnaghan_fitting.html#find_a_v_e_p_files"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.birch_murnaghan_fitting.find_a_v_e_p_files" title="Link to this definition"></a></dt>
+<dd><p>在目录树中查找所有的a_V_E_P.txt文件</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>root_dir</strong> -- 根目录</p></li>
+<li><p><strong>recursive</strong> -- 是否递归搜索</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>包含(a_V_E_P.txt文件路径, 相对路径)的元组列表</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.birch_murnaghan_fitting.find_scale_directories">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.birch_murnaghan_fitting.</span></span><span class="sig-name descname"><span class="pre">find_scale_directories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/birch_murnaghan_fitting.html#find_scale_directories"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.birch_murnaghan_fitting.find_scale_directories" title="Link to this definition"></a></dt>
+<dd><p>在源目录中查找所有scale_*目录</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>source_dir</strong> -- 源目录路径</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>包含(scale目录路径, 缩放系数)的元组列表</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.birch_murnaghan_fitting.get_initial_guess">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.birch_murnaghan_fitting.</span></span><span class="sig-name descname"><span class="pre">get_initial_guess</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/birch_murnaghan_fitting.html#get_initial_guess"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.birch_murnaghan_fitting.get_initial_guess" title="Link to this definition"></a></dt>
+<dd><p>获取初始猜测参数</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> -- 数据DataFrame</p></li>
+<li><p><strong>config</strong> -- 拟合配置</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>初始参数数组 [E0, V0, B0, B1]</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>p0</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.birch_murnaghan_fitting.get_reference_volume">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.birch_murnaghan_fitting.</span></span><span class="sig-name descname"><span class="pre">get_reference_volume</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/birch_murnaghan_fitting.html#get_reference_volume"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.birch_murnaghan_fitting.get_reference_volume" title="Link to this definition"></a></dt>
+<dd><p>从源目录获取参考体积</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>source_path</strong> -- 原始数据文件路径</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>参考体积</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.birch_murnaghan_fitting.main">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.birch_murnaghan_fitting.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/birch_murnaghan_fitting.html#main"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.birch_murnaghan_fitting.main" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.birch_murnaghan_fitting.perform_fitting">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.birch_murnaghan_fitting.</span></span><span class="sig-name descname"><span class="pre">perform_fitting</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/birch_murnaghan_fitting.html#perform_fitting"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.birch_murnaghan_fitting.perform_fitting" title="Link to this definition"></a></dt>
+<dd><p>执行Birch-Murnaghan拟合</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> -- 数据DataFrame</p></li>
+<li><p><strong>config</strong> -- 拟合配置</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>拟合结果字典</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>result</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.birch_murnaghan_fitting.process_all_birch_murnaghan_fitting">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.birch_murnaghan_fitting.</span></span><span class="sig-name descname"><span class="pre">process_all_birch_murnaghan_fitting</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/birch_murnaghan_fitting.html#process_all_birch_murnaghan_fitting"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.birch_murnaghan_fitting.process_all_birch_murnaghan_fitting" title="Link to this definition"></a></dt>
+<dd><p>处理所有Birch-Murnaghan拟合</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_path</strong> -- 配置文件路径</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.birch_murnaghan_fitting.read_a_v_e_p_file">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.birch_murnaghan_fitting.</span></span><span class="sig-name descname"><span class="pre">read_a_v_e_p_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/birch_murnaghan_fitting.html#read_a_v_e_p_file"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.birch_murnaghan_fitting.read_a_v_e_p_file" title="Link to this definition"></a></dt>
+<dd><p>读取a_V_E_P.txt文件，处理多空格分隔问题</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_path</strong> -- 文件路径</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>处理后的DataFrame</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>df</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.birch_murnaghan_fitting.save_fitting_results">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.birch_murnaghan_fitting.</span></span><span class="sig-name descname"><span class="pre">save_fitting_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">structure_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_volume</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/birch_murnaghan_fitting.html#save_fitting_results"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.birch_murnaghan_fitting.save_fitting_results" title="Link to this definition"></a></dt>
+<dd><p>保存拟合结果</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>result</strong> -- 拟合结果</p></li>
+<li><p><strong>df</strong> -- 原始数据</p></li>
+<li><p><strong>output_dir</strong> -- 输出目录</p></li>
+<li><p><strong>config</strong> -- 配置</p></li>
+<li><p><strong>structure_name</strong> -- 结构名称</p></li>
+<li><p><strong>source_path</strong> -- 原始数据文件路径</p></li>
+<li><p><strong>reference_volume</strong> -- 参考体积（用于计算缩放因子）</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-phymlp.auto_generate_set.config">
+<span id="phymlp-auto-generate-set-config-module"></span><h2>phymlp.auto_generate_set.config module<a class="headerlink" href="#module-phymlp.auto_generate_set.config" title="Link to this heading"></a></h2>
+<p>配置管理模块</p>
+<p>该模块负责加载和管理整个项目的配置信息，包括Materials Project API配置、
+路径设置、形变参数、微扰参数、VASP计算参数等。</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.config.load_config">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.config.</span></span><span class="sig-name descname"><span class="pre">load_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'input.yaml'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/config.html#load_config"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.config.load_config" title="Link to this definition"></a></dt>
+<dd><p>加载和验证配置文件。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_file</strong> (<em>str</em>) -- 配置文件的路径，默认为 'input.yaml'。</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>包含所有配置参数的字典。</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">抛出<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>FileNotFoundError</strong> -- 当指定的配置文件不存在时抛出。</p></li>
+<li><p><strong>yaml.YAMLError</strong> -- 当配置文件格式错误时抛出。</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">示例</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span> <span class="o">=</span> <span class="n">load_config</span><span class="p">(</span><span class="s2">&quot;input.yaml&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">api_key</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;api&#39;</span><span class="p">][</span><span class="s1">&#39;key&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">elements</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;elements&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="phymlp-auto-generate-set-deform-structures-module">
+<h2>phymlp.auto_generate_set.deform_structures module<a class="headerlink" href="#phymlp-auto-generate-set-deform-structures-module" title="Link to this heading"></a></h2>
+</section>
+<section id="phymlp-auto-generate-set-from-mp-structures-module">
+<h2>phymlp.auto_generate_set.from_mp_structures module<a class="headerlink" href="#phymlp-auto-generate-set-from-mp-structures-module" title="Link to this heading"></a></h2>
+</section>
+<section id="module-phymlp.auto_generate_set.generate_extxyz_dataset">
+<span id="phymlp-auto-generate-set-generate-extxyz-dataset-module"></span><h2>phymlp.auto_generate_set.generate_extxyz_dataset module<a class="headerlink" href="#module-phymlp.auto_generate_set.generate_extxyz_dataset" title="Link to this heading"></a></h2>
+<p>Extxyz数据集生成模块
+从VASP计算结果和Birch-Murnaghan拟合结果生成extxyz格式数据集
+新增功能：根据fit_a_P.data数据生成extxyz结构</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.generate_extxyz_dataset.calculate_pressure_from_birch_murnaghan">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.generate_extxyz_dataset.</span></span><span class="sig-name descname"><span class="pre">calculate_pressure_from_birch_murnaghan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volume</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/generate_extxyz_dataset.html#calculate_pressure_from_birch_murnaghan"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.generate_extxyz_dataset.calculate_pressure_from_birch_murnaghan" title="Link to this definition"></a></dt>
+<dd><p>根据Birch-Murnaghan方程计算压力</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> -- [E0, V0, B0, B1] 拟合参数</p></li>
+<li><p><strong>volume</strong> -- 体积</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>压力 (GPa)</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pressure</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.generate_extxyz_dataset.extract_structures_from_outcar">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.generate_extxyz_dataset.</span></span><span class="sig-name descname"><span class="pre">extract_structures_from_outcar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">outcar_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/generate_extxyz_dataset.html#extract_structures_from_outcar"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.generate_extxyz_dataset.extract_structures_from_outcar" title="Link to this definition"></a></dt>
+<dd><p>从OUTCAR文件中提取结构并保存为extxyz格式</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>outcar_file</strong> -- OUTCAR文件路径</p></li>
+<li><p><strong>output_file</strong> -- 输出文件路径</p></li>
+<li><p><strong>step</strong> -- 提取步长</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>提取的结构总数</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.generate_extxyz_dataset.extract_structures_from_outcar_scale">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.generate_extxyz_dataset.</span></span><span class="sig-name descname"><span class="pre">extract_structures_from_outcar_scale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">outcar_scale_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/generate_extxyz_dataset.html#extract_structures_from_outcar_scale"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.generate_extxyz_dataset.extract_structures_from_outcar_scale" title="Link to this definition"></a></dt>
+<dd><p>从OUTCAR_scale目录中的OUTCAR文件提取结构</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>outcar_scale_dir</strong> -- OUTCAR_scale目录路径</p></li>
+<li><p><strong>output_file</strong> -- 输出文件路径</p></li>
+<li><p><strong>step</strong> -- 提取步长</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>提取的结构总数</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.generate_extxyz_dataset.filter_data_by_pressure">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.generate_extxyz_dataset.</span></span><span class="sig-name descname"><span class="pre">filter_data_by_pressure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pressure_range</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/generate_extxyz_dataset.html#filter_data_by_pressure"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.generate_extxyz_dataset.filter_data_by_pressure" title="Link to this definition"></a></dt>
+<dd><p>根据压力范围筛选数据</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_file</strong> -- 数据文件路径</p></li>
+<li><p><strong>pressure_range</strong> -- 压力范围 [min, max]</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>筛选后的数据</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.generate_extxyz_dataset.find_outcar_files">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.generate_extxyz_dataset.</span></span><span class="sig-name descname"><span class="pre">find_outcar_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recursive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/generate_extxyz_dataset.html#find_outcar_files"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.generate_extxyz_dataset.find_outcar_files" title="Link to this definition"></a></dt>
+<dd><p>在目录树中查找所有的OUTCAR文件</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>search_dir</strong> -- 搜索目录</p></li>
+<li><p><strong>recursive</strong> -- 是否递归搜索</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>OUTCAR文件路径列表</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.generate_extxyz_dataset.find_reference_structure">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.generate_extxyz_dataset.</span></span><span class="sig-name descname"><span class="pre">find_reference_structure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">outcar_scale_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/generate_extxyz_dataset.html#find_reference_structure"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.generate_extxyz_dataset.find_reference_structure" title="Link to this definition"></a></dt>
+<dd><p>在OUTCAR_scale目录中查找参考结构</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>outcar_scale_dir</strong> -- OUTCAR_scale目录路径</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>参考原子结构</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Atoms</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.generate_extxyz_dataset.generate_birch_murnaghan_extxyz">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.generate_extxyz_dataset.</span></span><span class="sig-name descname"><span class="pre">generate_birch_murnaghan_extxyz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/generate_extxyz_dataset.html#generate_birch_murnaghan_extxyz"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.generate_extxyz_dataset.generate_birch_murnaghan_extxyz" title="Link to this definition"></a></dt>
+<dd><p>从Birch-Murnaghan拟合结果生成extxyz文件</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> -- 配置字典</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>生成的结构总数</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.generate_extxyz_dataset.generate_extxyz_dataset">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.generate_extxyz_dataset.</span></span><span class="sig-name descname"><span class="pre">generate_extxyz_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/generate_extxyz_dataset.html#generate_extxyz_dataset"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.generate_extxyz_dataset.generate_extxyz_dataset" title="Link to this definition"></a></dt>
+<dd><p>生成完整的Extxyz数据集</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_path</strong> -- 配置文件路径</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.generate_extxyz_dataset.generate_extxyz_from_config">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.generate_extxyz_dataset.</span></span><span class="sig-name descname"><span class="pre">generate_extxyz_from_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/generate_extxyz_dataset.html#generate_extxyz_from_config"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.generate_extxyz_dataset.generate_extxyz_from_config" title="Link to this definition"></a></dt>
+<dd><p>从配置文件生成extxyz数据集的入口函数</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_path</strong> -- 配置文件路径</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.generate_extxyz_dataset.generate_structures_from_fit_a_P">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.generate_extxyz_dataset.</span></span><span class="sig-name descname"><span class="pre">generate_structures_from_fit_a_P</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/generate_extxyz_dataset.html#generate_structures_from_fit_a_P"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.generate_extxyz_dataset.generate_structures_from_fit_a_P" title="Link to this definition"></a></dt>
+<dd><p>根据fit_a_P.data数据生成extxyz结构</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> -- 配置字典</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>生成的结构总数</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.generate_extxyz_dataset.generate_structures_from_fitting_curve">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.generate_extxyz_dataset.</span></span><span class="sig-name descname"><span class="pre">generate_structures_from_fitting_curve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_atoms</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fitted_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">structure_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_structures</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pressure_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">original_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scaling_factors_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bm_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/generate_extxyz_dataset.html#generate_structures_from_fitting_curve"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.generate_extxyz_dataset.generate_structures_from_fitting_curve" title="Link to this definition"></a></dt>
+<dd><p>根据拟合曲线数据生成扩展结构</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>reference_atoms</strong> -- 参考原子结构</p></li>
+<li><p><strong>fitted_data</strong> -- 拟合数据DataFrame</p></li>
+<li><p><strong>output_file</strong> -- 输出文件路径</p></li>
+<li><p><strong>structure_name</strong> -- 结构名称</p></li>
+<li><p><strong>n_structures</strong> -- 生成的结构数量</p></li>
+<li><p><strong>pressure_range</strong> -- 压力范围筛选 [min, max]</p></li>
+<li><p><strong>original_data</strong> -- 原始数据用于压力筛选</p></li>
+<li><p><strong>scaling_factors_range</strong> -- 缩放因子范围 [min, max]</p></li>
+<li><p><strong>bm_params</strong> -- Birch-Murnaghan拟合参数 [E0, V0, B0, B1]</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>生成的结构总数</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.generate_extxyz_dataset.generate_vasp_extxyz">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.generate_extxyz_dataset.</span></span><span class="sig-name descname"><span class="pre">generate_vasp_extxyz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/generate_extxyz_dataset.html#generate_vasp_extxyz"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.generate_extxyz_dataset.generate_vasp_extxyz" title="Link to this definition"></a></dt>
+<dd><p>从VASP计算结果生成extxyz文件</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> -- 配置字典</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>提取的结构总数</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.generate_extxyz_dataset.gpa_to_ev_per_ang3">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.generate_extxyz_dataset.</span></span><span class="sig-name descname"><span class="pre">gpa_to_ev_per_ang3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pressure_gpa</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/generate_extxyz_dataset.html#gpa_to_ev_per_ang3"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.generate_extxyz_dataset.gpa_to_ev_per_ang3" title="Link to this definition"></a></dt>
+<dd><p>将压力从GPa转换为eV/Å³</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>pressure_gpa</strong> -- 压力值 (GPa)</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>压力值 (eV/Å³)</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.generate_extxyz_dataset.load_birch_murnaghan_fitting_results">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.generate_extxyz_dataset.</span></span><span class="sig-name descname"><span class="pre">load_birch_murnaghan_fitting_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bm_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recursive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/generate_extxyz_dataset.html#load_birch_murnaghan_fitting_results"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.generate_extxyz_dataset.load_birch_murnaghan_fitting_results" title="Link to this definition"></a></dt>
+<dd><p>加载Birch-Murnaghan拟合结果</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bm_dir</strong> -- Birch-Murnaghan拟合目录</p></li>
+<li><p><strong>recursive</strong> -- 是否递归搜索子目录</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>拟合结果信息</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.generate_extxyz_dataset.load_fit_a_P_data">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.generate_extxyz_dataset.</span></span><span class="sig-name descname"><span class="pre">load_fit_a_P_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fit_a_P_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/generate_extxyz_dataset.html#load_fit_a_P_data"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.generate_extxyz_dataset.load_fit_a_P_data" title="Link to this definition"></a></dt>
+<dd><p>加载fit_a_P.data文件数据</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fit_a_P_file</strong> -- fit_a_P.data文件路径</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>包含晶格常数、缩放因子和压力的数据</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.generate_extxyz_dataset.main">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.generate_extxyz_dataset.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/generate_extxyz_dataset.html#main"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.generate_extxyz_dataset.main" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.generate_extxyz_dataset.merge_extxyz_files">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.generate_extxyz_dataset.</span></span><span class="sig-name descname"><span class="pre">merge_extxyz_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/generate_extxyz_dataset.html#merge_extxyz_files"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.generate_extxyz_dataset.merge_extxyz_files" title="Link to this definition"></a></dt>
+<dd><p>合并VASP、Birch-Murnaghan和fit_a_P的extxyz文件</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> -- 配置字典</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>合并后的结构总数</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="phymlp-auto-generate-set-perturb-structures-module">
+<h2>phymlp.auto_generate_set.perturb_structures module<a class="headerlink" href="#phymlp-auto-generate-set-perturb-structures-module" title="Link to this heading"></a></h2>
+</section>
+<section id="module-phymlp.auto_generate_set.potcar_generator">
+<span id="phymlp-auto-generate-set-potcar-generator-module"></span><h2>phymlp.auto_generate_set.potcar_generator module<a class="headerlink" href="#module-phymlp.auto_generate_set.potcar_generator" title="Link to this heading"></a></h2>
+<p>POTCAR生成器 - 集成auto_potcar.py功能</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.potcar_generator.concatenate_potcar_files">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.potcar_generator.</span></span><span class="sig-name descname"><span class="pre">concatenate_potcar_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">potcar_paths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/potcar_generator.html#concatenate_potcar_files"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.potcar_generator.concatenate_potcar_files" title="Link to this definition"></a></dt>
+<dd><p>拼接多个POTCAR文件</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.potcar_generator.find_potcar_files">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.potcar_generator.</span></span><span class="sig-name descname"><span class="pre">find_potcar_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">potcar_base_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">functional</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elements</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">potcar_variants</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/potcar_generator.html#find_potcar_files"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.potcar_generator.find_potcar_files" title="Link to this definition"></a></dt>
+<dd><p>查找每个元素对应的POTCAR文件路径</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.potcar_generator.generate_potcar">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.potcar_generator.</span></span><span class="sig-name descname"><span class="pre">generate_potcar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">poscar_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">structure</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/potcar_generator.html#generate_potcar"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.potcar_generator.generate_potcar" title="Link to this definition"></a></dt>
+<dd><p>主POTCAR生成函数 - 修复版本</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.potcar_generator.generate_potcar_auto">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.potcar_generator.</span></span><span class="sig-name descname"><span class="pre">generate_potcar_auto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">poscar_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/potcar_generator.html#generate_potcar_auto"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.potcar_generator.generate_potcar_auto" title="Link to this definition"></a></dt>
+<dd><p>自动生成POTCAR文件 - 修复版本</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.potcar_generator.generate_potcar_pymatgen">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.potcar_generator.</span></span><span class="sig-name descname"><span class="pre">generate_potcar_pymatgen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">structure</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/potcar_generator.html#generate_potcar_pymatgen"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.potcar_generator.generate_potcar_pymatgen" title="Link to this definition"></a></dt>
+<dd><p>使用pymatgen生成POTCAR</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.potcar_generator.main">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.potcar_generator.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/potcar_generator.html#main"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.potcar_generator.main" title="Link to this definition"></a></dt>
+<dd><p>独立运行测试</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.potcar_generator.read_poscar_elements">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.potcar_generator.</span></span><span class="sig-name descname"><span class="pre">read_poscar_elements</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">poscar_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/potcar_generator.html#read_poscar_elements"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.potcar_generator.read_poscar_elements" title="Link to this definition"></a></dt>
+<dd><p>正确读取POSCAR文件中的元素种类和顺序</p>
+</dd></dl>
+
+</section>
+<section id="module-phymlp.auto_generate_set.process_deform_results">
+<span id="phymlp-auto-generate-set-process-deform-results-module"></span><h2>phymlp.auto_generate_set.process_deform_results module<a class="headerlink" href="#module-phymlp.auto_generate_set.process_deform_results" title="Link to this heading"></a></h2>
+<p>处理形变计算结果 - 目录分类和数据提取</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.process_deform_results.classify_deform_directories">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.process_deform_results.</span></span><span class="sig-name descname"><span class="pre">classify_deform_directories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/process_deform_results.html#classify_deform_directories"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.process_deform_results.classify_deform_directories" title="Link to this definition"></a></dt>
+<dd><p>对形变计算目录进行分类</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>root_dir</strong> -- 包含形变计算结果的根目录</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>分类后的目录结构 {base_name: [dir_paths]}</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.process_deform_results.create_classified_structure">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.process_deform_results.</span></span><span class="sig-name descname"><span class="pre">create_classified_structure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classified_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/process_deform_results.html#create_classified_structure"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.process_deform_results.create_classified_structure" title="Link to this definition"></a></dt>
+<dd><p>创建分类后的目录结构</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>root_dir</strong> -- 根目录</p></li>
+<li><p><strong>classified_dict</strong> -- 分类后的目录字典</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.process_deform_results.extract_vasp_data">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.process_deform_results.</span></span><span class="sig-name descname"><span class="pre">extract_vasp_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">directory</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/process_deform_results.html#extract_vasp_data"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.process_deform_results.extract_vasp_data" title="Link to this definition"></a></dt>
+<dd><p>从VASP计算结果中提取数据</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>directory</strong> -- 包含VASP计算结果的目录</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>提取的数据 {a, V, E, P}</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.process_deform_results.main">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.process_deform_results.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/process_deform_results.html#main"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.process_deform_results.main" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.process_deform_results.process_all_deform_results">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.process_deform_results.</span></span><span class="sig-name descname"><span class="pre">process_all_deform_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/process_deform_results.html#process_all_deform_results"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.process_deform_results.process_all_deform_results" title="Link to this definition"></a></dt>
+<dd><p>处理所有形变计算结果</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>root_dir</strong> -- 根目录路径</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-phymlp.auto_generate_set.utils">
+<span id="phymlp-auto-generate-set-utils-module"></span><h2>phymlp.auto_generate_set.utils module<a class="headerlink" href="#module-phymlp.auto_generate_set.utils" title="Link to this heading"></a></h2>
+<p>工具函数</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.utils.check_file_exists">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.utils.</span></span><span class="sig-name descname"><span class="pre">check_file_exists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/utils.html#check_file_exists"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.utils.check_file_exists" title="Link to this definition"></a></dt>
+<dd><p>检查文件是否存在，提供详细的错误信息</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.utils.check_potcar_availability">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.utils.</span></span><span class="sig-name descname"><span class="pre">check_potcar_availability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/utils.html#check_potcar_availability"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.utils.check_potcar_availability" title="Link to this definition"></a></dt>
+<dd><p>检查POTCAR配置是否可用</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.utils.chemsys_comb">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.utils.</span></span><span class="sig-name descname"><span class="pre">chemsys_comb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elements</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/utils.html#chemsys_comb"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.utils.chemsys_comb" title="Link to this definition"></a></dt>
+<dd><p>生成所有可能的元素组合</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.utils.get_formula_from_filename">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.utils.</span></span><span class="sig-name descname"><span class="pre">get_formula_from_filename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/utils.html#get_formula_from_filename"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.utils.get_formula_from_filename" title="Link to this definition"></a></dt>
+<dd><p>从文件名中提取化学式</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.utils.mkdir_output_load">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.utils.</span></span><span class="sig-name descname"><span class="pre">mkdir_output_load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/utils.html#mkdir_output_load"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.utils.mkdir_output_load" title="Link to this definition"></a></dt>
+<dd><p>创建输出目录，如果已存在则清空</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.utils.safe_copy">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.utils.</span></span><span class="sig-name descname"><span class="pre">safe_copy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dst</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/utils.html#safe_copy"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.utils.safe_copy" title="Link to this definition"></a></dt>
+<dd><p>安全复制文件</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="phymlp.auto_generate_set.utils.safe_path_join">
+<span class="sig-prename descclassname"><span class="pre">phymlp.auto_generate_set.utils.</span></span><span class="sig-name descname"><span class="pre">safe_path_join</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/phymlp/auto_generate_set/utils.html#safe_path_join"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#phymlp.auto_generate_set.utils.safe_path_join" title="Link to this definition"></a></dt>
+<dd><p>安全的路径连接，处理混合的路径分隔符</p>
+</dd></dl>
+
+</section>
+<section id="phymlp-auto-generate-set-vasp-setup-module">
+<h2>phymlp.auto_generate_set.vasp_setup module<a class="headerlink" href="#phymlp-auto-generate-set-vasp-setup-module" title="Link to this heading"></a></h2>
+</section>
+<section id="phymlp-auto-generate-set-vasp-submit-module">
+<h2>phymlp.auto_generate_set.vasp_submit module<a class="headerlink" href="#phymlp-auto-generate-set-vasp-submit-module" title="Link to this heading"></a></h2>
+</section>
+<section id="module-phymlp.auto_generate_set">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-phymlp.auto_generate_set" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="phymlp.html" class="btn btn-neutral float-left" title="phymlp package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="phymlp.cli.html" class="btn btn-neutral float-right" title="phymlp.cli package" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 NSH。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
