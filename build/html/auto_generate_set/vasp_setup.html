@@ -1,0 +1,1065 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VASP计算设置模块 &mdash; PhyMLP Kit 2.0.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=b15d7ad8"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="VASP任务提交和管理模块" href="vasp_submit.html" />
+    <link rel="prev" title="工具函数模块" href="utils.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            PhyMLP Kit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">PhyMLP快速开始</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../phymlp.html">phymlp简介</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../phymlp.html#id1">快速开始指南</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html">快速开始指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#id3">概述</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#id4">安装与设置</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id5">1. 环境要求</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#phymlp-kit">2. 安装 PhyMLP Kit</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id6">3. 配置软件路径</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#id7">基本使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#id8">核心功能模块</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id9">1. 机器学习势训练</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id10">2. 初始势函数生成</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id11">3. 数据格式转换</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id12">4. 数据集处理</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id14">5. 自动训练集生成流程</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id18">6. 数据分析与拟合</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id20">7. 数据集生成</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id21">8. 完整工作流</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#id22">典型工作流程示例</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id23">1. 准备阶段</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id24">2. 训练阶段</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id25">3. 扩展训练集（可选）</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id26">4. 验证阶段</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#id27">配置说明</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#input-yaml">1. 主配置文件（input.yaml）</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#inputfile">2. 训练配置文件（Inputfile）</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#id28">常见问题</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id29">1. 软件路径错误</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id30">2. 训练失败</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id31">3. VASP 计算设置错误</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id32">4. 数据集生成问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#id33">高级功能</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id34">1. 批量处理</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id35">2. 自定义工作流</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id36">3. 并行计算</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#id37">获取帮助</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#id38">下一步</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../phymlp.html#id2">配置文件说明</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../phymlp.html#id3">自动采样配置参数</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../input_files/auto_trainset_input.html">自动化获取训练集配置文件</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../input_files/auto_trainset_input.html#id3">概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../input_files/auto_trainset_input.html#id5">详细参数说明</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../input_files/auto_trainset_input.html#id13">使用示例</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../input_files/auto_trainset_input.html#id14">注意事项</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../input_files/auto_trainset_input.html#id15">相关文档</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../phymlp.html#id4">自动训练及检验配置</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../input_files/train_input.html">训练和检验配置文件</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../input_files/train_input.html#id3">概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../input_files/train_input.html#id5">详细参数说明</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../input_files/train_input.html#id15">配置示例</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../input_files/train_input.html#id16">使用流程</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../input_files/train_input.html#id17">常见问题</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../input_files/train_input.html#id18">相关文档</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../input_files/train_input.html#id19">版本说明</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">命令行工具模块（开发者模块）</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/main.html">命令管理模块说明</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../cli/main.html#id3">概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/main.html#id4">模块架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/main.html#id5">模块详细说明</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#id6">1. 训练与验证模块</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../cli/main.html#train">1.1 train - 机器学习势训练</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../cli/main.html#init-phymlp">1.2 init_phymlp - 初始势函数生成</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#id7">2. 数据转换模块</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../cli/main.html#outcar2extxyz-outcar-extxyz">2.1 outcar2extxyz - OUTCAR 转 Extxyz</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../cli/main.html#cfg2extxyz-cfg-extxyz">2.2 cfg2extxyz - CFG 转 Extxyz</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../cli/main.html#dump-to-poscar-lammps-dump-poscar">2.3 dump_to_poscar - LAMMPS Dump 转 POSCAR</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#id8">3. 数据集处理模块</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../cli/main.html#split-set">3.1 split_set - 数据集分割</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../cli/main.html#generate-kpath-kpath">3.2 generate_kpath - KPATH 生成</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#id9">4. 自动训练集生成模块</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../cli/main.html#from-mp-structures-materials-project">4.1 from_mp_structures - Materials Project 结构获取</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../cli/main.html#deform-structures">4.2 deform_structures - 形变结构生成</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../cli/main.html#perturb-structures">4.3 perturb_structures - 微扰结构生成</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#vasp">5. VASP 计算模块</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../cli/main.html#setup-vasp-vasp">5.1 setup_vasp - VASP 计算设置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../cli/main.html#submit-vasp-vasp">5.2 submit_vasp - VASP 作业提交</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../cli/main.html#test-potcar-potcar">5.3 test_potcar - POTCAR 测试</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#id10">6. 数据分析模块</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../cli/main.html#process-deform">6.1 process_deform - 形变结果处理</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../cli/main.html#birch-murnaghan-birch-murnaghan">6.2 birch_murnaghan - Birch-Murnaghan 拟合</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../cli/main.html#exp-pv-structures-p-v">6.3 exp_pv_structures - 实验 P-V 数据拟合</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../cli/main.html#generate-extxyz-extxyz">6.4 generate_extxyz - Extxyz 数据集生成</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#id11">7. 工作流模块</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../cli/main.html#full-workflow">7.1 full_workflow - 完整工作流</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/main.html#id12">配置系统</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#id13">1. 配置文件类型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#id14">2. 配置解析机制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#id15">3. 动态模块导入</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/main.html#id16">错误处理机制</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#id17">1. 导入错误处理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#id18">2. 文件系统错误</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#id19">3. 计算错误处理</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/main.html#id20">扩展与定制</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#id21">1. 添加新命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#id22">2. 模块扩展</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/main.html#id23">性能优化</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#id24">1. 批量处理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#id25">2. 缓存机制</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/main.html#id26">使用建议</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#id27">1. 新手建议</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#id28">2. 高级用户</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#id29">3. 开发人员</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/main.html#id30">相关链接</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/main.html#id32">更新日志</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">LAMMPS计算工具模块</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tools/get_KPATH.html">get_KPATH 模块说明</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tools/get_KPATH.html#id2">概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/get_KPATH.html#id3">功能特性</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/get_KPATH.html#id4">快速开始</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#id5">基本使用方式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#id6">前置要求</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/get_KPATH.html#id7">核心函数详解</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#generate-kpath">generate_kpath 函数</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../tools/get_KPATH.html#generate_kpath"><code class="docutils literal notranslate"><span class="pre">generate_kpath()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/get_KPATH.html#vaspkit">VASPKIT 交互选项详解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/get_KPATH.html#id8">输出文件说明</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#kpoints">KPOINTS 文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#kpath-in">KPATH.in 文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#symmetry">SYMMETRY 文件</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/get_KPATH.html#id9">错误处理机制</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#id10">权限错误处理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#id11">管道错误处理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#id12">文件存在性检查</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/get_KPATH.html#id13">使用示例</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#id14">基本示例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#id15">集成到工作流</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#id16">批量处理示例</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/get_KPATH.html#id17">常见问题解答</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#q1-vaspkit">Q1: 运行时提示 &quot;权限错误: 无法执行Vaspkit&quot;</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#q2-vaspkit">Q2: VASPKIT 启动后立即退出，没有生成文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#q3-kpoints">Q3: 生成的 KPOINTS 文件采样点数不合适</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#q4-kpath">Q4: 需要为不同精度生成多个 KPATH</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/get_KPATH.html#id18">性能优化建议</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/get_KPATH.html#api">API 参考</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#id19">函数列表</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../tools/get_KPATH.html#id0"><code class="docutils literal notranslate"><span class="pre">generate_kpath()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#id20">异常列表</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../tools/get_KPATH.html#PermissionError"><code class="docutils literal notranslate"><span class="pre">PermissionError</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../tools/get_KPATH.html#FileNotFoundError"><code class="docutils literal notranslate"><span class="pre">FileNotFoundError</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/get_KPATH.html#id21">相关链接</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/get_KPATH.html#id24">更新日志</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#id25">版本历史</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#id26">计划功能</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">数据集处理模块</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tools/split_set.html">split_set 模块说明</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tools/split_set.html#id2">概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/split_set.html#id3">功能特性</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/split_set.html#id4">快速开始</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id5">基本使用方式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id6">命令行参数详解</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/split_set.html#id7">核心函数详解</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#split-extxyz-structures">split_extxyz_structures 函数</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../tools/split_set.html#split_extxyz_structures"><code class="docutils literal notranslate"><span class="pre">split_extxyz_structures()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/split_set.html#extxyz">EXTXYZ 格式详解</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id8">格式概述</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id9">关键字段说明</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id10">格式解析逻辑</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/split_set.html#id11">使用示例</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id12">基础示例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id13">高级使用示例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id14">集成到训练工作流</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id15">带随机种子的分割</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/split_set.html#id16">错误处理机制</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id17">输入文件检查</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id18">比例参数验证</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id19">格式验证</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/split_set.html#id20">性能优化</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id21">内存优化策略</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id22">并行处理优化</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/split_set.html#id23">最佳实践建议</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id24">数据集比例选择</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id25">数据质量检查</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id26">随机性保证</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/split_set.html#id27">常见问题解答</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#q1">Q1: 分割时提示 &quot;输入文件不存在&quot;</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#q2">Q2: 验证集比例设置错误</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#q3">Q3: 分割后文件为空</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#q4">Q4: 需要按能量分层抽样</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/split_set.html#api">API 参考</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id28">函数列表</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../tools/split_set.html#id0"><code class="docutils literal notranslate"><span class="pre">split_extxyz_structures()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id29">异常列表</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../tools/split_set.html#FileNotFoundError"><code class="docutils literal notranslate"><span class="pre">FileNotFoundError</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../tools/split_set.html#ValueError"><code class="docutils literal notranslate"><span class="pre">ValueError</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../tools/split_set.html#TypeError"><code class="docutils literal notranslate"><span class="pre">TypeError</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/split_set.html#id30">相关链接</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/split_set.html#id33">更新日志</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id34">版本历史</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id35">计划功能</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">训练及检验模块</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../train_and_validation/core.html">训练与检验模块</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../train_and_validation/core.html#id3">概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../train_and_validation/core.html#id4">模块架构</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../train_and_validation/core.html#id5">模块架构图</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../train_and_validation/core.html#public">PUBLIC 类详解</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../train_and_validation/core.html#id6">类概述</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../train_and_validation/core.html#id7">初始化参数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../train_and_validation/core.html#id8">默认参数设置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../train_and_validation/core.html#id9">核心方法详解</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../train_and_validation/core.html#read">Read 方法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../train_and_validation/core.html#key-and-parament">Key_and_parament 方法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../train_and_validation/core.html#parse-value">_parse_value 方法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../train_and_validation/core.html#bool-commands">Bool_commands 方法</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../train_and_validation/core.html#run">RUN 类详解</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../train_and_validation/core.html#id14">类概述</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../train_and_validation/core.html#id15">作业调度系统</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../train_and_validation/core.html#slurm">SLURM 作业提交</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../train_and_validation/core.html#wait-for-job-completion">_wait_for_job_completion 方法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../train_and_validation/core.html#post-process">_post_process 方法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../train_and_validation/core.html#process-phonon">_process_phonon 方法</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../train_and_validation/core.html#id16">训练管理方法</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../train_and_validation/core.html#train-commands">Train_commands 方法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../train_and_validation/core.html#train">Train 方法</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../train_and_validation/core.html#id17">计算管理方法</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../train_and_validation/core.html#calculate-dir">Calculate_dir 方法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../train_and_validation/core.html#rewrite-lammps-in">Rewrite_lammps_in 方法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../train_and_validation/core.html#id18">输入文件修改方法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../train_and_validation/core.html#execute">Execute 方法</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../train_and_validation/core.html#id19">使用示例</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../train_and_validation/core.html#id20">基本使用流程</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../train_and_validation/core.html#id21">自定义配置示例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../train_and_validation/core.html#id22">批量计算示例</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../train_and_validation/core.html#id23">错误处理机制</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../train_and_validation/core.html#id24">配置文件错误</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../train_and_validation/core.html#id25">作业提交错误</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../train_and_validation/core.html#id26">参数验证</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../train_and_validation/core.html#id27">性能优化建议</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../train_and_validation/core.html#id28">并发作业提交</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../train_and_validation/core.html#id29">资源监控</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../train_and_validation/core.html#id30">常见问题解答</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../train_and_validation/core.html#q1">Q1: 配置文件读取失败，提示编码错误</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../train_and_validation/core.html#q2-slurm">Q2: SLURM 作业提交后立即失败</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../train_and_validation/core.html#q3">Q3: 训练过程中出现 &quot;参数不正确&quot; 错误</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../train_and_validation/core.html#q4">Q4: 如何自定义后处理脚本</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../train_and_validation/core.html#api">API 参考</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../train_and_validation/core.html#id31">类列表</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../train_and_validation/core.html#PUBLIC"><code class="docutils literal notranslate"><span class="pre">PUBLIC</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../train_and_validation/core.html#RUN"><code class="docutils literal notranslate"><span class="pre">RUN</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../train_and_validation/core.html#id32">异常列表</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../train_and_validation/core.html#SystemExit"><code class="docutils literal notranslate"><span class="pre">SystemExit</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../train_and_validation/core.html#id33">相关链接</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../train_and_validation/core.html#id35">更新日志</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../train_and_validation/core.html#id36">版本历史</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../train_and_validation/core.html#id37">计划功能</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">自动化训练集生成模块</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="auto_generate_set.html">自动训练集生成模块</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="auto_generate_set.html#id2">概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto_generate_set.html#id3">主要特点</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto_generate_set.html#id4">核心功能</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="auto_generate_set.html#materials-project">从 Materials Project 获取结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="auto_generate_set.html#id5">结构形变生成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="auto_generate_set.html#id6">原子位置微扰</a></li>
+<li class="toctree-l3"><a class="reference internal" href="auto_generate_set.html#vasp">VASP 计算设置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="auto_generate_set.html#id7">VASP 作业提交</a></li>
+<li class="toctree-l3"><a class="reference internal" href="auto_generate_set.html#potcar">POTCAR 生成测试</a></li>
+<li class="toctree-l3"><a class="reference internal" href="auto_generate_set.html#id8">形变结果处理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="auto_generate_set.html#birch-murnaghan">Birch-Murnaghan 拟合</a></li>
+<li class="toctree-l3"><a class="reference internal" href="auto_generate_set.html#p-v">实验 P-V 数据拟合</a></li>
+<li class="toctree-l3"><a class="reference internal" href="auto_generate_set.html#poscar">数据转 POSCAR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="auto_generate_set.html#extxyz">Extxyz 数据集生成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="auto_generate_set.html#id9">完整工作流</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="auto_generate_set.html#id10">配置系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto_generate_set.html#id11">工作流程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto_generate_set.html#id12">依赖关系</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto_generate_set.html#id13">使用示例</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="auto_generate_set.html#id14">基本使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="auto_generate_set.html#id15">分步执行</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="auto_generate_set.html#id16">常见问题</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="auto_generate_set.html#q1-materials-project-api">Q1: 如何获取 Materials Project API 密钥？</a></li>
+<li class="toctree-l3"><a class="reference internal" href="auto_generate_set.html#q2-vasp">Q2: VASP 计算失败如何处理？</a></li>
+<li class="toctree-l3"><a class="reference internal" href="auto_generate_set.html#q3">Q3: 如何自定义结构生成策略？</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="auto_generate_set.html#id17">进阶使用</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="auto_generate_set.html#id18">自定义插件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="auto_generate_set.html#id19">批量处理</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="auto_generate_set.html#id20">相关文档</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="birch_murnaghan_fitting.html">Birch-Murnaghan 拟合模块</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="birch_murnaghan_fitting.html#id2">概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="birch_murnaghan_fitting.html#id3">输入配置</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="birch_murnaghan_fitting.html#input-yaml">配置文件 (input.yaml)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="birch_murnaghan_fitting.html#id4">输入数据文件</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="birch_murnaghan_fitting.html#id5">主要函数</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="birch_murnaghan_fitting.html#id6">核心拟合函数</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="birch_murnaghan_fitting.html#birch_murnaghan_eqn"><code class="docutils literal notranslate"><span class="pre">birch_murnaghan_eqn()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="birch_murnaghan_fitting.html#perform_fitting"><code class="docutils literal notranslate"><span class="pre">perform_fitting()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="birch_murnaghan_fitting.html#id7">数据处理函数</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="birch_murnaghan_fitting.html#read_a_v_e_p_file"><code class="docutils literal notranslate"><span class="pre">read_a_v_e_p_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="birch_murnaghan_fitting.html#filter_data"><code class="docutils literal notranslate"><span class="pre">filter_data()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="birch_murnaghan_fitting.html#id8">目录处理函数</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="birch_murnaghan_fitting.html#find_a_v_e_p_files"><code class="docutils literal notranslate"><span class="pre">find_a_v_e_p_files()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="birch_murnaghan_fitting.html#create_mirror_structure"><code class="docutils literal notranslate"><span class="pre">create_mirror_structure()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="birch_murnaghan_fitting.html#id9">结果输出函数</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="birch_murnaghan_fitting.html#save_fitting_results"><code class="docutils literal notranslate"><span class="pre">save_fitting_results()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="birch_murnaghan_fitting.html#id10">主工作流程</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="birch_murnaghan_fitting.html#process_all_birch_murnaghan_fitting"><code class="docutils literal notranslate"><span class="pre">process_all_birch_murnaghan_fitting()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="birch_murnaghan_fitting.html#id11">输出文件</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="birch_murnaghan_fitting.html#id12">拟合参数文件示例</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="birch_murnaghan_fitting.html#id13">使用方式</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="birch_murnaghan_fitting.html#id14">命令行使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="birch_murnaghan_fitting.html#python-api">Python API使用</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="birch_murnaghan_fitting.html#id15">目录结构</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="birch_murnaghan_fitting.html#id16">输入目录结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="birch_murnaghan_fitting.html#id17">输出目录结构</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="birch_murnaghan_fitting.html#id18">注意事项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="birch_murnaghan_fitting.html#id19">常见问题</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="birch_murnaghan_fitting.html#q1-not-enough-data-points">Q1: 拟合失败，提示&quot;Not enough data points&quot;</a></li>
+<li class="toctree-l3"><a class="reference internal" href="birch_murnaghan_fitting.html#q2-a-v-e-p-txt">Q2: 找不到 a_V_E_P.txt 文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="birch_murnaghan_fitting.html#q3-b0">Q3: 拟合结果不合理（B0为负数等）</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="birch_murnaghan_fitting.html#id20">相关模块</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">配置管理模块</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="config.html#id2">概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#id3">主要功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#id4">核心函数</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="config.html#load-config">load_config 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#set-default-values">_set_default_values 函数</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#id5">配置结构</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="config.html#paths">路径配置 (paths)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#deformation">形变参数 (deformation)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#perturbation">微扰参数 (perturbation)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#vasp-vasp">VASP 计算参数 (vasp)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="config.html#incar-incar-parameters">INCAR 参数 (incar_parameters)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="config.html#potcar-potcar">POTCAR 配置 (potcar)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="config.html#submission">作业提交配置 (submission)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#birch-murnaghan-birch-murnaghan-fitting">Birch-Murnaghan 拟合配置 (birch_murnaghan_fitting)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#extxyz-extxyz-generation">Extxyz 数据集生成配置 (extxyz_generation)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#id6">配置文件示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#id7">使用流程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#id8">依赖关系</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#id9">最佳实践</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#id10">相关模块</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="deform_structures.html">形变结构生成模块</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="deform_structures.html#id2">概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deform_structures.html#id3">主要功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deform_structures.html#id4">核心函数</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="deform_structures.html#find-optimal-supercell">find_optimal_supercell 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deform_structures.html#create-supercell">create_supercell 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deform_structures.html#scale-lattice">scale_lattice 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deform_structures.html#process-structure-for-deformation">process_structure_for_deformation 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deform_structures.html#main">main 函数</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="deform_structures.html#id5">配置参数</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="deform_structures.html#id6">路径配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deform_structures.html#id7">形变参数</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="deform_structures.html#id8">文件命名规则</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deform_structures.html#id9">目录组织结构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deform_structures.html#id10">使用示例</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="deform_structures.html#id11">命令行调用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deform_structures.html#python">Python 脚本调用</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="deform_structures.html#id12">依赖关系</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deform_structures.html#id13">常见问题</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="deform_structures.html#q1">Q1: 没有生成任何形变结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deform_structures.html#q2">Q2: 生成的原子数超过限制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deform_structures.html#q3">Q3: 化学式识别错误</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="deform_structures.html#id14">相关模块</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="exp_pv_structures.html">实验P-V数据拟合模块</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="exp_pv_structures.html#id1">概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exp_pv_structures.html#id2">主要功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exp_pv_structures.html#id3">核心函数</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="exp_pv_structures.html#read-config">read_config 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exp_pv_structures.html#read-exp-data">read_exp_data 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exp_pv_structures.html#save-dft-a-p-data">save_dft_a_p_data 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exp_pv_structures.html#fit-pressure-relation">fit_pressure_relation 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exp_pv_structures.html#save-fitting-results">save_fitting_results 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exp_pv_structures.html#plot-fitting-results">plot_fitting_results 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exp_pv_structures.html#main">main 函数</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="exp_pv_structures.html#id4">配置文件结构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exp_pv_structures.html#id5">实验数据格式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exp_pv_structures.html#id6">输出文件说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exp_pv_structures.html#id7">使用方式</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="exp_pv_structures.html#id8">命令行调用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exp_pv_structures.html#python">Python脚本调用</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="exp_pv_structures.html#id9">依赖关系</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exp_pv_structures.html#id10">常见问题</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="exp_pv_structures.html#q1">Q1: 实验数据文件读取失败</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exp_pv_structures.html#q2-r2">Q2: 拟合效果不理想（R²值过低）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exp_pv_structures.html#q3">Q3: 晶格常数计算错误</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="exp_pv_structures.html#id11">应用场景</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exp_pv_structures.html#id12">相关模块</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="from_mp_structures.html">Materials Project结构获取模块</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="from_mp_structures.html#id1">概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="from_mp_structures.html#id2">主要功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="from_mp_structures.html#id3">核心函数</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="from_mp_structures.html#write-poscar-grouped-by-element">write_poscar_grouped_by_element 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="from_mp_structures.html#copy-user-poscars">copy_user_poscars 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="from_mp_structures.html#search-with-retry">search_with_retry 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="from_mp_structures.html#get-available-surface-structures">get_available_surface_structures 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="from_mp_structures.html#generate-basic-surfaces">generate_basic_surfaces 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="from_mp_structures.html#main">main 函数</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="from_mp_structures.html#id4">配置参数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="from_mp_structures.html#id5">目录结构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="from_mp_structures.html#id6">文件名格式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="from_mp_structures.html#id7">使用方式</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="from_mp_structures.html#id8">命令行调用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="from_mp_structures.html#python">Python脚本调用</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="from_mp_structures.html#api">API密钥获取</a></li>
+<li class="toctree-l2"><a class="reference internal" href="from_mp_structures.html#id9">输出文件说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="from_mp_structures.html#id10">依赖关系</a></li>
+<li class="toctree-l2"><a class="reference internal" href="from_mp_structures.html#id11">常见问题</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="from_mp_structures.html#q1-api">Q1: API密钥无效或过期</a></li>
+<li class="toctree-l3"><a class="reference internal" href="from_mp_structures.html#q2">Q2: 网络连接失败</a></li>
+<li class="toctree-l3"><a class="reference internal" href="from_mp_structures.html#q3">Q3: 元素组合太多导致超时</a></li>
+<li class="toctree-l3"><a class="reference internal" href="from_mp_structures.html#q4">Q4: 表面结构生成失败</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="from_mp_structures.html#id12">注意事项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="from_mp_structures.html#id13">相关模块</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="generate_extxyz_dataset.html">extxyz数据集生成模块</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="generate_extxyz_dataset.html#id1">模块概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generate_extxyz_dataset.html#id2">主要函数说明</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generate_extxyz_dataset.html#find-outcar-files-search-dir-recursive-true">find_outcar_files(search_dir, recursive=True)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generate_extxyz_dataset.html#extract-structures-from-outcar-outcar-file-output-file-step-10">extract_structures_from_outcar(outcar_file, output_file, step=10)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generate_extxyz_dataset.html#generate-vasp-extxyz-config">generate_vasp_extxyz(config)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generate_extxyz_dataset.html#load-birch-murnaghan-fitting-results-bm-dir-recursive-false">load_birch_murnaghan_fitting_results(bm_dir, recursive=False)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generate_extxyz_dataset.html#extract-structures-from-outcar-scale-outcar-scale-dir-output-file-step-10">extract_structures_from_outcar_scale(outcar_scale_dir, output_file, step=10)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generate_extxyz_dataset.html#find-reference-structure-outcar-scale-dir">find_reference_structure(outcar_scale_dir)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generate_extxyz_dataset.html#filter-data-by-pressure-data-file-pressure-range">filter_data_by_pressure(data_file, pressure_range)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generate_extxyz_dataset.html#calculate-pressure-from-birch-murnaghan-params-volume">calculate_pressure_from_birch_murnaghan(params, volume)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generate_extxyz_dataset.html#generate-structures-from-fitting-curve-reference-atoms-fitted-data-output-file-structure-name-n-structures-50-pressure-range-none-original-data-none-scaling-factors-range-none-bm-params-none">generate_structures_from_fitting_curve(reference_atoms, fitted_data, output_file, structure_name, n_structures=50, pressure_range=None, original_data=None, scaling_factors_range=None, bm_params=None)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generate_extxyz_dataset.html#generate-birch-murnaghan-extxyz-config">generate_birch_murnaghan_extxyz(config)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generate_extxyz_dataset.html#load-fit-a-p-data-fit-a-p-file">load_fit_a_P_data(fit_a_P_file)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generate_extxyz_dataset.html#gpa-to-ev-per-ang3-pressure-gpa">gpa_to_ev_per_ang3(pressure_gpa)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generate_extxyz_dataset.html#generate-structures-from-fit-a-p-config">generate_structures_from_fit_a_P(config)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generate_extxyz_dataset.html#merge-extxyz-files-config">merge_extxyz_files(config)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generate_extxyz_dataset.html#generate-extxyz-dataset-config-path">generate_extxyz_dataset(config_path)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generate_extxyz_dataset.html#generate-extxyz-from-config-config-path">generate_extxyz_from_config(config_path)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="generate_extxyz_dataset.html#id3">使用示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generate_extxyz_dataset.html#id4">配置文件说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generate_extxyz_dataset.html#id5">输出文件</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="perturb_structures.html">结构微扰模块</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="perturb_structures.html#id2">模块概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="perturb_structures.html#id3">主要函数说明</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="perturb_structures.html#find-optimal-supercell-structure-max-atoms-150-max-supercell-4">find_optimal_supercell(structure, max_atoms=150, max_supercell=4)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="perturb_structures.html#create-supercell-structure-scaling-matrix">create_supercell(structure, scaling_matrix)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="perturb_structures.html#process-structure-for-perturbation-poscar-path-output-base-dir-config">process_structure_for_perturbation(poscar_path, output_base_dir, config)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="perturb_structures.html#generate-perturbation-fallback-structure-output-dir-base-filename-perturb-params">generate_perturbation_fallback(structure, output_dir, base_filename, perturb_params)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="perturb_structures.html#main-config-file-input-yaml">main(config_file=&quot;input.yaml&quot;)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="perturb_structures.html#id4">配置参数说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="perturb_structures.html#id5">使用示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="perturb_structures.html#id6">输出文件结构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="perturb_structures.html#id7">注意事项</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="potcar_generator.html">POTCAR生成器模块</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="potcar_generator.html#id1">模块概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="potcar_generator.html#id2">主要函数说明</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="potcar_generator.html#read-poscar-elements-poscar-path">read_poscar_elements(poscar_path)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="potcar_generator.html#find-potcar-files-potcar-base-dir-functional-elements-potcar-variants-none">find_potcar_files(potcar_base_dir, functional, elements, potcar_variants=None)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="potcar_generator.html#concatenate-potcar-files-potcar-paths-output-path">concatenate_potcar_files(potcar_paths, output_path)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="potcar_generator.html#generate-potcar-auto-poscar-path-config">generate_potcar_auto(poscar_path, config)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="potcar_generator.html#generate-potcar-pymatgen-structure-config">generate_potcar_pymatgen(structure, config)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="potcar_generator.html#generate-potcar-poscar-path-structure-config-output-dir">generate_potcar(poscar_path, structure, config, output_dir)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="potcar_generator.html#id3">配置参数说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="potcar_generator.html#id4">使用方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="potcar_generator.html#id5">输出文件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="potcar_generator.html#id6">注意事项</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="process_deform_results.html">处理形变计算结果模块</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="process_deform_results.html#id2">模块概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="process_deform_results.html#id3">主要函数说明</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="process_deform_results.html#classify-deform-directories-root-dir">classify_deform_directories(root_dir)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="process_deform_results.html#create-classified-structure-root-dir-classified-dict">create_classified_structure(root_dir, classified_dict)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="process_deform_results.html#extract-vasp-data-directory">extract_vasp_data(directory)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="process_deform_results.html#process-all-deform-results-root-dir">process_all_deform_results(root_dir)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="process_deform_results.html#id4">输出文件结构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="process_deform_results.html#id5">数据文件格式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="process_deform_results.html#id6">使用示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="process_deform_results.html#id7">注意事项</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">工具函数模块</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#id2">模块概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#id3">主要函数说明</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#mkdir-output-load-path">mkdir_output_load(path)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#chemsys-comb-elements">chemsys_comb(elements)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#get-formula-from-filename-filename">get_formula_from_filename(filename)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#safe-copy-src-dst">safe_copy(src, dst)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#check-potcar-availability-config">check_potcar_availability(config)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#safe-path-join-args">safe_path_join(*args)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#check-file-exists-file-path">check_file_exists(file_path)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#id6">使用示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#id7">注意事项</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">VASP计算设置模块</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">模块概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">主要函数说明</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#create-incar-config">create_incar(config)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setup-vasp-calculation-poscar-path-output-dir-config">setup_vasp_calculation(poscar_path, output_dir, config)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#create-submission-script-output-dir-config">create_submission_script(output_dir, config)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#discover-structure-dirs-input-paths">discover_structure_dirs(input_paths)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#process-directory-for-vasp-input-dir-output-base-dir-config-prefix">process_directory_for_vasp(input_dir, output_base_dir, config, prefix=&quot;&quot;)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">配置参数说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">输入输出结构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">使用示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">注意事项</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="vasp_submit.html">VASP任务提交和管理模块</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="vasp_submit.html#id1">模块概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vasp_submit.html#id2">主要函数说明</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="vasp_submit.html#check-job-status-job-id">check_job_status(job_id)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vasp_submit.html#check-calculation-success-calc-dir">check_calculation_success(calc_dir)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vasp_submit.html#submit-job-calc-dir">submit_job(calc_dir)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vasp_submit.html#get-running-jobs">get_running_jobs()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vasp_submit.html#discover-vasp-calc-dirs-vasp-dir">discover_vasp_calc_dirs(vasp_dir)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vasp_submit.html#submit-vasp-calculations-config-file-input-yaml">submit_vasp_calculations(config_file=&quot;input.yaml&quot;)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="vasp_submit.html#id3">工作流程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vasp_submit.html#id6">配置参数说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vasp_submit.html#id7">输出信息</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vasp_submit.html#id8">使用示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vasp_submit.html#id9">注意事项</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">训练集格式转换模块</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dump_to_poscar.html">LAMMPS转POSCAR模块</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dump_to_poscar.html#id1">概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dump_to_poscar.html#id2">主要功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dump_to_poscar.html#id3">核心类与方法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dump_to_poscar.html#lammpstoposcarconverter">LammpsToPoscarConverter 类</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dump_to_poscar.html#set-atom-types-mapping">set_atom_types_mapping 方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dump_to_poscar.html#read-dump-file">read_dump_file 方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dump_to_poscar.html#calculate-lattice-vectors">calculate_lattice_vectors 方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dump_to_poscar.html#sort-atoms-by-type">sort_atoms_by_type 方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dump_to_poscar.html#convert-to-poscar">convert_to_poscar 方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dump_to_poscar.html#is-lammps-dump-file">is_lammps_dump_file 方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dump_to_poscar.html#find-dump-files">find_dump_files 方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dump_to_poscar.html#process-input">process_input 方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dump_to_poscar.html#process-single-file">process_single_file 方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dump_to_poscar.html#process-directory">process_directory 方法</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dump_to_poscar.html#id4">工具函数</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dump_to_poscar.html#load-config">load_config 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dump_to_poscar.html#convert-single-file">convert_single_file 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dump_to_poscar.html#id5">process_directory 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dump_to_poscar.html#parse-arguments">parse_arguments 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dump_to_poscar.html#create-default-config">create_default_config 函数</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dump_to_poscar.html#id6">配置文件结构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dump_to_poscar.html#id7">输出文件命名</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dump_to_poscar.html#id8">使用方式</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dump_to_poscar.html#id9">命令行使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dump_to_poscar.html#python">Python脚本调用</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dump_to_poscar.html#id10">支持的文件格式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dump_to_poscar.html#id11">注意事项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dump_to_poscar.html#id12">常见问题</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dump_to_poscar.html#q1-poscar">Q1: 转换后的POSCAR元素符号不正确</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dump_to_poscar.html#q2-dump">Q2: 没有找到任何dump文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dump_to_poscar.html#q3">Q3: 盒子边界转换错误</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dump_to_poscar.html#id13">依赖关系</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dump_to_poscar.html#id14">相关模块</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../converters/cfg2extxyz.html">CFG到EXTXYZ格式转换器</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../converters/cfg2extxyz.html#id1">模块概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../converters/cfg2extxyz.html#id2">主要函数说明</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../converters/cfg2extxyz.html#parse-cfg-file-file-path">parse_cfg_file(file_path)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../converters/cfg2extxyz.html#write-extxyz-configs-output-file-type-map-none-float-fmt-9f">write_extxyz(configs, output_file, type_map=None, float_fmt=&quot;.9f&quot;)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../converters/cfg2extxyz.html#type-map">原子类型映射（type_map）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../converters/cfg2extxyz.html#cfg">输入文件格式（CFG）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../converters/cfg2extxyz.html#extxyz">输出文件格式（EXTXYZ）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../converters/cfg2extxyz.html#id3">使用示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../converters/cfg2extxyz.html#id4">错误处理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../converters/cfg2extxyz.html#id5">注意事项</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../converters/outcar_converter.html">OUTCAR到EXTXYZ格式转换器</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../converters/outcar_converter.html#id1">模块概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../converters/outcar_converter.html#id2">主要函数说明</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../converters/outcar_converter.html#extract-structures-from-outcar-outcar-file-output-file-step-1">extract_structures_from_outcar(outcar_file, output_file, step=1)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../converters/outcar_converter.html#outcar">输入文件（OUTCAR）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../converters/outcar_converter.html#extxyz">输出文件（EXTXYZ）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../converters/outcar_converter.html#id3">使用示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../converters/outcar_converter.html#id4">注意事项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../converters/outcar_converter.html#id5">错误处理</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PhyMLP Kit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">VASP计算设置模块</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/auto_generate_set/vasp_setup.rst.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="vasp">
+<h1>VASP计算设置模块<a class="headerlink" href="#vasp" title="Link to this heading"></a></h1>
+<p>本模块用于自动设置VASP计算任务，支持多个输入路径和灵活的输出配置。</p>
+<section id="id1">
+<h2>模块概述<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p>该模块提供了一组函数，用于：</p>
+<ol class="arabic simple">
+<li><p>自动发现结构文件和目录</p></li>
+<li><p>创建VASP计算所需的所有输入文件</p></li>
+<li><p>保持原有的目录分类结构</p></li>
+<li><p>生成可自定义的提交脚本</p></li>
+</ol>
+</section>
+<section id="id2">
+<h2>主要函数说明<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<section id="create-incar-config">
+<h3>create_incar(config)<a class="headerlink" href="#create-incar-config" title="Link to this heading"></a></h3>
+<p>创建INCAR文件。</p>
+<p><strong>参数：</strong>
+- <code class="docutils literal notranslate"><span class="pre">config</span></code>: 配置字典，包含INCAR参数</p>
+<p><strong>返回：</strong>
+- Incar对象</p>
+<p><strong>作用：</strong>
+根据配置参数生成VASP的INCAR输入文件。</p>
+</section>
+<section id="setup-vasp-calculation-poscar-path-output-dir-config">
+<h3>setup_vasp_calculation(poscar_path, output_dir, config)<a class="headerlink" href="#setup-vasp-calculation-poscar-path-output-dir-config" title="Link to this heading"></a></h3>
+<p>为单个结构设置VASP计算。</p>
+<p><strong>参数：</strong>
+- <code class="docutils literal notranslate"><span class="pre">poscar_path</span></code>: POSCAR文件路径
+- <code class="docutils literal notranslate"><span class="pre">output_dir</span></code>: 输出目录路径
+- <code class="docutils literal notranslate"><span class="pre">config</span></code>: 配置字典</p>
+<p><strong>返回：</strong>
+- 布尔值，表示设置是否成功</p>
+<p><strong>作用：</strong>
+为单个结构创建完整的VASP计算目录，包括POSCAR、INCAR、POTCAR和提交脚本。</p>
+</section>
+<section id="create-submission-script-output-dir-config">
+<h3>create_submission_script(output_dir, config)<a class="headerlink" href="#create-submission-script-output-dir-config" title="Link to this heading"></a></h3>
+<p>创建完全可自定义的SLURM提交脚本。</p>
+<p><strong>参数：</strong>
+- <code class="docutils literal notranslate"><span class="pre">output_dir</span></code>: 输出目录路径
+- <code class="docutils literal notranslate"><span class="pre">config</span></code>: 配置字典，包含提交脚本配置</p>
+<p><strong>返回：</strong>
+- 无返回值</p>
+<p><strong>作用：</strong>
+根据配置文件生成适应不同HPC环境的SLURM提交脚本。</p>
+</section>
+<section id="discover-structure-dirs-input-paths">
+<h3>discover_structure_dirs(input_paths)<a class="headerlink" href="#discover-structure-dirs-input-paths" title="Link to this heading"></a></h3>
+<p>自动发现所有输入路径中的结构目录。</p>
+<p><strong>参数：</strong>
+- <code class="docutils literal notranslate"><span class="pre">input_paths</span></code>: 输入路径列表</p>
+<p><strong>返回：</strong>
+- 发现的目录信息列表，每个元素包含name、path、prefix、type等信息</p>
+<p><strong>作用：</strong>
+扫描输入路径，识别包含.vasp文件的目录，为后续处理做准备。</p>
+</section>
+<section id="process-directory-for-vasp-input-dir-output-base-dir-config-prefix">
+<h3>process_directory_for_vasp(input_dir, output_base_dir, config, prefix=&quot;&quot;)<a class="headerlink" href="#process-directory-for-vasp-input-dir-output-base-dir-config-prefix" title="Link to this heading"></a></h3>
+<p>处理整个目录的结构用于VASP计算。</p>
+<p><strong>参数：</strong>
+- <code class="docutils literal notranslate"><span class="pre">input_dir</span></code>: 输入目录路径
+- <code class="docutils literal notranslate"><span class="pre">output_base_dir</span></code>: 输出基础目录
+- <code class="docutils literal notranslate"><span class="pre">config</span></code>: 配置字典
+- <code class="docutils literal notranslate"><span class="pre">prefix</span></code>: 目录前缀（可选）</p>
+<p><strong>返回：</strong>
+- 设置的计算任务数量</p>
+<p><strong>作用：</strong>
+遍历目录中的所有.vasp文件，为每个结构设置VASP计算，保持原有目录结构。</p>
+</section>
+</section>
+<section id="id3">
+<h2>配置参数说明<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>配置文件需要包含以下VASP设置相关参数：</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">vasp_setup</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">input_paths</span><span class="p">:</span><span class="w">        </span><span class="c1"># 输入路径列表</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;./deformed_structures&#39;</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;./perturbed_structures&#39;</span>
+<span class="w">    </span><span class="nt">output_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;./vasp_calculations&#39;</span><span class="w">  </span><span class="c1"># 输出目录</span>
+
+<span class="nt">vasp</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">incar_parameters</span><span class="p">:</span><span class="w">   </span><span class="c1"># INCAR参数</span>
+<span class="w">        </span><span class="nt">PREC</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;Accurate&#39;</span>
+<span class="w">        </span><span class="nt">ENCUT</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">500</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="w">    </span><span class="nt">submission</span><span class="p">:</span><span class="w">         </span><span class="c1"># 提交脚本配置</span>
+<span class="w">        </span><span class="nt">slurm_headers</span><span class="p">:</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;#SBATCH</span><span class="nv"> </span><span class="s">--job-name=vasp_calculation&#39;</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;#SBATCH</span><span class="nv"> </span><span class="s">--nodes=1&#39;</span>
+<span class="w">        </span><span class="nt">modules</span><span class="p">:</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;module</span><span class="nv"> </span><span class="s">load</span><span class="nv"> </span><span class="s">vasp/5.4.4&#39;</span>
+<span class="w">        </span><span class="nt">vasp_execution</span><span class="p">:</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;srun</span><span class="nv"> </span><span class="s">vasp_std&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h2>输入输出结构<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p><strong>输入结构：</strong>
+任意包含.vasp文件的目录结构，如：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>deformed_structures/
+├── BaTiO3/
+│   ├── BaTiO3_mp-2998_supercell.vasp
+│   └── BaTiO3_mp-2998_perturb_0001.vasp
+└── SrTiO3/
+    └── SrTiO3_mp-5229.vasp
+</pre></div>
+</div>
+<p><strong>输出结构：</strong>
+保持原有结构，每个结构一个计算目录：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vasp_calculations/
+├── BaTiO3/
+│   ├── BaTiO3_mp-2998_supercell/
+│   │   ├── POSCAR
+│   │   ├── INCAR
+│   │   ├── POTCAR
+│   │   └── submit.sh
+│   └── BaTiO3_mp-2998_perturb_0001/
+└── SrTiO3/
+    └── SrTiO3_mp-5229/
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h2>使用示例<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># 直接运行模块</span>
+python<span class="w"> </span>vasp_setup.py
+
+<span class="c1"># 或在Python代码中调用</span>
+from<span class="w"> </span>vasp_setup<span class="w"> </span>import<span class="w"> </span>main
+main<span class="o">(</span><span class="s2">&quot;input.yaml&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h2>注意事项<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>需要正确配置INCAR参数以适应计算需求</p></li>
+<li><p>POTCAR生成依赖potcar_generator模块</p></li>
+<li><p>提交脚本需要根据实际HPC环境调整配置</p></li>
+<li><p>已完成的计算（存在OUTCAR）会自动跳过</p></li>
+<li><p>保持原有目录结构便于数据管理和追溯</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="utils.html" class="btn btn-neutral float-left" title="工具函数模块" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="vasp_submit.html" class="btn btn-neutral float-right" title="VASP任务提交和管理模块" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2025, Hunan University, PhyMLP Development Team。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

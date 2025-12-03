@@ -1,0 +1,2058 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>训练与检验模块 &mdash; PhyMLP Kit 2.0.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=b15d7ad8"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="自动训练集生成模块" href="../auto_generate_set/auto_generate_set.html" />
+    <link rel="prev" title="split_set 模块说明" href="../tools/split_set.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            PhyMLP Kit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">PhyMLP快速开始</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../phymlp.html">phymlp简介</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../phymlp.html#id1">快速开始指南</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html">快速开始指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#id3">概述</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#id4">安装与设置</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id5">1. 环境要求</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#phymlp-kit">2. 安装 PhyMLP Kit</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id6">3. 配置软件路径</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#id7">基本使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#id8">核心功能模块</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id9">1. 机器学习势训练</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id10">2. 初始势函数生成</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id11">3. 数据格式转换</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id12">4. 数据集处理</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id14">5. 自动训练集生成流程</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id18">6. 数据分析与拟合</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id20">7. 数据集生成</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id21">8. 完整工作流</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#id22">典型工作流程示例</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id23">1. 准备阶段</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id24">2. 训练阶段</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id25">3. 扩展训练集（可选）</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id26">4. 验证阶段</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#id27">配置说明</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#input-yaml">1. 主配置文件（input.yaml）</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#inputfile">2. 训练配置文件（Inputfile）</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#id28">常见问题</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id29">1. 软件路径错误</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id30">2. 训练失败</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id31">3. VASP 计算设置错误</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id32">4. 数据集生成问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#id33">高级功能</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id34">1. 批量处理</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id35">2. 自定义工作流</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#id36">3. 并行计算</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#id37">获取帮助</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#id38">下一步</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../phymlp.html#id2">配置文件说明</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../phymlp.html#id3">自动采样配置参数</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../input_files/auto_trainset_input.html">自动化获取训练集配置文件</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../input_files/auto_trainset_input.html#id3">概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../input_files/auto_trainset_input.html#id5">详细参数说明</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../input_files/auto_trainset_input.html#id13">使用示例</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../input_files/auto_trainset_input.html#id14">注意事项</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../input_files/auto_trainset_input.html#id15">相关文档</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../phymlp.html#id4">自动训练及检验配置</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../input_files/train_input.html">训练和检验配置文件</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../input_files/train_input.html#id3">概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../input_files/train_input.html#id5">详细参数说明</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../input_files/train_input.html#id15">配置示例</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../input_files/train_input.html#id16">使用流程</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../input_files/train_input.html#id17">常见问题</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../input_files/train_input.html#id18">相关文档</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../input_files/train_input.html#id19">版本说明</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">命令行工具模块（开发者模块）</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/main.html">命令管理模块说明</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../cli/main.html#id3">概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/main.html#id4">模块架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/main.html#id5">模块详细说明</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#id6">1. 训练与验证模块</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../cli/main.html#train">1.1 train - 机器学习势训练</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../cli/main.html#init-phymlp">1.2 init_phymlp - 初始势函数生成</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#id7">2. 数据转换模块</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../cli/main.html#outcar2extxyz-outcar-extxyz">2.1 outcar2extxyz - OUTCAR 转 Extxyz</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../cli/main.html#cfg2extxyz-cfg-extxyz">2.2 cfg2extxyz - CFG 转 Extxyz</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../cli/main.html#dump-to-poscar-lammps-dump-poscar">2.3 dump_to_poscar - LAMMPS Dump 转 POSCAR</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#id8">3. 数据集处理模块</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../cli/main.html#split-set">3.1 split_set - 数据集分割</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../cli/main.html#generate-kpath-kpath">3.2 generate_kpath - KPATH 生成</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#id9">4. 自动训练集生成模块</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../cli/main.html#from-mp-structures-materials-project">4.1 from_mp_structures - Materials Project 结构获取</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../cli/main.html#deform-structures">4.2 deform_structures - 形变结构生成</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../cli/main.html#perturb-structures">4.3 perturb_structures - 微扰结构生成</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#vasp">5. VASP 计算模块</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../cli/main.html#setup-vasp-vasp">5.1 setup_vasp - VASP 计算设置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../cli/main.html#submit-vasp-vasp">5.2 submit_vasp - VASP 作业提交</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../cli/main.html#test-potcar-potcar">5.3 test_potcar - POTCAR 测试</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#id10">6. 数据分析模块</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../cli/main.html#process-deform">6.1 process_deform - 形变结果处理</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../cli/main.html#birch-murnaghan-birch-murnaghan">6.2 birch_murnaghan - Birch-Murnaghan 拟合</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../cli/main.html#exp-pv-structures-p-v">6.3 exp_pv_structures - 实验 P-V 数据拟合</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../cli/main.html#generate-extxyz-extxyz">6.4 generate_extxyz - Extxyz 数据集生成</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#id11">7. 工作流模块</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../cli/main.html#full-workflow">7.1 full_workflow - 完整工作流</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/main.html#id12">配置系统</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#id13">1. 配置文件类型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#id14">2. 配置解析机制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#id15">3. 动态模块导入</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/main.html#id16">错误处理机制</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#id17">1. 导入错误处理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#id18">2. 文件系统错误</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#id19">3. 计算错误处理</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/main.html#id20">扩展与定制</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#id21">1. 添加新命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#id22">2. 模块扩展</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/main.html#id23">性能优化</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#id24">1. 批量处理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#id25">2. 缓存机制</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/main.html#id26">使用建议</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#id27">1. 新手建议</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#id28">2. 高级用户</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/main.html#id29">3. 开发人员</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/main.html#id30">相关链接</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/main.html#id32">更新日志</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">LAMMPS计算工具模块</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tools/get_KPATH.html">get_KPATH 模块说明</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tools/get_KPATH.html#id2">概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/get_KPATH.html#id3">功能特性</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/get_KPATH.html#id4">快速开始</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#id5">基本使用方式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#id6">前置要求</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/get_KPATH.html#id7">核心函数详解</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#generate-kpath">generate_kpath 函数</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../tools/get_KPATH.html#generate_kpath"><code class="docutils literal notranslate"><span class="pre">generate_kpath()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/get_KPATH.html#vaspkit">VASPKIT 交互选项详解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/get_KPATH.html#id8">输出文件说明</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#kpoints">KPOINTS 文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#kpath-in">KPATH.in 文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#symmetry">SYMMETRY 文件</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/get_KPATH.html#id9">错误处理机制</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#id10">权限错误处理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#id11">管道错误处理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#id12">文件存在性检查</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/get_KPATH.html#id13">使用示例</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#id14">基本示例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#id15">集成到工作流</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#id16">批量处理示例</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/get_KPATH.html#id17">常见问题解答</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#q1-vaspkit">Q1: 运行时提示 &quot;权限错误: 无法执行Vaspkit&quot;</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#q2-vaspkit">Q2: VASPKIT 启动后立即退出，没有生成文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#q3-kpoints">Q3: 生成的 KPOINTS 文件采样点数不合适</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#q4-kpath">Q4: 需要为不同精度生成多个 KPATH</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/get_KPATH.html#id18">性能优化建议</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/get_KPATH.html#api">API 参考</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#id19">函数列表</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../tools/get_KPATH.html#id0"><code class="docutils literal notranslate"><span class="pre">generate_kpath()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#id20">异常列表</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../tools/get_KPATH.html#PermissionError"><code class="docutils literal notranslate"><span class="pre">PermissionError</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../tools/get_KPATH.html#FileNotFoundError"><code class="docutils literal notranslate"><span class="pre">FileNotFoundError</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/get_KPATH.html#id21">相关链接</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/get_KPATH.html#id24">更新日志</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#id25">版本历史</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/get_KPATH.html#id26">计划功能</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">数据集处理模块</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tools/split_set.html">split_set 模块说明</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tools/split_set.html#id2">概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/split_set.html#id3">功能特性</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/split_set.html#id4">快速开始</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id5">基本使用方式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id6">命令行参数详解</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/split_set.html#id7">核心函数详解</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#split-extxyz-structures">split_extxyz_structures 函数</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../tools/split_set.html#split_extxyz_structures"><code class="docutils literal notranslate"><span class="pre">split_extxyz_structures()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/split_set.html#extxyz">EXTXYZ 格式详解</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id8">格式概述</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id9">关键字段说明</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id10">格式解析逻辑</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/split_set.html#id11">使用示例</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id12">基础示例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id13">高级使用示例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id14">集成到训练工作流</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id15">带随机种子的分割</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/split_set.html#id16">错误处理机制</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id17">输入文件检查</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id18">比例参数验证</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id19">格式验证</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/split_set.html#id20">性能优化</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id21">内存优化策略</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id22">并行处理优化</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/split_set.html#id23">最佳实践建议</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id24">数据集比例选择</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id25">数据质量检查</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id26">随机性保证</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/split_set.html#id27">常见问题解答</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#q1">Q1: 分割时提示 &quot;输入文件不存在&quot;</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#q2">Q2: 验证集比例设置错误</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#q3">Q3: 分割后文件为空</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#q4">Q4: 需要按能量分层抽样</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/split_set.html#api">API 参考</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id28">函数列表</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../tools/split_set.html#id0"><code class="docutils literal notranslate"><span class="pre">split_extxyz_structures()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id29">异常列表</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../tools/split_set.html#FileNotFoundError"><code class="docutils literal notranslate"><span class="pre">FileNotFoundError</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../tools/split_set.html#ValueError"><code class="docutils literal notranslate"><span class="pre">ValueError</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../tools/split_set.html#TypeError"><code class="docutils literal notranslate"><span class="pre">TypeError</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/split_set.html#id30">相关链接</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tools/split_set.html#id33">更新日志</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id34">版本历史</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/split_set.html#id35">计划功能</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">训练及检验模块</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">训练与检验模块</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id3">概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">模块架构</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">模块架构图</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#public">PUBLIC 类详解</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id6">类概述</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">初始化参数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">默认参数设置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">核心方法详解</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#read">Read 方法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#key-and-parament">Key_and_parament 方法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#parse-value">_parse_value 方法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bool-commands">Bool_commands 方法</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#run">RUN 类详解</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id14">类概述</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id15">作业调度系统</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#slurm">SLURM 作业提交</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#wait-for-job-completion">_wait_for_job_completion 方法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#post-process">_post_process 方法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#process-phonon">_process_phonon 方法</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id16">训练管理方法</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#train-commands">Train_commands 方法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#train">Train 方法</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id17">计算管理方法</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#calculate-dir">Calculate_dir 方法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rewrite-lammps-in">Rewrite_lammps_in 方法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id18">输入文件修改方法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#execute">Execute 方法</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id19">使用示例</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id20">基本使用流程</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id21">自定义配置示例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id22">批量计算示例</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id23">错误处理机制</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id24">配置文件错误</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id25">作业提交错误</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id26">参数验证</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id27">性能优化建议</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id28">并发作业提交</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id29">资源监控</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id30">常见问题解答</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#q1">Q1: 配置文件读取失败，提示编码错误</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#q2-slurm">Q2: SLURM 作业提交后立即失败</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#q3">Q3: 训练过程中出现 &quot;参数不正确&quot; 错误</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#q4">Q4: 如何自定义后处理脚本</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#api">API 参考</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id31">类列表</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#PUBLIC"><code class="docutils literal notranslate"><span class="pre">PUBLIC</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#RUN"><code class="docutils literal notranslate"><span class="pre">RUN</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id32">异常列表</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#SystemExit"><code class="docutils literal notranslate"><span class="pre">SystemExit</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id33">相关链接</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id35">更新日志</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id36">版本历史</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id37">计划功能</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">自动化训练集生成模块</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../auto_generate_set/auto_generate_set.html">自动训练集生成模块</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/auto_generate_set.html#id2">概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/auto_generate_set.html#id3">主要特点</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/auto_generate_set.html#id4">核心功能</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/auto_generate_set.html#materials-project">从 Materials Project 获取结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/auto_generate_set.html#id5">结构形变生成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/auto_generate_set.html#id6">原子位置微扰</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/auto_generate_set.html#vasp">VASP 计算设置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/auto_generate_set.html#id7">VASP 作业提交</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/auto_generate_set.html#potcar">POTCAR 生成测试</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/auto_generate_set.html#id8">形变结果处理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/auto_generate_set.html#birch-murnaghan">Birch-Murnaghan 拟合</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/auto_generate_set.html#p-v">实验 P-V 数据拟合</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/auto_generate_set.html#poscar">数据转 POSCAR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/auto_generate_set.html#extxyz">Extxyz 数据集生成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/auto_generate_set.html#id9">完整工作流</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/auto_generate_set.html#id10">配置系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/auto_generate_set.html#id11">工作流程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/auto_generate_set.html#id12">依赖关系</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/auto_generate_set.html#id13">使用示例</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/auto_generate_set.html#id14">基本使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/auto_generate_set.html#id15">分步执行</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/auto_generate_set.html#id16">常见问题</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/auto_generate_set.html#q1-materials-project-api">Q1: 如何获取 Materials Project API 密钥？</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/auto_generate_set.html#q2-vasp">Q2: VASP 计算失败如何处理？</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/auto_generate_set.html#q3">Q3: 如何自定义结构生成策略？</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/auto_generate_set.html#id17">进阶使用</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/auto_generate_set.html#id18">自定义插件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/auto_generate_set.html#id19">批量处理</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/auto_generate_set.html#id20">相关文档</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_generate_set/birch_murnaghan_fitting.html">Birch-Murnaghan 拟合模块</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/birch_murnaghan_fitting.html#id2">概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/birch_murnaghan_fitting.html#id3">输入配置</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/birch_murnaghan_fitting.html#input-yaml">配置文件 (input.yaml)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/birch_murnaghan_fitting.html#id4">输入数据文件</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/birch_murnaghan_fitting.html#id5">主要函数</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/birch_murnaghan_fitting.html#id6">核心拟合函数</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../auto_generate_set/birch_murnaghan_fitting.html#birch_murnaghan_eqn"><code class="docutils literal notranslate"><span class="pre">birch_murnaghan_eqn()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../auto_generate_set/birch_murnaghan_fitting.html#perform_fitting"><code class="docutils literal notranslate"><span class="pre">perform_fitting()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/birch_murnaghan_fitting.html#id7">数据处理函数</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../auto_generate_set/birch_murnaghan_fitting.html#read_a_v_e_p_file"><code class="docutils literal notranslate"><span class="pre">read_a_v_e_p_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../auto_generate_set/birch_murnaghan_fitting.html#filter_data"><code class="docutils literal notranslate"><span class="pre">filter_data()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/birch_murnaghan_fitting.html#id8">目录处理函数</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../auto_generate_set/birch_murnaghan_fitting.html#find_a_v_e_p_files"><code class="docutils literal notranslate"><span class="pre">find_a_v_e_p_files()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../auto_generate_set/birch_murnaghan_fitting.html#create_mirror_structure"><code class="docutils literal notranslate"><span class="pre">create_mirror_structure()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/birch_murnaghan_fitting.html#id9">结果输出函数</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../auto_generate_set/birch_murnaghan_fitting.html#save_fitting_results"><code class="docutils literal notranslate"><span class="pre">save_fitting_results()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/birch_murnaghan_fitting.html#id10">主工作流程</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../auto_generate_set/birch_murnaghan_fitting.html#process_all_birch_murnaghan_fitting"><code class="docutils literal notranslate"><span class="pre">process_all_birch_murnaghan_fitting()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/birch_murnaghan_fitting.html#id11">输出文件</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/birch_murnaghan_fitting.html#id12">拟合参数文件示例</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/birch_murnaghan_fitting.html#id13">使用方式</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/birch_murnaghan_fitting.html#id14">命令行使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/birch_murnaghan_fitting.html#python-api">Python API使用</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/birch_murnaghan_fitting.html#id15">目录结构</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/birch_murnaghan_fitting.html#id16">输入目录结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/birch_murnaghan_fitting.html#id17">输出目录结构</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/birch_murnaghan_fitting.html#id18">注意事项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/birch_murnaghan_fitting.html#id19">常见问题</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/birch_murnaghan_fitting.html#q1-not-enough-data-points">Q1: 拟合失败，提示&quot;Not enough data points&quot;</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/birch_murnaghan_fitting.html#q2-a-v-e-p-txt">Q2: 找不到 a_V_E_P.txt 文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/birch_murnaghan_fitting.html#q3-b0">Q3: 拟合结果不合理（B0为负数等）</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/birch_murnaghan_fitting.html#id20">相关模块</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_generate_set/config.html">配置管理模块</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/config.html#id2">概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/config.html#id3">主要功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/config.html#id4">核心函数</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/config.html#load-config">load_config 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/config.html#set-default-values">_set_default_values 函数</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/config.html#id5">配置结构</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/config.html#paths">路径配置 (paths)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/config.html#deformation">形变参数 (deformation)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/config.html#perturbation">微扰参数 (perturbation)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/config.html#vasp-vasp">VASP 计算参数 (vasp)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../auto_generate_set/config.html#incar-incar-parameters">INCAR 参数 (incar_parameters)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../auto_generate_set/config.html#potcar-potcar">POTCAR 配置 (potcar)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../auto_generate_set/config.html#submission">作业提交配置 (submission)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/config.html#birch-murnaghan-birch-murnaghan-fitting">Birch-Murnaghan 拟合配置 (birch_murnaghan_fitting)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/config.html#extxyz-extxyz-generation">Extxyz 数据集生成配置 (extxyz_generation)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/config.html#id6">配置文件示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/config.html#id7">使用流程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/config.html#id8">依赖关系</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/config.html#id9">最佳实践</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/config.html#id10">相关模块</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_generate_set/deform_structures.html">形变结构生成模块</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/deform_structures.html#id2">概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/deform_structures.html#id3">主要功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/deform_structures.html#id4">核心函数</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/deform_structures.html#find-optimal-supercell">find_optimal_supercell 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/deform_structures.html#create-supercell">create_supercell 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/deform_structures.html#scale-lattice">scale_lattice 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/deform_structures.html#process-structure-for-deformation">process_structure_for_deformation 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/deform_structures.html#main">main 函数</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/deform_structures.html#id5">配置参数</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/deform_structures.html#id6">路径配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/deform_structures.html#id7">形变参数</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/deform_structures.html#id8">文件命名规则</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/deform_structures.html#id9">目录组织结构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/deform_structures.html#id10">使用示例</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/deform_structures.html#id11">命令行调用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/deform_structures.html#python">Python 脚本调用</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/deform_structures.html#id12">依赖关系</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/deform_structures.html#id13">常见问题</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/deform_structures.html#q1">Q1: 没有生成任何形变结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/deform_structures.html#q2">Q2: 生成的原子数超过限制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/deform_structures.html#q3">Q3: 化学式识别错误</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/deform_structures.html#id14">相关模块</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_generate_set/exp_pv_structures.html">实验P-V数据拟合模块</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/exp_pv_structures.html#id1">概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/exp_pv_structures.html#id2">主要功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/exp_pv_structures.html#id3">核心函数</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/exp_pv_structures.html#read-config">read_config 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/exp_pv_structures.html#read-exp-data">read_exp_data 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/exp_pv_structures.html#save-dft-a-p-data">save_dft_a_p_data 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/exp_pv_structures.html#fit-pressure-relation">fit_pressure_relation 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/exp_pv_structures.html#save-fitting-results">save_fitting_results 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/exp_pv_structures.html#plot-fitting-results">plot_fitting_results 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/exp_pv_structures.html#main">main 函数</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/exp_pv_structures.html#id4">配置文件结构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/exp_pv_structures.html#id5">实验数据格式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/exp_pv_structures.html#id6">输出文件说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/exp_pv_structures.html#id7">使用方式</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/exp_pv_structures.html#id8">命令行调用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/exp_pv_structures.html#python">Python脚本调用</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/exp_pv_structures.html#id9">依赖关系</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/exp_pv_structures.html#id10">常见问题</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/exp_pv_structures.html#q1">Q1: 实验数据文件读取失败</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/exp_pv_structures.html#q2-r2">Q2: 拟合效果不理想（R²值过低）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/exp_pv_structures.html#q3">Q3: 晶格常数计算错误</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/exp_pv_structures.html#id11">应用场景</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/exp_pv_structures.html#id12">相关模块</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_generate_set/from_mp_structures.html">Materials Project结构获取模块</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/from_mp_structures.html#id1">概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/from_mp_structures.html#id2">主要功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/from_mp_structures.html#id3">核心函数</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/from_mp_structures.html#write-poscar-grouped-by-element">write_poscar_grouped_by_element 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/from_mp_structures.html#copy-user-poscars">copy_user_poscars 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/from_mp_structures.html#search-with-retry">search_with_retry 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/from_mp_structures.html#get-available-surface-structures">get_available_surface_structures 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/from_mp_structures.html#generate-basic-surfaces">generate_basic_surfaces 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/from_mp_structures.html#main">main 函数</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/from_mp_structures.html#id4">配置参数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/from_mp_structures.html#id5">目录结构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/from_mp_structures.html#id6">文件名格式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/from_mp_structures.html#id7">使用方式</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/from_mp_structures.html#id8">命令行调用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/from_mp_structures.html#python">Python脚本调用</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/from_mp_structures.html#api">API密钥获取</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/from_mp_structures.html#id9">输出文件说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/from_mp_structures.html#id10">依赖关系</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/from_mp_structures.html#id11">常见问题</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/from_mp_structures.html#q1-api">Q1: API密钥无效或过期</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/from_mp_structures.html#q2">Q2: 网络连接失败</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/from_mp_structures.html#q3">Q3: 元素组合太多导致超时</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/from_mp_structures.html#q4">Q4: 表面结构生成失败</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/from_mp_structures.html#id12">注意事项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/from_mp_structures.html#id13">相关模块</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_generate_set/generate_extxyz_dataset.html">extxyz数据集生成模块</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/generate_extxyz_dataset.html#id1">模块概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/generate_extxyz_dataset.html#id2">主要函数说明</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/generate_extxyz_dataset.html#find-outcar-files-search-dir-recursive-true">find_outcar_files(search_dir, recursive=True)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/generate_extxyz_dataset.html#extract-structures-from-outcar-outcar-file-output-file-step-10">extract_structures_from_outcar(outcar_file, output_file, step=10)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/generate_extxyz_dataset.html#generate-vasp-extxyz-config">generate_vasp_extxyz(config)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/generate_extxyz_dataset.html#load-birch-murnaghan-fitting-results-bm-dir-recursive-false">load_birch_murnaghan_fitting_results(bm_dir, recursive=False)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/generate_extxyz_dataset.html#extract-structures-from-outcar-scale-outcar-scale-dir-output-file-step-10">extract_structures_from_outcar_scale(outcar_scale_dir, output_file, step=10)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/generate_extxyz_dataset.html#find-reference-structure-outcar-scale-dir">find_reference_structure(outcar_scale_dir)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/generate_extxyz_dataset.html#filter-data-by-pressure-data-file-pressure-range">filter_data_by_pressure(data_file, pressure_range)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/generate_extxyz_dataset.html#calculate-pressure-from-birch-murnaghan-params-volume">calculate_pressure_from_birch_murnaghan(params, volume)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/generate_extxyz_dataset.html#generate-structures-from-fitting-curve-reference-atoms-fitted-data-output-file-structure-name-n-structures-50-pressure-range-none-original-data-none-scaling-factors-range-none-bm-params-none">generate_structures_from_fitting_curve(reference_atoms, fitted_data, output_file, structure_name, n_structures=50, pressure_range=None, original_data=None, scaling_factors_range=None, bm_params=None)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/generate_extxyz_dataset.html#generate-birch-murnaghan-extxyz-config">generate_birch_murnaghan_extxyz(config)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/generate_extxyz_dataset.html#load-fit-a-p-data-fit-a-p-file">load_fit_a_P_data(fit_a_P_file)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/generate_extxyz_dataset.html#gpa-to-ev-per-ang3-pressure-gpa">gpa_to_ev_per_ang3(pressure_gpa)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/generate_extxyz_dataset.html#generate-structures-from-fit-a-p-config">generate_structures_from_fit_a_P(config)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/generate_extxyz_dataset.html#merge-extxyz-files-config">merge_extxyz_files(config)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/generate_extxyz_dataset.html#generate-extxyz-dataset-config-path">generate_extxyz_dataset(config_path)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/generate_extxyz_dataset.html#generate-extxyz-from-config-config-path">generate_extxyz_from_config(config_path)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/generate_extxyz_dataset.html#id3">使用示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/generate_extxyz_dataset.html#id4">配置文件说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/generate_extxyz_dataset.html#id5">输出文件</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_generate_set/perturb_structures.html">结构微扰模块</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/perturb_structures.html#id2">模块概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/perturb_structures.html#id3">主要函数说明</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/perturb_structures.html#find-optimal-supercell-structure-max-atoms-150-max-supercell-4">find_optimal_supercell(structure, max_atoms=150, max_supercell=4)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/perturb_structures.html#create-supercell-structure-scaling-matrix">create_supercell(structure, scaling_matrix)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/perturb_structures.html#process-structure-for-perturbation-poscar-path-output-base-dir-config">process_structure_for_perturbation(poscar_path, output_base_dir, config)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/perturb_structures.html#generate-perturbation-fallback-structure-output-dir-base-filename-perturb-params">generate_perturbation_fallback(structure, output_dir, base_filename, perturb_params)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/perturb_structures.html#main-config-file-input-yaml">main(config_file=&quot;input.yaml&quot;)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/perturb_structures.html#id4">配置参数说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/perturb_structures.html#id5">使用示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/perturb_structures.html#id6">输出文件结构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/perturb_structures.html#id7">注意事项</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_generate_set/potcar_generator.html">POTCAR生成器模块</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/potcar_generator.html#id1">模块概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/potcar_generator.html#id2">主要函数说明</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/potcar_generator.html#read-poscar-elements-poscar-path">read_poscar_elements(poscar_path)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/potcar_generator.html#find-potcar-files-potcar-base-dir-functional-elements-potcar-variants-none">find_potcar_files(potcar_base_dir, functional, elements, potcar_variants=None)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/potcar_generator.html#concatenate-potcar-files-potcar-paths-output-path">concatenate_potcar_files(potcar_paths, output_path)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/potcar_generator.html#generate-potcar-auto-poscar-path-config">generate_potcar_auto(poscar_path, config)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/potcar_generator.html#generate-potcar-pymatgen-structure-config">generate_potcar_pymatgen(structure, config)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/potcar_generator.html#generate-potcar-poscar-path-structure-config-output-dir">generate_potcar(poscar_path, structure, config, output_dir)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/potcar_generator.html#id3">配置参数说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/potcar_generator.html#id4">使用方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/potcar_generator.html#id5">输出文件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/potcar_generator.html#id6">注意事项</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_generate_set/process_deform_results.html">处理形变计算结果模块</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/process_deform_results.html#id2">模块概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/process_deform_results.html#id3">主要函数说明</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/process_deform_results.html#classify-deform-directories-root-dir">classify_deform_directories(root_dir)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/process_deform_results.html#create-classified-structure-root-dir-classified-dict">create_classified_structure(root_dir, classified_dict)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/process_deform_results.html#extract-vasp-data-directory">extract_vasp_data(directory)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/process_deform_results.html#process-all-deform-results-root-dir">process_all_deform_results(root_dir)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/process_deform_results.html#id4">输出文件结构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/process_deform_results.html#id5">数据文件格式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/process_deform_results.html#id6">使用示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/process_deform_results.html#id7">注意事项</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_generate_set/utils.html">工具函数模块</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/utils.html#id2">模块概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/utils.html#id3">主要函数说明</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/utils.html#mkdir-output-load-path">mkdir_output_load(path)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/utils.html#chemsys-comb-elements">chemsys_comb(elements)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/utils.html#get-formula-from-filename-filename">get_formula_from_filename(filename)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/utils.html#safe-copy-src-dst">safe_copy(src, dst)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/utils.html#check-potcar-availability-config">check_potcar_availability(config)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/utils.html#safe-path-join-args">safe_path_join(*args)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/utils.html#check-file-exists-file-path">check_file_exists(file_path)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/utils.html#id6">使用示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/utils.html#id7">注意事项</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_generate_set/vasp_setup.html">VASP计算设置模块</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/vasp_setup.html#id1">模块概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/vasp_setup.html#id2">主要函数说明</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/vasp_setup.html#create-incar-config">create_incar(config)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/vasp_setup.html#setup-vasp-calculation-poscar-path-output-dir-config">setup_vasp_calculation(poscar_path, output_dir, config)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/vasp_setup.html#create-submission-script-output-dir-config">create_submission_script(output_dir, config)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/vasp_setup.html#discover-structure-dirs-input-paths">discover_structure_dirs(input_paths)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/vasp_setup.html#process-directory-for-vasp-input-dir-output-base-dir-config-prefix">process_directory_for_vasp(input_dir, output_base_dir, config, prefix=&quot;&quot;)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/vasp_setup.html#id3">配置参数说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/vasp_setup.html#id4">输入输出结构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/vasp_setup.html#id5">使用示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/vasp_setup.html#id6">注意事项</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_generate_set/vasp_submit.html">VASP任务提交和管理模块</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/vasp_submit.html#id1">模块概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/vasp_submit.html#id2">主要函数说明</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/vasp_submit.html#check-job-status-job-id">check_job_status(job_id)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/vasp_submit.html#check-calculation-success-calc-dir">check_calculation_success(calc_dir)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/vasp_submit.html#submit-job-calc-dir">submit_job(calc_dir)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/vasp_submit.html#get-running-jobs">get_running_jobs()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/vasp_submit.html#discover-vasp-calc-dirs-vasp-dir">discover_vasp_calc_dirs(vasp_dir)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/vasp_submit.html#submit-vasp-calculations-config-file-input-yaml">submit_vasp_calculations(config_file=&quot;input.yaml&quot;)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/vasp_submit.html#id3">工作流程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/vasp_submit.html#id6">配置参数说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/vasp_submit.html#id7">输出信息</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/vasp_submit.html#id8">使用示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/vasp_submit.html#id9">注意事项</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">训练集格式转换模块</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../auto_generate_set/dump_to_poscar.html">LAMMPS转POSCAR模块</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/dump_to_poscar.html#id1">概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/dump_to_poscar.html#id2">主要功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/dump_to_poscar.html#id3">核心类与方法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/dump_to_poscar.html#lammpstoposcarconverter">LammpsToPoscarConverter 类</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/dump_to_poscar.html#set-atom-types-mapping">set_atom_types_mapping 方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/dump_to_poscar.html#read-dump-file">read_dump_file 方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/dump_to_poscar.html#calculate-lattice-vectors">calculate_lattice_vectors 方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/dump_to_poscar.html#sort-atoms-by-type">sort_atoms_by_type 方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/dump_to_poscar.html#convert-to-poscar">convert_to_poscar 方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/dump_to_poscar.html#is-lammps-dump-file">is_lammps_dump_file 方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/dump_to_poscar.html#find-dump-files">find_dump_files 方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/dump_to_poscar.html#process-input">process_input 方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/dump_to_poscar.html#process-single-file">process_single_file 方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/dump_to_poscar.html#process-directory">process_directory 方法</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/dump_to_poscar.html#id4">工具函数</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/dump_to_poscar.html#load-config">load_config 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/dump_to_poscar.html#convert-single-file">convert_single_file 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/dump_to_poscar.html#id5">process_directory 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/dump_to_poscar.html#parse-arguments">parse_arguments 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/dump_to_poscar.html#create-default-config">create_default_config 函数</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/dump_to_poscar.html#id6">配置文件结构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/dump_to_poscar.html#id7">输出文件命名</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/dump_to_poscar.html#id8">使用方式</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/dump_to_poscar.html#id9">命令行使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/dump_to_poscar.html#python">Python脚本调用</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/dump_to_poscar.html#id10">支持的文件格式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/dump_to_poscar.html#id11">注意事项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/dump_to_poscar.html#id12">常见问题</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/dump_to_poscar.html#q1-poscar">Q1: 转换后的POSCAR元素符号不正确</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/dump_to_poscar.html#q2-dump">Q2: 没有找到任何dump文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../auto_generate_set/dump_to_poscar.html#q3">Q3: 盒子边界转换错误</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/dump_to_poscar.html#id13">依赖关系</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_generate_set/dump_to_poscar.html#id14">相关模块</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../converters/cfg2extxyz.html">CFG到EXTXYZ格式转换器</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../converters/cfg2extxyz.html#id1">模块概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../converters/cfg2extxyz.html#id2">主要函数说明</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../converters/cfg2extxyz.html#parse-cfg-file-file-path">parse_cfg_file(file_path)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../converters/cfg2extxyz.html#write-extxyz-configs-output-file-type-map-none-float-fmt-9f">write_extxyz(configs, output_file, type_map=None, float_fmt=&quot;.9f&quot;)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../converters/cfg2extxyz.html#type-map">原子类型映射（type_map）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../converters/cfg2extxyz.html#cfg">输入文件格式（CFG）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../converters/cfg2extxyz.html#extxyz">输出文件格式（EXTXYZ）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../converters/cfg2extxyz.html#id3">使用示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../converters/cfg2extxyz.html#id4">错误处理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../converters/cfg2extxyz.html#id5">注意事项</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../converters/outcar_converter.html">OUTCAR到EXTXYZ格式转换器</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../converters/outcar_converter.html#id1">模块概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../converters/outcar_converter.html#id2">主要函数说明</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../converters/outcar_converter.html#extract-structures-from-outcar-outcar-file-output-file-step-1">extract_structures_from_outcar(outcar_file, output_file, step=1)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../converters/outcar_converter.html#outcar">输入文件（OUTCAR）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../converters/outcar_converter.html#extxyz">输出文件（EXTXYZ）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../converters/outcar_converter.html#id3">使用示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../converters/outcar_converter.html#id4">注意事项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../converters/outcar_converter.html#id5">错误处理</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PhyMLP Kit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">训练与检验模块</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/train_and_validation/core.rst.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="core-module">
+<span id="id1"></span><h1>训练与检验模块<a class="headerlink" href="#core-module" title="Link to this heading"></a></h1>
+<nav class="contents local" id="id2">
+<p class="topic-title">目录</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#id3" id="id45">概述</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id46">模块架构</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id5" id="id47">模块架构图</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#public" id="id48">PUBLIC 类详解</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id6" id="id49">类概述</a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id50">初始化参数</a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id51">默认参数设置</a></p></li>
+<li><p><a class="reference internal" href="#id9" id="id52">核心方法详解</a></p>
+<ul>
+<li><p><a class="reference internal" href="#read" id="id53">Read 方法</a></p></li>
+<li><p><a class="reference internal" href="#key-and-parament" id="id54">Key_and_parament 方法</a></p></li>
+<li><p><a class="reference internal" href="#parse-value" id="id55">_parse_value 方法</a></p></li>
+<li><p><a class="reference internal" href="#bool-commands" id="id56">Bool_commands 方法</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#run" id="id57">RUN 类详解</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id14" id="id58">类概述</a></p></li>
+<li><p><a class="reference internal" href="#id15" id="id59">作业调度系统</a></p>
+<ul>
+<li><p><a class="reference internal" href="#slurm" id="id60">SLURM 作业提交</a></p></li>
+<li><p><a class="reference internal" href="#wait-for-job-completion" id="id61">_wait_for_job_completion 方法</a></p></li>
+<li><p><a class="reference internal" href="#post-process" id="id62">_post_process 方法</a></p></li>
+<li><p><a class="reference internal" href="#process-phonon" id="id63">_process_phonon 方法</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id16" id="id64">训练管理方法</a></p>
+<ul>
+<li><p><a class="reference internal" href="#train-commands" id="id65">Train_commands 方法</a></p></li>
+<li><p><a class="reference internal" href="#train" id="id66">Train 方法</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id17" id="id67">计算管理方法</a></p>
+<ul>
+<li><p><a class="reference internal" href="#calculate-dir" id="id68">Calculate_dir 方法</a></p></li>
+<li><p><a class="reference internal" href="#rewrite-lammps-in" id="id69">Rewrite_lammps_in 方法</a></p></li>
+<li><p><a class="reference internal" href="#id18" id="id70">输入文件修改方法</a></p></li>
+<li><p><a class="reference internal" href="#execute" id="id71">Execute 方法</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id19" id="id72">使用示例</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id20" id="id73">基本使用流程</a></p></li>
+<li><p><a class="reference internal" href="#id21" id="id74">自定义配置示例</a></p></li>
+<li><p><a class="reference internal" href="#id22" id="id75">批量计算示例</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id23" id="id76">错误处理机制</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id24" id="id77">配置文件错误</a></p></li>
+<li><p><a class="reference internal" href="#id25" id="id78">作业提交错误</a></p></li>
+<li><p><a class="reference internal" href="#id26" id="id79">参数验证</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id27" id="id80">性能优化建议</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id28" id="id81">并发作业提交</a></p></li>
+<li><p><a class="reference internal" href="#id29" id="id82">资源监控</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id30" id="id83">常见问题解答</a></p>
+<ul>
+<li><p><a class="reference internal" href="#q1" id="id84">Q1: 配置文件读取失败，提示编码错误</a></p></li>
+<li><p><a class="reference internal" href="#q2-slurm" id="id85">Q2: SLURM 作业提交后立即失败</a></p></li>
+<li><p><a class="reference internal" href="#q3" id="id86">Q3: 训练过程中出现 &quot;参数不正确&quot; 错误</a></p></li>
+<li><p><a class="reference internal" href="#q4" id="id87">Q4: 如何自定义后处理脚本</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#api" id="id88">API 参考</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id31" id="id89">类列表</a></p></li>
+<li><p><a class="reference internal" href="#id32" id="id90">异常列表</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id33" id="id91">相关链接</a></p></li>
+<li><p><a class="reference internal" href="#id35" id="id92">更新日志</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id36" id="id93">版本历史</a></p></li>
+<li><p><a class="reference internal" href="#id37" id="id94">计划功能</a></p></li>
+</ul>
+</li>
+</ul>
+</nav>
+<section id="id3">
+<h2><a class="toc-backref" href="#id45" role="doc-backlink">概述</a><a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">core.py</span></code> 是 PhyMLP Kit 工具包的核心模块，提供配置文件读取、参数解析、作业提交、任务管理等核心功能。该模块包含两个主要类：<code class="docutils literal notranslate"><span class="pre">PUBLIC</span></code> 和 <code class="docutils literal notranslate"><span class="pre">RUN</span></code>，共同构成了整个系统的基础架构。</p>
+</section>
+<section id="id4">
+<h2><a class="toc-backref" href="#id46" role="doc-backlink">模块架构</a><a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<section id="id5">
+<h3><a class="toc-backref" href="#id47" role="doc-backlink">模块架构图</a><a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>core.py 核心模块
+├── PUBLIC 类
+│   ├── 配置管理
+│   ├── 参数解析
+│   └── 格式处理
+└── RUN 类
+    ├── 训练管理
+    │   ├── 训练命令生成
+    │   └── 训练执行
+    ├── 计算管理
+    │   ├── 计算目录管理
+    │   ├── 输入文件重写
+    │   └── 计算执行
+    └── 作业调度
+        ├── SLURM作业提交
+        ├── 作业状态监控
+        └── 后处理执行
+</pre></div>
+</div>
+</section>
+</section>
+<section id="public">
+<h2><a class="toc-backref" href="#id48" role="doc-backlink">PUBLIC 类详解</a><a class="headerlink" href="#public" title="Link to this heading"></a></h2>
+<section id="id6">
+<h3><a class="toc-backref" href="#id49" role="doc-backlink">类概述</a><a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">PUBLIC</span></code> 类是公共配置管理器，负责：</p>
+<ol class="arabic simple">
+<li><p><strong>配置参数管理</strong>：定义和维护所有配置参数</p></li>
+<li><p><strong>配置文件解析</strong>：读取和解析 <code class="docutils literal notranslate"><span class="pre">Inputfile.txt</span></code> 配置文件</p></li>
+<li><p><strong>参数验证</strong>：验证参数的有效性和完整性</p></li>
+<li><p><strong>默认值设置</strong>：提供合理的默认配置</p></li>
+</ol>
+</section>
+<section id="id7">
+<h3><a class="toc-backref" href="#id50" role="doc-backlink">初始化参数</a><a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<div class="literal-block-wrapper docutils container" id="id38">
+<div class="code-block-caption"><span class="caption-text">PUBLIC 类的初始化参数</span><a class="headerlink" href="#id38" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">PUBLIC</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Inputfile</span> <span class="o">=</span> <span class="s2">&quot;Inputfile&quot;</span>
+
+        <span class="c1"># 所有允许的命令</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_keys</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;PhyMLP_load&quot;</span><span class="p">,</span> <span class="s2">&quot;lmp_mpi_load&quot;</span><span class="p">,</span> <span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="s1">&#39;extxyz_load&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;init_PhyMLP&#39;</span><span class="p">,</span> <span class="s1">&#39;iteration_limit&#39;</span><span class="p">,</span> <span class="s1">&#39;al_mode&#39;</span><span class="p">,</span> <span class="s1">&#39;save_to&#39;</span><span class="p">,</span>
+            <span class="s2">&quot;pot_PhyMLP_load&quot;</span><span class="p">,</span> <span class="s1">&#39;calculate&#39;</span><span class="p">,</span> <span class="s1">&#39;properties&#39;</span><span class="p">,</span> <span class="s2">&quot;crystal_structure&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;lattice&quot;</span><span class="p">,</span> <span class="s2">&quot;atomic_mass&quot;</span><span class="p">,</span> <span class="s2">&quot;vaspkit_load&quot;</span>
+        <span class="p">]</span>
+
+        <span class="c1"># 所有支持的计算属性</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_properties</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;E-V&quot;</span><span class="p">,</span> <span class="s2">&quot;Elastic&quot;</span><span class="p">,</span> <span class="s2">&quot;phonon&quot;</span><span class="p">,</span> <span class="s2">&quot;P-V&quot;</span><span class="p">]</span>
+
+        <span class="c1"># 设置默认参数</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_default_parameters</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="id8">
+<h3><a class="toc-backref" href="#id51" role="doc-backlink">默认参数设置</a><a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<table class="docutils align-default" id="id39">
+<caption><span class="caption-text">PUBLIC 类的默认参数</span><a class="headerlink" href="#id39" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 35.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>参数名</p></th>
+<th class="head"><p>默认值</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">vaspkit_load</span></code></p></td>
+<td><p>&quot;./&quot;</p></td>
+<td><p>VASPKIT 工具路径</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">PhyMLP_load</span></code></p></td>
+<td><p>&quot;./&quot;</p></td>
+<td><p>PhyMLP 安装路径</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lmp_mpi_load</span></code></p></td>
+<td><p>&quot;./lmp_mpi&quot;</p></td>
+<td><p>LAMMPS 可执行文件路径</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">train</span></code></p></td>
+<td><p>&quot;True&quot;</p></td>
+<td><p>是否执行训练</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">extxyz_load</span></code></p></td>
+<td><p>&quot;./train.exyz&quot;</p></td>
+<td><p>训练集文件路径</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">init_PhyMLP</span></code></p></td>
+<td><p>&quot;06.PhyMLP&quot;</p></td>
+<td><p>初始势函数文件</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">iteration_limit</span></code></p></td>
+<td><p>&quot;5000&quot;</p></td>
+<td><p>最大迭代次数</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">al_mode</span></code></p></td>
+<td><p>&quot;nbh&quot;</p></td>
+<td><p>训练模式</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">save_to</span></code></p></td>
+<td><p>&quot;./pot.PhyMLP&quot;</p></td>
+<td><p>势函数保存路径</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">calculate</span></code></p></td>
+<td><p>&quot;True&quot;</p></td>
+<td><p>是否执行计算</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">properties</span></code></p></td>
+<td><p>[&quot;E-V&quot;]</p></td>
+<td><p>计算性质列表</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">crystal_structure</span></code></p></td>
+<td><p>&quot;bcc&quot;</p></td>
+<td><p>晶体结构类型</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lattice</span></code></p></td>
+<td><p>&quot;1&quot;</p></td>
+<td><p>晶格常数</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">atomic_mass</span></code></p></td>
+<td><p>&quot;1&quot;</p></td>
+<td><p>原子质量</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id9">
+<h3><a class="toc-backref" href="#id52" role="doc-backlink">核心方法详解</a><a class="headerlink" href="#id9" title="Link to this heading"></a></h3>
+<section id="read">
+<h4><a class="toc-backref" href="#id53" role="doc-backlink">Read 方法</a><a class="headerlink" href="#read" title="Link to this heading"></a></h4>
+<dl class="py method">
+<dt class="sig sig-object py" id="PUBLIC.Read">
+<span class="sig-prename descclassname"><span class="pre">PUBLIC.</span></span><span class="sig-name descname"><span class="pre">Read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Inputfile</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PUBLIC.Read" title="Link to this definition"></a></dt>
+<dd><p>读取并解析配置文件</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>Inputfile</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 配置文件路径</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>解析后的配置信息列表</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="（在 Python v3.14）">list</a></p>
+</dd>
+<dt class="field-even">抛出<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#SystemExit" title="SystemExit"><strong>SystemExit</strong></a> -- 当文件读取失败时</p>
+</dd>
+</dl>
+<p><strong>功能说明</strong>：</p>
+<ol class="arabic simple">
+<li><p>打开指定配置文件</p></li>
+<li><p>逐行读取内容</p></li>
+<li><p>跳过注释行和空行</p></li>
+<li><p>移除行内注释</p></li>
+<li><p>返回有效配置行列表</p></li>
+</ol>
+<p><strong>代码实现</strong>：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">Read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Inputfile</span><span class="p">):</span>
+    <span class="n">input_informations</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">Inputfile</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">readfile</span><span class="p">:</span>
+            <span class="n">read_informations</span> <span class="o">=</span> <span class="n">readfile</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">read_information</span> <span class="ow">in</span> <span class="n">read_informations</span><span class="p">:</span>
+                <span class="n">new_line</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">read_information</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>  <span class="c1"># 移除空白字符</span>
+                <span class="k">if</span> <span class="n">new_line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_line</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">continue</span>  <span class="c1"># 跳过注释行和空行</span>
+                <span class="n">new_line</span> <span class="o">=</span> <span class="n">new_line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># 移除行内注释</span>
+                <span class="n">input_informations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_line</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">input_informations</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;文件读取错误: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="key-and-parament">
+<h4><a class="toc-backref" href="#id54" role="doc-backlink">Key_and_parament 方法</a><a class="headerlink" href="#key-and-parament" title="Link to this heading"></a></h4>
+<dl class="py method">
+<dt class="sig sig-object py" id="PUBLIC.Key_and_parament">
+<span class="sig-prename descclassname"><span class="pre">PUBLIC.</span></span><span class="sig-name descname"><span class="pre">Key_and_parament</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_informations</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PUBLIC.Key_and_parament" title="Link to this definition"></a></dt>
+<dd><p>解析配置信息并设置类属性</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input_informations</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="（在 Python v3.14）"><em>list</em></a>) -- 配置信息列表</p>
+</dd>
+<dt class="field-even">抛出<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#SystemExit" title="SystemExit"><strong>SystemExit</strong></a> -- 当配置错误时</p>
+</dd>
+</dl>
+<p><strong>解析逻辑</strong>：</p>
+<ol class="arabic">
+<li><p><strong>键名映射</strong>：处理大小写和命名差异</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">key_mapping</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;phymlp_load&#39;</span><span class="p">:</span> <span class="s1">&#39;PhyMLP_load&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;lmp_mpi_load&#39;</span><span class="p">:</span> <span class="s1">&#39;lmp_mpi_load&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;train&#39;</span><span class="p">:</span> <span class="s1">&#39;train&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;extxyz_load&#39;</span><span class="p">:</span> <span class="s1">&#39;extxyz_load&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;init_phymlp&#39;</span><span class="p">:</span> <span class="s1">&#39;init_PhyMLP&#39;</span><span class="p">,</span>
+    <span class="c1"># ... 其他映射</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>值解析</strong>：支持多种值格式
+- 字符串（带引号）：&quot;path/to/file&quot;
+- 数字：5000
+- 布尔值：True/False
+- 列表：[&quot;E-V&quot;, &quot;Elastic&quot;]</p></li>
+<li><p><strong>特殊处理</strong>：<code class="docutils literal notranslate"><span class="pre">properties</span></code> 参数的特殊解析</p></li>
+<li><p><strong>属性设置</strong>：使用 <code class="docutils literal notranslate"><span class="pre">setattr()</span></code> 动态设置类属性</p></li>
+</ol>
+</dd></dl>
+
+</section>
+<section id="parse-value">
+<h4><a class="toc-backref" href="#id55" role="doc-backlink">_parse_value 方法</a><a class="headerlink" href="#parse-value" title="Link to this heading"></a></h4>
+<dl class="py method">
+<dt class="sig sig-object py" id="PUBLIC._parse_value">
+<span class="sig-prename descclassname"><span class="pre">PUBLIC.</span></span><span class="sig-name descname"><span class="pre">_parse_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value_str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PUBLIC._parse_value" title="Link to this definition"></a></dt>
+<dd><p>安全地解析配置值字符串</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value_str</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 原始值字符串</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>解析后的值</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>any</p>
+</dd>
+</dl>
+<p><strong>解析策略</strong>：</p>
+<ol class="arabic simple">
+<li><p><strong>字符串检测</strong>：检查是否被引号包围</p></li>
+<li><p><strong>字面量解析</strong>：尝试使用 <code class="docutils literal notranslate"><span class="pre">ast.literal_eval()</span></code> 解析</p></li>
+<li><p><strong>回退机制</strong>：解析失败时返回原始字符串</p></li>
+</ol>
+<p><strong>示例</strong>：</p>
+<ul class="simple">
+<li><p>输入：<code class="docutils literal notranslate"><span class="pre">'&quot;path/to/file&quot;'</span></code> → 输出：<code class="docutils literal notranslate"><span class="pre">&quot;path/to/file&quot;</span></code></p></li>
+<li><p>输入：<code class="docutils literal notranslate"><span class="pre">'5000'</span></code> → 输出：<code class="docutils literal notranslate"><span class="pre">5000</span></code></p></li>
+<li><p>输入：<code class="docutils literal notranslate"><span class="pre">'[&quot;E-V&quot;,</span> <span class="pre">&quot;Elastic&quot;]'</span></code> → 输出：<code class="docutils literal notranslate"><span class="pre">[&quot;E-V&quot;,</span> <span class="pre">&quot;Elastic&quot;]</span></code></p></li>
+<li><p>输入：<code class="docutils literal notranslate"><span class="pre">'True'</span></code> → 输出：<code class="docutils literal notranslate"><span class="pre">True</span></code></p></li>
+</ul>
+</dd></dl>
+
+</section>
+<section id="bool-commands">
+<h4><a class="toc-backref" href="#id56" role="doc-backlink">Bool_commands 方法</a><a class="headerlink" href="#bool-commands" title="Link to this heading"></a></h4>
+<dl class="py method">
+<dt class="sig sig-object py" id="PUBLIC.Bool_commands">
+<span class="sig-prename descclassname"><span class="pre">PUBLIC.</span></span><span class="sig-name descname"><span class="pre">Bool_commands</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bool_command</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PUBLIC.Bool_commands" title="Link to this definition"></a></dt>
+<dd><p>验证并转换布尔命令</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>bool_command</strong> (<em>any</em>) -- 布尔命令值</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>转换后的布尔值</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）">bool</a></p>
+</dd>
+<dt class="field-even">抛出<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#SystemExit" title="SystemExit"><strong>SystemExit</strong></a> -- 当值无效时</p>
+</dd>
+</dl>
+<p><strong>支持格式</strong>：</p>
+<ul class="simple">
+<li><p>Python 布尔值：<code class="docutils literal notranslate"><span class="pre">True</span></code>, <code class="docutils literal notranslate"><span class="pre">False</span></code></p></li>
+<li><p>字符串布尔值：<code class="docutils literal notranslate"><span class="pre">&quot;true&quot;</span></code>, <a href="#id10"><span class="problematic" id="id11">``</span></a>&quot;false&quot;<a href="#id12"><span class="problematic" id="id13">``</span></a>（不区分大小写）</p></li>
+<li><p>其他值将引发错误</p></li>
+</ul>
+</dd></dl>
+
+</section>
+</section>
+</section>
+<section id="run">
+<h2><a class="toc-backref" href="#id57" role="doc-backlink">RUN 类详解</a><a class="headerlink" href="#run" title="Link to this heading"></a></h2>
+<section id="id14">
+<h3><a class="toc-backref" href="#id58" role="doc-backlink">类概述</a><a class="headerlink" href="#id14" title="Link to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">RUN</span></code> 类继承自 <code class="docutils literal notranslate"><span class="pre">PUBLIC</span></code>，负责：</p>
+<ol class="arabic simple">
+<li><p><strong>训练任务管理</strong>：机器学习势的训练流程控制</p></li>
+<li><p><strong>计算任务管理</strong>：各种物性计算的执行控制</p></li>
+<li><p><strong>作业调度</strong>：SLURM 作业提交和监控</p></li>
+<li><p><strong>后处理</strong>：计算结果的处理和分析</p></li>
+</ol>
+</section>
+<section id="id15">
+<h3><a class="toc-backref" href="#id59" role="doc-backlink">作业调度系统</a><a class="headerlink" href="#id15" title="Link to this heading"></a></h3>
+<section id="slurm">
+<h4><a class="toc-backref" href="#id60" role="doc-backlink">SLURM 作业提交</a><a class="headerlink" href="#slurm" title="Link to this heading"></a></h4>
+<dl class="py method">
+<dt class="sig sig-object py" id="RUN.slurm_sub">
+<span class="sig-prename descclassname"><span class="pre">RUN.</span></span><span class="sig-name descname"><span class="pre">slurm_sub</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">command</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#RUN.slurm_sub" title="Link to this definition"></a></dt>
+<dd><p>提交作业到 SLURM 调度系统</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>job_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 作业名称</p></li>
+<li><p><strong>command</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 训练命令（仅训练作业需要）</p></li>
+</ul>
+</dd>
+<dt class="field-even">抛出<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/subprocess.html#subprocess.CalledProcessError" title="（在 Python v3.14）"><strong>subprocess.CalledProcessError</strong></a> -- 作业提交失败时</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeError" title="（在 Python v3.14）"><strong>RuntimeError</strong></a> -- 作业监控过程中出错时</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>作业脚本生成</strong>：</p>
+<p>根据作业类型生成不同的 SLURM 脚本：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># 训练作业脚本</span>
+<span class="c1">#!/bin/bash</span>
+<span class="c1">#SBATCH -J calculate_train</span>
+<span class="c1">#SBATCH -N 1</span>
+<span class="c1">#SBATCH -p xahcnormal</span>
+<span class="c1">#SBATCH --ntasks-per-node=32</span>
+mpirun<span class="w"> </span>-n<span class="w"> </span><span class="m">32</span><span class="w"> </span><span class="o">{</span>train_command<span class="o">}</span><span class="w"> </span>&gt;<span class="w"> </span>train-output.log
+
+<span class="c1"># 计算作业脚本</span>
+<span class="c1">#!/bin/bash</span>
+<span class="c1">#SBATCH -J calculate_{job_name}</span>
+<span class="c1">#SBATCH -N 1</span>
+<span class="c1">#SBATCH -p xahcnormal</span>
+<span class="c1">#SBATCH --ntasks-per-node=32</span>
+mpirun<span class="w"> </span>-n<span class="w"> </span><span class="m">32</span><span class="w"> </span><span class="o">{</span>lmp_mpi_load<span class="o">}</span><span class="w"> </span>-i<span class="w"> </span><span class="o">{</span>job_name<span class="o">}</span>.in<span class="w"> </span>&gt;<span class="w"> </span>output.log
+</pre></div>
+</div>
+<p><strong>执行流程</strong>：</p>
+<ol class="arabic simple">
+<li><p>创建作业目录</p></li>
+<li><p>生成 SLURM 脚本文件</p></li>
+<li><p>提交作业到队列</p></li>
+<li><p>获取作业 ID</p></li>
+<li><p>启动作业监控</p></li>
+</ol>
+</dd></dl>
+
+</section>
+<section id="wait-for-job-completion">
+<h4><a class="toc-backref" href="#id61" role="doc-backlink">_wait_for_job_completion 方法</a><a class="headerlink" href="#wait-for-job-completion" title="Link to this heading"></a></h4>
+<dl class="py method">
+<dt class="sig sig-object py" id="RUN._wait_for_job_completion">
+<span class="sig-prename descclassname"><span class="pre">RUN.</span></span><span class="sig-name descname"><span class="pre">_wait_for_job_completion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">job_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">job_dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#RUN._wait_for_job_completion" title="Link to this definition"></a></dt>
+<dd><p>监控作业状态并等待完成</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>job_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- SLURM 作业 ID</p></li>
+<li><p><strong>job_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 作业名称</p></li>
+<li><p><strong>current_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 当前工作目录</p></li>
+<li><p><strong>job_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 作业目录</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>监控机制</strong>：</p>
+<ol class="arabic simple">
+<li><p>启动等待动画线程</p></li>
+<li><p>定期使用 <code class="docutils literal notranslate"><span class="pre">squeue</span> <span class="pre">-j</span> <span class="pre">{job_id}</span></code> 检查作业状态</p></li>
+<li><p>检测作业状态变化：
+- <code class="docutils literal notranslate"><span class="pre">R</span></code>：运行中
+- <code class="docutils literal notranslate"><span class="pre">PD</span></code>：排队中
+- 不存在：作业已完成</p></li>
+<li><p>作业完成后执行后处理</p></li>
+<li><p>清理临时文件</p></li>
+</ol>
+</dd></dl>
+
+</section>
+<section id="post-process">
+<h4><a class="toc-backref" href="#id62" role="doc-backlink">_post_process 方法</a><a class="headerlink" href="#post-process" title="Link to this heading"></a></h4>
+<dl class="py method">
+<dt class="sig sig-object py" id="RUN._post_process">
+<span class="sig-prename descclassname"><span class="pre">RUN.</span></span><span class="sig-name descname"><span class="pre">_post_process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#RUN._post_process" title="Link to this definition"></a></dt>
+<dd><p>作业完成后执行相应的后处理</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>job_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 作业名称</p></li>
+<li><p><strong>current_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 当前工作目录</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>后处理类型</strong>：</p>
+<table class="docutils align-default" id="id40">
+<caption><span class="caption-text">不同作业的后处理</span><a class="headerlink" href="#id40" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>作业类型</p></th>
+<th class="head"><p>后处理命令</p></th>
+<th class="head"><p>说明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>E-V</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">plot.py</span></code></p></td>
+<td><p>绘制能量-体积曲线</p></td>
+</tr>
+<tr class="row-odd"><td><p>P-V</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">plot.py</span></code></p></td>
+<td><p>绘制压力-体积曲线</p></td>
+</tr>
+<tr class="row-even"><td><p>phonon</p></td>
+<td><p>多步声子分析</p></td>
+<td><p>生成声子谱</p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</section>
+<section id="process-phonon">
+<h4><a class="toc-backref" href="#id63" role="doc-backlink">_process_phonon 方法</a><a class="headerlink" href="#process-phonon" title="Link to this heading"></a></h4>
+<dl class="py method">
+<dt class="sig sig-object py" id="RUN._process_phonon">
+<span class="sig-prename descclassname"><span class="pre">RUN.</span></span><span class="sig-name descname"><span class="pre">_process_phonon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">current_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">job_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#RUN._process_phonon" title="Link to this definition"></a></dt>
+<dd><p>声子计算的特殊后处理</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>current_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 当前工作目录</p></li>
+<li><p><strong>job_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 作业名称</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>处理流程</strong>：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. 运行 phonolammps</span>
+phonolammps<span class="w"> </span>PHONON.in<span class="w"> </span>-c<span class="w"> </span>POSCAR<span class="w"> </span>--dim<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">2</span>
+
+<span class="c1"># 2. 生成 KPATH</span>
+python<span class="w"> </span>get_KPATH.py<span class="w"> </span>&gt;&gt;<span class="w"> </span>PHONON.log
+rm<span class="w"> </span>./get_KPATH.py
+
+<span class="c1"># 3. 修改维度设置</span>
+sed<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;s/DIM =/DIM = 2 2 2/&#39;</span><span class="w"> </span>./KPATH.phonopy
+
+<span class="c1"># 4. 生成声子谱</span>
+phonopy<span class="w"> </span>-c<span class="w"> </span>POSCAR<span class="w"> </span>-p<span class="w"> </span>-s<span class="w"> </span>KPATH.phonopy
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+</section>
+<section id="id16">
+<h3><a class="toc-backref" href="#id64" role="doc-backlink">训练管理方法</a><a class="headerlink" href="#id16" title="Link to this heading"></a></h3>
+<section id="train-commands">
+<h4><a class="toc-backref" href="#id65" role="doc-backlink">Train_commands 方法</a><a class="headerlink" href="#train-commands" title="Link to this heading"></a></h4>
+<dl class="py method">
+<dt class="sig sig-object py" id="RUN.Train_commands">
+<span class="sig-prename descclassname"><span class="pre">RUN.</span></span><span class="sig-name descname"><span class="pre">Train_commands</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">drive</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#RUN.Train_commands" title="Link to this definition"></a></dt>
+<dd><p>生成训练命令和准备训练目录</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>drive</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><em>bool</em></a>) -- 是否执行训练</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>(训练目录路径, 训练命令) 或 (&quot;No_path&quot;, &quot;Skip_step&quot;)</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="（在 Python v3.14）">tuple</a></p>
+</dd>
+<dt class="field-even">抛出<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#SystemExit" title="SystemExit"><strong>SystemExit</strong></a> -- 训练目录创建失败时</p>
+</dd>
+</dl>
+<p><strong>执行步骤</strong>：</p>
+<ol class="arabic simple">
+<li><p>检查训练开关</p></li>
+<li><p>创建训练目录</p></li>
+<li><p>复制初始势函数和训练集</p></li>
+<li><p>生成训练命令</p></li>
+</ol>
+<p><strong>训练命令格式</strong>：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">{</span>PhyMLP_load<span class="o">}</span>/bin/MLP<span class="w"> </span>train<span class="w"> </span><span class="o">{</span>init_PhyMLP<span class="o">}</span><span class="w"> </span><span class="o">{</span>extxyz_load<span class="o">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--save_to<span class="o">={</span>save_to<span class="o">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--iteration_limit<span class="o">={</span>iteration_limit<span class="o">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--al_mode<span class="o">={</span>al_mode<span class="o">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="train">
+<h4><a class="toc-backref" href="#id66" role="doc-backlink">Train 方法</a><a class="headerlink" href="#train" title="Link to this heading"></a></h4>
+<dl class="py method">
+<dt class="sig sig-object py" id="RUN.Train">
+<span class="sig-prename descclassname"><span class="pre">RUN.</span></span><span class="sig-name descname"><span class="pre">Train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_drive</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_command</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#RUN.Train" title="Link to this definition"></a></dt>
+<dd><p>执行训练任务</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_drive</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><em>bool</em></a>) -- 是否执行训练</p></li>
+<li><p><strong>train_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 训练目录路径</p></li>
+<li><p><strong>train_command</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 训练命令</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>执行逻辑</strong>：</p>
+<ol class="arabic simple">
+<li><p>检查训练开关</p></li>
+<li><p>调用 <code class="docutils literal notranslate"><span class="pre">slurm_sub()</span></code> 提交训练作业</p></li>
+<li><p>等待训练完成</p></li>
+</ol>
+</dd></dl>
+
+</section>
+</section>
+<section id="id17">
+<h3><a class="toc-backref" href="#id67" role="doc-backlink">计算管理方法</a><a class="headerlink" href="#id17" title="Link to this heading"></a></h3>
+<section id="calculate-dir">
+<h4><a class="toc-backref" href="#id68" role="doc-backlink">Calculate_dir 方法</a><a class="headerlink" href="#calculate-dir" title="Link to this heading"></a></h4>
+<dl class="py method">
+<dt class="sig sig-object py" id="RUN.Calculate_dir">
+<span class="sig-prename descclassname"><span class="pre">RUN.</span></span><span class="sig-name descname"><span class="pre">Calculate_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">drive</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#RUN.Calculate_dir" title="Link to this definition"></a></dt>
+<dd><p>创建计算目录并复制必要文件</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>drive</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><em>bool</em></a>) -- 是否执行计算</p>
+</dd>
+<dt class="field-even">抛出<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#SystemExit" title="SystemExit"><strong>SystemExit</strong></a> -- 目录创建或文件复制失败时</p>
+</dd>
+</dl>
+<p><strong>执行步骤</strong>：</p>
+<ol class="arabic simple">
+<li><p>检查计算开关</p></li>
+<li><p>去重计算属性列表</p></li>
+<li><p>为每个属性：
+- 从 PhyMLP 模板目录复制计算目录
+- 复制势函数文件到计算目录</p></li>
+</ol>
+</dd></dl>
+
+</section>
+<section id="rewrite-lammps-in">
+<h4><a class="toc-backref" href="#id69" role="doc-backlink">Rewrite_lammps_in 方法</a><a class="headerlink" href="#rewrite-lammps-in" title="Link to this heading"></a></h4>
+<dl class="py method">
+<dt class="sig sig-object py" id="RUN.Rewrite_lammps_in">
+<span class="sig-prename descclassname"><span class="pre">RUN.</span></span><span class="sig-name descname"><span class="pre">Rewrite_lammps_in</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">drive</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#RUN.Rewrite_lammps_in" title="Link to this definition"></a></dt>
+<dd><p>根据配置重写 LAMMPS 输入文件</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>drive</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><em>bool</em></a>) -- 是否执行计算任务</p>
+</dd>
+</dl>
+<p><strong>修改逻辑</strong>：</p>
+<p>根据不同的计算属性，调用相应的修改方法：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">_modify_ev_in()</span></code>：修改 E-V 计算输入文件</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_modify_elastic_in()</span></code>：修改弹性常数计算输入文件</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_modify_pv_in()</span></code>：修改 P-V 计算输入文件</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_modify_phonon_in()</span></code>：修改声子计算输入文件</p></li>
+</ul>
+</dd></dl>
+
+</section>
+<section id="id18">
+<h4><a class="toc-backref" href="#id70" role="doc-backlink">输入文件修改方法</a><a class="headerlink" href="#id18" title="Link to this heading"></a></h4>
+<section id="e-v">
+<h5>E-V 计算修改<a class="headerlink" href="#e-v" title="Link to this heading"></a></h5>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">_modify_ev_in</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">lattice_min</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%.2f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lattice</span><span class="p">)</span> <span class="o">-</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lattice</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.3</span><span class="p">)</span>
+    <span class="n">interval</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%.2f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lattice</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.3</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
+
+    <span class="n">commands</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="sa">f</span><span class="s2">&quot;sed -i &#39;s/define_mass/mass 1 </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">atomic_mass</span><span class="si">}</span><span class="s2">/&#39; ./E-V/E-V.in&quot;</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;sed -i &#39;s/crystal_structure/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">crystal_structure</span><span class="si">}</span><span class="s2">/&#39; ./E-V/E-V.in&quot;</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;sed -i &#39;s/lattice_constant/</span><span class="si">{</span><span class="n">lattice_min</span><span class="si">}</span><span class="s2">+</span><span class="si">{</span><span class="n">interval</span><span class="si">}</span><span class="s2">*$i/&#39; ./E-V/E-V.in&quot;</span>
+    <span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="p-v">
+<h5>P-V 计算修改<a class="headerlink" href="#p-v" title="Link to this heading"></a></h5>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">_modify_pv_in</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">interval</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%.6f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lattice</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.1</span> <span class="o">/</span> <span class="mi">50</span><span class="p">)</span>
+    <span class="n">basis_volume</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lattice</span><span class="p">)</span> <span class="o">**</span> <span class="mi">3</span>
+
+    <span class="n">commands</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="sa">f</span><span class="s2">&quot;sed -i &#39;s/define_mass/mass 1 </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">atomic_mass</span><span class="si">}</span><span class="s2">/&#39; ./P-V/P-V.in&quot;</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;sed -i &#39;s/crystal_structure/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">crystal_structure</span><span class="si">}</span><span class="s2">/&#39; ./P-V/P-V.in&quot;</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;sed -i &#39;s/lattice_constant/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">lattice</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">interval</span><span class="si">}</span><span class="s2">*$i/&#39; ./P-V/P-V.in&quot;</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;sed -i &#39;s/basis_volume/</span><span class="si">{</span><span class="n">basis_volume</span><span class="si">}</span><span class="s2">/&#39; ./P-V/P-V.in&quot;</span>
+    <span class="p">]</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="execute">
+<h4><a class="toc-backref" href="#id71" role="doc-backlink">Execute 方法</a><a class="headerlink" href="#execute" title="Link to this heading"></a></h4>
+<dl class="py method">
+<dt class="sig sig-object py" id="RUN.Execute">
+<span class="sig-prename descclassname"><span class="pre">RUN.</span></span><span class="sig-name descname"><span class="pre">Execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">drive</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#RUN.Execute" title="Link to this definition"></a></dt>
+<dd><p>执行所有计算任务</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>drive</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><em>bool</em></a>) -- 是否执行计算任务</p>
+</dd>
+</dl>
+<p><strong>执行逻辑</strong>：</p>
+<ol class="arabic simple">
+<li><p>检查计算开关</p></li>
+<li><p>遍历所有计算属性</p></li>
+<li><p>为每个属性提交计算作业</p></li>
+<li><p>等待所有作业完成</p></li>
+</ol>
+</dd></dl>
+
+</section>
+</section>
+</section>
+<section id="id19">
+<h2><a class="toc-backref" href="#id72" role="doc-backlink">使用示例</a><a class="headerlink" href="#id19" title="Link to this heading"></a></h2>
+<section id="id20">
+<h3><a class="toc-backref" href="#id73" role="doc-backlink">基本使用流程</a><a class="headerlink" href="#id20" title="Link to this heading"></a></h3>
+<div class="literal-block-wrapper docutils container" id="id41">
+<div class="code-block-caption"><span class="caption-text">基本使用示例</span><a class="headerlink" href="#id41" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="sd">&quot;&quot;&quot;core.py 模块使用示例&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+
+<span class="c1"># 导入核心模块</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">phymlp.utils.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">RUN</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="c1"># 1. 创建 RUN 实例</span>
+    <span class="n">run</span> <span class="o">=</span> <span class="n">RUN</span><span class="p">()</span>
+
+    <span class="c1"># 2. 读取配置文件</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;步骤1: 读取配置文件...&quot;</span><span class="p">)</span>
+    <span class="n">input_info</span> <span class="o">=</span> <span class="n">run</span><span class="o">.</span><span class="n">Read</span><span class="p">(</span><span class="s2">&quot;Inputfile.txt&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 3. 解析配置参数</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;步骤2: 解析配置参数...&quot;</span><span class="p">)</span>
+    <span class="n">run</span><span class="o">.</span><span class="n">Key_and_parament</span><span class="p">(</span><span class="n">input_info</span><span class="p">)</span>
+
+    <span class="c1"># 4. 执行训练（如果需要）</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;步骤3: 准备训练...&quot;</span><span class="p">)</span>
+    <span class="n">train_drive</span> <span class="o">=</span> <span class="n">run</span><span class="o">.</span><span class="n">Bool_commands</span><span class="p">(</span><span class="n">run</span><span class="o">.</span><span class="n">train</span><span class="p">)</span>
+    <span class="n">train_dir</span><span class="p">,</span> <span class="n">train_cmd</span> <span class="o">=</span> <span class="n">run</span><span class="o">.</span><span class="n">Train_commands</span><span class="p">(</span><span class="n">train_drive</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;步骤4: 执行训练...&quot;</span><span class="p">)</span>
+    <span class="n">run</span><span class="o">.</span><span class="n">Train</span><span class="p">(</span><span class="n">train_drive</span><span class="p">,</span> <span class="n">train_dir</span><span class="p">,</span> <span class="n">train_cmd</span><span class="p">)</span>
+
+    <span class="c1"># 5. 执行计算（如果需要）</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;步骤5: 准备计算...&quot;</span><span class="p">)</span>
+    <span class="n">calc_drive</span> <span class="o">=</span> <span class="n">run</span><span class="o">.</span><span class="n">Bool_commands</span><span class="p">(</span><span class="n">run</span><span class="o">.</span><span class="n">calculate</span><span class="p">)</span>
+    <span class="n">run</span><span class="o">.</span><span class="n">Calculate_dir</span><span class="p">(</span><span class="n">calc_drive</span><span class="p">)</span>
+    <span class="n">run</span><span class="o">.</span><span class="n">Rewrite_lammps_in</span><span class="p">(</span><span class="n">calc_drive</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;步骤6: 执行计算...&quot;</span><span class="p">)</span>
+    <span class="n">run</span><span class="o">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">calc_drive</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;所有任务完成！&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="id21">
+<h3><a class="toc-backref" href="#id74" role="doc-backlink">自定义配置示例</a><a class="headerlink" href="#id21" title="Link to this heading"></a></h3>
+<div class="literal-block-wrapper docutils container" id="id42">
+<div class="code-block-caption"><span class="caption-text">自定义配置和使用</span><a class="headerlink" href="#id42" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">custom_training_workflow</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;自定义训练工作流&quot;&quot;&quot;</span>
+
+    <span class="c1"># 创建配置管理器</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">PUBLIC</span><span class="p">()</span>
+
+    <span class="c1"># 手动设置参数</span>
+    <span class="n">config</span><span class="o">.</span><span class="n">PhyMLP_load</span> <span class="o">=</span> <span class="s2">&quot;/opt/phymlp&quot;</span>
+    <span class="n">config</span><span class="o">.</span><span class="n">lmp_mpi_load</span> <span class="o">=</span> <span class="s2">&quot;/usr/local/bin/lmp_mpi&quot;</span>
+    <span class="n">config</span><span class="o">.</span><span class="n">train</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">config</span><span class="o">.</span><span class="n">extxyz_load</span> <span class="o">=</span> <span class="s2">&quot;./data/training_set.extxyz&quot;</span>
+    <span class="n">config</span><span class="o">.</span><span class="n">init_PhyMLP</span> <span class="o">=</span> <span class="s2">&quot;10.PhyMLP&quot;</span>
+    <span class="n">config</span><span class="o">.</span><span class="n">iteration_limit</span> <span class="o">=</span> <span class="mi">10000</span>
+    <span class="n">config</span><span class="o">.</span><span class="n">al_mode</span> <span class="o">=</span> <span class="s2">&quot;nbh&quot;</span>
+
+    <span class="c1"># 创建运行管理器</span>
+    <span class="n">runner</span> <span class="o">=</span> <span class="n">RUN</span><span class="p">()</span>
+
+    <span class="c1"># 继承配置</span>
+    <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">attr</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">):</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="n">runner</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">attr</span><span class="p">))</span>
+
+    <span class="c1"># 执行训练</span>
+    <span class="n">train_dir</span><span class="p">,</span> <span class="n">train_cmd</span> <span class="o">=</span> <span class="n">runner</span><span class="o">.</span><span class="n">Train_commands</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">runner</span><span class="o">.</span><span class="n">Train</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">train_dir</span><span class="p">,</span> <span class="n">train_cmd</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;自定义训练完成！&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="id22">
+<h3><a class="toc-backref" href="#id75" role="doc-backlink">批量计算示例</a><a class="headerlink" href="#id22" title="Link to this heading"></a></h3>
+<div class="literal-block-wrapper docutils container" id="id43">
+<div class="code-block-caption"><span class="caption-text">批量执行多种计算</span><a class="headerlink" href="#id43" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">batch_property_calculation</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;批量执行多种物性计算&quot;&quot;&quot;</span>
+
+    <span class="c1"># 初始化</span>
+    <span class="n">runner</span> <span class="o">=</span> <span class="n">RUN</span><span class="p">()</span>
+
+    <span class="c1"># 设置计算参数</span>
+    <span class="n">runner</span><span class="o">.</span><span class="n">calculate</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">runner</span><span class="o">.</span><span class="n">properties</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;E-V&quot;</span><span class="p">,</span> <span class="s2">&quot;Elastic&quot;</span><span class="p">,</span> <span class="s2">&quot;P-V&quot;</span><span class="p">,</span> <span class="s2">&quot;phonon&quot;</span><span class="p">]</span>
+    <span class="n">runner</span><span class="o">.</span><span class="n">crystal_structure</span> <span class="o">=</span> <span class="s2">&quot;fcc&quot;</span>
+    <span class="n">runner</span><span class="o">.</span><span class="n">lattice</span> <span class="o">=</span> <span class="s2">&quot;3.615&quot;</span>  <span class="c1"># 铜的晶格常数</span>
+    <span class="n">runner</span><span class="o">.</span><span class="n">atomic_mass</span> <span class="o">=</span> <span class="s2">&quot;63.546&quot;</span>
+    <span class="n">runner</span><span class="o">.</span><span class="n">pot_PhyMLP_load</span> <span class="o">=</span> <span class="s2">&quot;./train/pot.PhyMLP&quot;</span>
+
+    <span class="c1"># 准备计算</span>
+    <span class="n">runner</span><span class="o">.</span><span class="n">Calculate_dir</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">runner</span><span class="o">.</span><span class="n">Rewrite_lammps_in</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># 执行计算</span>
+    <span class="n">runner</span><span class="o">.</span><span class="n">Execute</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;批量计算完成！&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="id23">
+<h2><a class="toc-backref" href="#id76" role="doc-backlink">错误处理机制</a><a class="headerlink" href="#id23" title="Link to this heading"></a></h2>
+<section id="id24">
+<h3><a class="toc-backref" href="#id77" role="doc-backlink">配置文件错误</a><a class="headerlink" href="#id24" title="Link to this heading"></a></h3>
+<p><strong>常见错误</strong>：
+- 文件不存在
+- 格式错误
+- 参数无效</p>
+<p><strong>处理方式</strong>：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">input_info</span> <span class="o">=</span> <span class="n">run</span><span class="o">.</span><span class="n">Read</span><span class="p">(</span><span class="s2">&quot;Inputfile.txt&quot;</span><span class="p">)</span>
+    <span class="n">run</span><span class="o">.</span><span class="n">Key_and_parament</span><span class="p">(</span><span class="n">input_info</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">SystemExit</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;配置文件错误: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="c1"># 提供修复建议</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;请检查 Inputfile.txt 文件格式和内容&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;未知错误: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id25">
+<h3><a class="toc-backref" href="#id78" role="doc-backlink">作业提交错误</a><a class="headerlink" href="#id25" title="Link to this heading"></a></h3>
+<p><strong>常见错误</strong>：
+- SLURM 命令不存在
+- 权限不足
+- 队列不可用</p>
+<p><strong>处理方式</strong>：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">safe_slurm_sub</span><span class="p">(</span><span class="n">runner</span><span class="p">,</span> <span class="n">job_name</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;安全的作业提交&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">runner</span><span class="o">.</span><span class="n">slurm_sub</span><span class="p">(</span><span class="n">job_name</span><span class="p">,</span> <span class="n">command</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;作业提交失败: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;返回码: </span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="n">returncode</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;输出: </span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="n">output</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;作业执行错误: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id26">
+<h3><a class="toc-backref" href="#id79" role="doc-backlink">参数验证</a><a class="headerlink" href="#id26" title="Link to this heading"></a></h3>
+<p><strong>验证函数示例</strong>：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">validate_parameters</span><span class="p">(</span><span class="n">runner</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;验证核心参数&quot;&quot;&quot;</span>
+
+    <span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># 检查必要路径</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">runner</span><span class="o">.</span><span class="n">PhyMLP_load</span><span class="p">):</span>
+        <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PhyMLP路径不存在: </span><span class="si">{</span><span class="n">runner</span><span class="o">.</span><span class="n">PhyMLP_load</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">runner</span><span class="o">.</span><span class="n">lmp_mpi_load</span><span class="p">):</span>
+        <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;LAMMPS路径不存在: </span><span class="si">{</span><span class="n">runner</span><span class="o">.</span><span class="n">lmp_mpi_load</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 检查训练集</span>
+    <span class="k">if</span> <span class="n">runner</span><span class="o">.</span><span class="n">train</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">runner</span><span class="o">.</span><span class="n">extxyz_load</span><span class="p">):</span>
+        <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;训练集文件不存在: </span><span class="si">{</span><span class="n">runner</span><span class="o">.</span><span class="n">extxyz_load</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 检查势函数</span>
+    <span class="k">if</span> <span class="n">runner</span><span class="o">.</span><span class="n">calculate</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">runner</span><span class="o">.</span><span class="n">pot_PhyMLP_load</span><span class="p">):</span>
+        <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;势函数文件不存在: </span><span class="si">{</span><span class="n">runner</span><span class="o">.</span><span class="n">pot_PhyMLP_load</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 返回错误列表</span>
+    <span class="k">return</span> <span class="n">errors</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id27">
+<h2><a class="toc-backref" href="#id80" role="doc-backlink">性能优化建议</a><a class="headerlink" href="#id27" title="Link to this heading"></a></h2>
+<section id="id28">
+<h3><a class="toc-backref" href="#id81" role="doc-backlink">并发作业提交</a><a class="headerlink" href="#id28" title="Link to this heading"></a></h3>
+<p>对于多个计算任务，可以优化提交策略：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">parallel_execute</span><span class="p">(</span><span class="n">runner</span><span class="p">,</span> <span class="n">max_concurrent</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;并行执行计算任务&quot;&quot;&quot;</span>
+
+    <span class="kn">import</span><span class="w"> </span><span class="nn">threading</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">queue</span><span class="w"> </span><span class="kn">import</span> <span class="n">Queue</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">worker</span><span class="p">():</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">job_name</span> <span class="o">=</span> <span class="n">job_queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">job_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="n">runner</span><span class="o">.</span><span class="n">slurm_sub</span><span class="p">(</span><span class="n">job_name</span><span class="p">)</span>
+            <span class="n">job_queue</span><span class="o">.</span><span class="n">task_done</span><span class="p">()</span>
+
+    <span class="c1"># 创建作业队列</span>
+    <span class="n">job_queue</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">runner</span><span class="o">.</span><span class="n">properties</span><span class="p">:</span>
+        <span class="n">job_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+
+    <span class="c1"># 创建工作线程</span>
+    <span class="n">threads</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">max_concurrent</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">runner</span><span class="o">.</span><span class="n">properties</span><span class="p">))):</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">worker</span><span class="p">)</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="n">threads</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+
+    <span class="c1"># 等待所有作业完成</span>
+    <span class="n">job_queue</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+
+    <span class="c1"># 停止工作线程</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">threads</span><span class="p">)):</span>
+        <span class="n">job_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">threads</span><span class="p">:</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="id29">
+<h3><a class="toc-backref" href="#id82" role="doc-backlink">资源监控</a><a class="headerlink" href="#id29" title="Link to this heading"></a></h3>
+<p>监控系统资源使用情况：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">monitor_resources</span><span class="p">(</span><span class="n">job_id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;监控作业资源使用&quot;&quot;&quot;</span>
+
+    <span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="c1"># 使用 sacct 命令获取资源信息</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;sacct -j </span><span class="si">{</span><span class="n">job_id</span><span class="si">}</span><span class="s2"> --format=JobID,State,CPUTime,MaxRSS,NodeList&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">returncode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;资源监控: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">stdout</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># 等待一段时间</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id30">
+<h2><a class="toc-backref" href="#id83" role="doc-backlink">常见问题解答</a><a class="headerlink" href="#id30" title="Link to this heading"></a></h2>
+<section id="q1">
+<h3><a class="toc-backref" href="#id84" role="doc-backlink">Q1: 配置文件读取失败，提示编码错误</a><a class="headerlink" href="#q1" title="Link to this heading"></a></h3>
+<p><strong>解决方案</strong>：指定正确的文件编码</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 修改 Read 方法中的文件打开方式</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">Inputfile</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8-sig&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">readfile</span><span class="p">:</span>
+</pre></div>
+</div>
+</section>
+<section id="q2-slurm">
+<h3><a class="toc-backref" href="#id85" role="doc-backlink">Q2: SLURM 作业提交后立即失败</a><a class="headerlink" href="#q2-slurm" title="Link to this heading"></a></h3>
+<p><strong>可能原因</strong>：
+1. LAMMPS 可执行文件路径错误
+2. 势函数文件不存在
+3. 输入文件格式错误</p>
+<p><strong>检查步骤</strong>：
+1. 验证 <code class="docutils literal notranslate"><span class="pre">lmp_mpi_load</span></code> 路径
+2. 检查计算目录中的势函数文件
+3. 查看生成的输入文件</p>
+</section>
+<section id="q3">
+<h3><a class="toc-backref" href="#id86" role="doc-backlink">Q3: 训练过程中出现 &quot;参数不正确&quot; 错误</a><a class="headerlink" href="#q3" title="Link to this heading"></a></h3>
+<p><strong>解决方案</strong>：
+1. 检查 <code class="docutils literal notranslate"><span class="pre">Inputfile.txt</span></code> 中的参数拼写
+2. 确保值格式正确
+3. 查看 <code class="docutils literal notranslate"><span class="pre">Key_and_parament</span></code> 方法的输出</p>
+</section>
+<section id="q4">
+<h3><a class="toc-backref" href="#id87" role="doc-backlink">Q4: 如何自定义后处理脚本</a><a class="headerlink" href="#q4" title="Link to this heading"></a></h3>
+<p><strong>扩展方法</strong>：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">CustomRUN</span><span class="p">(</span><span class="n">RUN</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_post_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job_name</span><span class="p">,</span> <span class="n">current_path</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;自定义后处理&quot;&quot;&quot;</span>
+
+        <span class="c1"># 调用父类方法</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_post_process</span><span class="p">(</span><span class="n">job_name</span><span class="p">,</span> <span class="n">current_path</span><span class="p">)</span>
+
+        <span class="c1"># 添加自定义处理</span>
+        <span class="k">if</span> <span class="n">job_name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;e-v&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_custom_ev_analysis</span><span class="p">(</span><span class="n">current_path</span><span class="p">,</span> <span class="n">job_name</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_custom_ev_analysis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current_path</span><span class="p">,</span> <span class="n">job_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;自定义 E-V 分析&quot;&quot;&quot;</span>
+        <span class="n">custom_cmd</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;cd </span><span class="si">{</span><span class="n">current_path</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">job_name</span><span class="si">}</span><span class="s2"> &amp;&amp; python custom_analysis.py&quot;</span>
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">custom_cmd</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="api">
+<h2><a class="toc-backref" href="#id88" role="doc-backlink">API 参考</a><a class="headerlink" href="#api" title="Link to this heading"></a></h2>
+<section id="id31">
+<h3><a class="toc-backref" href="#id89" role="doc-backlink">类列表</a><a class="headerlink" href="#id31" title="Link to this heading"></a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="PUBLIC">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PUBLIC</span></span><a class="headerlink" href="#PUBLIC" title="Link to this definition"></a></dt>
+<dd><p>公共配置管理器</p>
+<p><strong>主要方法</strong>：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Read(Inputfile)</span></code>：读取配置文件</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Key_and_parament(input_informations)</span></code>：解析配置</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Bool_commands(bool_command)</span></code>：验证布尔命令</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="RUN">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RUN</span></span><a class="headerlink" href="#RUN" title="Link to this definition"></a></dt>
+<dd><p>运行管理器（继承自 PUBLIC）</p>
+<p><strong>主要方法</strong>：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">slurm_sub(job_name,</span> <span class="pre">command=&quot;&quot;)</span></code>：提交 SLURM 作业</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Train_commands(drive)</span></code>：生成训练命令</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Train(train_drive,</span> <span class="pre">train_dir,</span> <span class="pre">train_command)</span></code>：执行训练</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Calculate_dir(drive)</span></code>：准备计算目录</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Rewrite_lammps_in(drive)</span></code>：重写输入文件</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Execute(drive)</span></code>：执行计算任务</p></li>
+</ul>
+</dd></dl>
+
+</section>
+<section id="id32">
+<h3><a class="toc-backref" href="#id90" role="doc-backlink">异常列表</a><a class="headerlink" href="#id32" title="Link to this heading"></a></h3>
+<dl class="py exception">
+<dt class="sig sig-object py" id="SystemExit">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SystemExit</span></span><a class="headerlink" href="#SystemExit" title="Link to this definition"></a></dt>
+<dd><p>当配置错误或执行失败时抛出。</p>
+</dd></dl>
+
+</section>
+</section>
+<section id="id33">
+<h2><a class="toc-backref" href="#id91" role="doc-backlink">相关链接</a><a class="headerlink" href="#id33" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><span class="xref std std-ref">quickstart</span> - 快速开始指南</p></li>
+<li><p><span class="xref std std-ref">cli/main_py</span> - 主模块说明</p></li>
+<li><p><span class="xref std std-ref">input_files/train_input</span> - Inputfile.txt 配置说明</p></li>
+<li><p><a class="reference external" href="https://slurm.schedmd.com/documentation.html">SLURM 文档</a></p></li>
+<li><p><a class="reference external" href="https://docs.lammps.org/">LAMMPS 文档</a></p></li>
+<li><p><a class="reference external" href="https://phymlp.org/">PhyMLP 文档</a></p></li>
+</ul>
+</section>
+<section id="id35">
+<h2><a class="toc-backref" href="#id92" role="doc-backlink">更新日志</a><a class="headerlink" href="#id35" title="Link to this heading"></a></h2>
+<section id="id36">
+<h3><a class="toc-backref" href="#id93" role="doc-backlink">版本历史</a><a class="headerlink" href="#id36" title="Link to this heading"></a></h3>
+<table class="docutils align-default" id="id44">
+<caption><span class="caption-text">版本更新历史</span><a class="headerlink" href="#id44" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 80.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>版本</p></th>
+<th class="head"><p>更新内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>v1.0.0</p></td>
+<td><p>初始版本，基础功能实现</p></td>
+</tr>
+<tr class="row-odd"><td><p>v1.1.0</p></td>
+<td><p>添加配置解析和验证</p></td>
+</tr>
+<tr class="row-even"><td><p>v1.2.0</p></td>
+<td><p>集成 SLURM 作业调度</p></td>
+</tr>
+<tr class="row-odd"><td><p>v1.3.0</p></td>
+<td><p>改进错误处理和日志</p></td>
+</tr>
+<tr class="row-even"><td><p>v1.4.0</p></td>
+<td><p>添加多种计算类型支持</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id37">
+<h3><a class="toc-backref" href="#id94" role="doc-backlink">计划功能</a><a class="headerlink" href="#id37" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p><strong>更多调度器支持</strong>：支持 PBS、LSF 等其他作业调度系统</p></li>
+<li><p><strong>资源自适应</strong>：根据可用资源自动调整计算参数</p></li>
+<li><p><strong>进度报告</strong>：实时训练和计算进度报告</p></li>
+<li><p><strong>结果分析</strong>：集成自动化结果分析工具</p></li>
+<li><p><strong>Web 界面</strong>：提供 Web 管理界面</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>如果你在使用过程中遇到问题或有改进建议，请在项目仓库提交 Issue。</p>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="../tools/split_set.html" class="btn btn-neutral float-left" title="split_set 模块说明" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="../auto_generate_set/auto_generate_set.html" class="btn btn-neutral float-right" title="自动训练集生成模块" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2025, Hunan University, PhyMLP Development Team。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
